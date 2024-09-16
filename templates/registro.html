@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_producto.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}">
+</head>
+
+<body>
+
+
+    <style>
+        .inputBox {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .inputBox label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #d3d3d3; /* Gris claro */
+        }
+        .inputBox input {
+            width: calc(100% - 40px); /* Ajusta el ancho para el botón */
+            padding: 0.5rem;
+            box-sizing: border-box;
+        }
+        .inputBox .toggle-password {
+            position: absolute;
+            bottom: 100px; /* Ajusta este valor para mover el botón más abajo */
+            right: 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #d3d3d3; /* Gris claro */
+            padding: 0;
+            font-size: 1.5rem; /* Tamaño del icono */
+        }
+        .inputBox .toggle-password i {
+            display: inline-block;
+        }
+    </style>
+
+    <header>
+        <a href="{{ url_for('index') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                        id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="hr-color">
+            <hr>
+        </div>
+
+        <div class="box">
+            <div class="login-form">
+                <h2>¡Regístrate!</h2>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+
+                <form method="post" action="{{ url_for('registro') }}">
+
+
+
+                    <div class="inputBox">
+                        <div class="registration-link">
+                            <h5>Ingrese su nombre y apellido</h5>
+                        </div>
+                        <input type="text" id="nombre" name="nombre" required minlength="4" maxlength="50">
+                    </div>
+
+                    <div class="inputBox">
+                        <div class="registration-link">
+                            <h5>Ingrese su correo electrónico</h5>
+                        </div>
+                        <input type="email" id="email" name="email" required minlength="4" maxlength="40">
+                    </div>
+
+
+                    <div class="inputBox password-container">
+                        <div class="registration-link">
+                            <h5>Ingrese su contraseña</h5>
+                        </div>
+                        <input id="contrasena" type="password" name="contrasena" required minlength="4" maxlength="30">
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <input type="submit" value="Registrarte">
+
+                    <div class="registration-link">
+                        <h5>¿Ya tienes una cuenta?</h5>
+                        <a href="{{ url_for('login') }}">¡Inicia sesión!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SÍGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube"
+                        target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+
+    <script>
+        function togglePassword() {
+            var x = document.getElementById("contrasena");
+            var btn = document.querySelector(".toggle-password i");
+            if (x.type === "password") {
+                x.type = "text";
+                btn.className = "fas fa-eye-slash";
+            } else {
+                x.type = "password";
+                btn.className = "fas fa-eye";
+            }
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+
+</body>
+
+</html>

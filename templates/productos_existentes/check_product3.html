@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_check_product.css') }}" />
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="{{ url_for('login') }}">Inicio</a></li>
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}" id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Productos se agregarán aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Comprar Todo</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr class="hr-color">
+
+    <div class="container-title"><h2>Saco de capota - Edición limitada</h2></div>
+
+    <main>
+        <div class="container-img">
+            <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="imagen-producto" />
+        </div>
+        <div class="container-info-product">
+            <div class="container-price">
+                <span>$135.000</span>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="container-details-product">
+                <div class="form-group">
+                    <label for="size">Elige la talla</label>
+                    <select name="size" id="size">
+                        <option disabled selected value="">Escoge una opción</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+                <center><button id="add-to-cart" class="btn-2" data-img="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" data-product="3" data-name="Saco de capota" data-price="135.000">Agregar al carrito</button></center>
+
+            </div>
+
+            <div class="container-add-cart">
+                <div class="container-quantity">
+                    
+                    
+                </div>
+                <div class="product">
+                </div>
+            </div>
+
+            <div class="container-description">
+                <div class="title-description">
+                    <h4>Descripción</h4>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="text-description">
+                    <p>
+                        Un tributo exclusivo a los 20 años de Tears of Misery, este saco de capota en edición limitada combina estilo y comodidad en una pieza única. Diseñado con atención al detalle, su material suave y su corte moderno hacen de él una prenda esencial para los seguidores más apasionados. Disponible por tiempo limitado, es el complemento perfecto para recordar y celebrar la trayectoria de la banda.
+                    </p>
+                </div>
+            </div>
+
+            <div class="container-additional-information">
+                <div class="title-additional-information">
+                    <h4>Materiales</h4>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="text-additional-information hidden">
+                    <h4>Algodón Premium</h4>
+                    <p>Hecho de 100% algodón de alta calidad, este material ofrece una suavidad superior y una comodidad excepcional. Ideal para uso diario, mantiene su forma y color incluso después de múltiples lavados. Perfecto para celebrar los 20 años de Tears of Misery con estilo.</p>
+                </div>
+            </div>
+
+            <div class="container-reviews">
+                <div class="title-reviews">
+                    <h4>Guía de cuidado</h4>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="text-reviews hidden">
+                    <p><strong>Lavar:</strong> Lavar a máquina con agua fría para conservar el color. Usa detergente suave para evitar el desgaste. <br>
+                        <strong>Secar:</strong> Secar en secadora a baja temperatura o, preferiblemente, colgar para secar al aire. Evita el calor excesivo para prevenir el encogimiento. <br>
+                        <strong>Planchar:</strong> Planchar a temperatura media si es necesario. Recomendado hacerlo del revés para proteger el estampado.</p>
+                </div>
+            </div>
+
+            <div class="container-social">
+                <span><strong>Nuestras redes </strong></span>
+                <div class="container-buttons-social">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+</body>
+</html>

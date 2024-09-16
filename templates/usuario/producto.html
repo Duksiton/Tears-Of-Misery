@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagina Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_check_product.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('inicio') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group2">
+            <ul class="navigation">
+                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+                <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <div class="user-profile" style="position: relative; display: inline-block;">
+                <i class="fas fa-user-circle" style="font-size: 40px; color: white; cursor: pointer;"
+                    onclick="toggleMenu()"></i>
+                <div class="dropdown-menu" id="userMenu"
+                    style="display: none; position: absolute; background-color: #333; color: white; border-radius: 5px; padding: 10px; z-index: 1; width: 200px;">
+                    <ul
+                        style="list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; width: 100%;">
+                        <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
+                            <a href="{{ url_for('perfil.perfil') }}" class="logout-btn"
+                                style="color: white; text-decoration: none;   ">Perfil</a>
+                        </li>
+                        <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
+                            <a href="{{ url_for('logout.logout') }}" class="logout-btn"
+                                style="color: white; text-decoration: none;  ">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                        id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Productos se añadirán dinámicamente aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr class="hr-color">
+
+    <center>
+        <div class="container-title">
+            <h2>{{ producto.nombre }}</h2>
+        </div>
+    </center>
+
+
+    <main>
+        <div class="container-img">
+            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                alt="imagen-producto" />
+        </div>
+        <div class="container-info-product">
+            <div class="container-price">
+                <span>${{ producto.precio }}</span>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="">
+                <div class=""></div>
+
+                <div class="container-details-product">
+                    <div class="form-group" id="tallas-section">
+                        <label>Tallas</label>
+                        <div class="tallas-container">
+                            {% for talla, stock in producto.tallas_stock.items() %}
+                            <div class="talla-item">
+                                <input type="checkbox" id="talla{{ talla }}" name="tallas" value="{{ talla }}"
+                                    class="talla-checkbox">
+                                <label for="talla{{ talla }}" class="talla-button">{{ talla }}</label>
+                                <div class="stock-section" style="display: none;"> <!-- Inicialmente oculto -->
+                                    <label class="stock-label">Disponible</label>
+                                    <input type="number" id="stock{{ talla }}" name="stock{{ talla }}"
+                                        class="form-control stock-input" min="0" readonly value="{{ stock }}">
+                                    <div id="stock{{ talla }}-error" class="error-message"></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+
+
+                <div class="quantity-wrapper">
+                    <input type="number" id="quantityInput" placeholder="1" value="1" min="1" max="99"
+                        class="quantity-input" />
+                    <div class="arrows-container">
+                        <i class="fa-solid fa-chevron-up" id="increase"></i>
+                        <i class="fa-solid fa-chevron-down" id="decrease"></i>
+                    </div>
+                </div>
+
+
+
+
+                <center>
+                    <button id="add-to-cart" class="btn-2"
+                    data-img="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                    data-product-id="{{ producto.idProducto }}"
+                    data-name="{{ producto.nombre }}"
+                    data-price="{{ producto.precio }}"
+                    data-size="{% if producto.tallas_stock and producto.tallas_stock|length > 0 %}required{% else %}optional{% endif %}">
+                Agregar al carrito
+            </button>
+            
+                </center>
+            </div>
+            <div class="container-description">
+                <div class="title-description">
+                    <h4>Descripción</h4>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <br>
+                <br>
+                <div class="descripcion-container">
+                    <p>{{ producto.descripcion }}</p>
+                </div>
+          
+
+                <style>
+                    .descripcion-container {
+                        max-width: 500px;
+                        /* Ajusta el ancho máximo según tus necesidades */
+                        word-wrap: break-word;
+                        /* Permite que el texto se ajuste a las líneas */
+                        margin: 0 auto;
+                        /* Centra el contenedor en la página */
+                    }
+
+                    .descripcion-container p {
+                        margin: 0;
+                        /* Elimina el margen predeterminado del párrafo */
+                    }
+                </style>
+
+               
+
+
+                
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .tallas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            /* Espacio entre los elementos */
+        }
+
+        .talla-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            /* Espacio entre los elementos dentro de cada item */
+            width: 70px;
+            /* Ancho del contenedor del item */
+        }
+
+        .talla-item input[type="checkbox"] {
+            display: none;
+            /* Oculta el checkbox real */
+        }
+
+        .talla-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            /* Ancho del botón */
+            height: 40px;
+            /* Altura del botón */
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            /* Tamaño del texto */
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+            /* Evita la selección de texto */
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .talla-button:hover,
+        .talla-item input[type="checkbox"]:checked+.talla-button {
+            background-color: #ffbb00;
+            color: rgb(0, 0, 0);
+        }
+
+        .stock-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            /* Centra el texto */
+        }
+
+        .stock-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            /* Espacio entre la etiqueta y el número de stock */
+        }
+
+        .stock-input {
+            width: 60px;
+            /* Ajusta el ancho del campo de stock */
+            height: 30px;
+            /* Ajusta la altura del campo de stock */
+            text-align: center;
+            border: 2px solid #ffbb00;
+            /* Borde azul */
+            border-radius: 5px;
+            /* Bordes redondeados */
+            padding: 5px;
+            /* Espacio interno */
+            background-color: #f9f9f9;
+            /* Color de fondo */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil */
+            font-size: 14px;
+            /* Tamaño del texto */
+            color: #333;
+            /* Color del texto */
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .stock-input:focus {
+            border-color: #0056b3;
+            /* Color del borde cuando está enfocado */
+            background-color: #fff;
+            /* Color de fondo cuando está enfocado */
+        }
+    </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tallaCheckboxes = document.querySelectorAll('#tallas-section .talla-checkbox');
+    
+        tallaCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Muestra el stock de la talla seleccionada y oculta el stock de las demás
+                tallaCheckboxes.forEach(cb => {
+                    const stockInput = document.querySelector(`#stock${cb.value}`);
+                    if (cb.checked) {
+                        stockInput.parentElement.style.display = 'flex'; // Mostrar el stock de la talla seleccionada
+                    } else {
+                        stockInput.parentElement.style.display = 'none'; // Ocultar el stock de la talla no seleccionada
+                    }
+                });
+    
+                // Deseleccionar otras checkboxes si esta está marcada
+                if (checkbox.checked) {
+                    tallaCheckboxes.forEach(cb => {
+                        if (cb !== checkbox) {
+                            cb.checked = false; // Deseleccionar otras checkboxes
+                            const stockInput = document.querySelector(`#stock${cb.value}`);
+                            stockInput.parentElement.style.display = 'none'; // Ocultar el stock de las tallas no seleccionadas
+                        }
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube"
+                        target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script_pro_true.js') }}"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Ocultar el menú al hacer clic fuera
+        window.onclick = function (event) {
+            if (!event.target.matches('.fas')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        // Función para actualizar la visibilidad del botón "Explorar más productos"
+        function actualizarBotonExplorar() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const explorarBtn = document.getElementById('explorar');
+
+            // Mostrar el botón si hay productos en el carrito, de lo contrario, ocultarlo
+            if (carrito.length > 0) {
+                explorarBtn.style.display = 'block';
+            } else {
+                explorarBtn.style.display = 'none';
+            }
+        }
+
+        // Función para agregar productos al carrito
+        function agregarAlCarrito(product) {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const index = carrito.findIndex(item => item.name === product.name && item.size === product.size);
+
+            // Si el producto ya está en el carrito, aumentar la cantidad
+            if (index !== -1) {
+                carrito[index].quantity += 1;
+                mostrarMensaje(`Cantidad de "${product.name}" (${product.size}) aumentada. Ahora tienes ${carrito[index].quantity}.`, 'success');
+            } else {
+                // Si no, agregar el nuevo producto al carrito
+                carrito.push(product);
+                mostrarMensaje(`Nuevo producto "${product.name}" (${product.size}) agregado al carrito.`, 'success');
+            }
+
+            // Guardar el carrito en localStorage
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            // Actualizar la visualización del carrito
+            actualizarCarrito();
+
+            // Actualizar la visibilidad del botón "Explorar más productos"
+            actualizarBotonExplorar();
+        }
+
+        // Ejecutar la función para actualizar el botón al cargar la página
+        document.addEventListener('DOMContentLoaded', function () {
+            actualizarBotonExplorar();
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantityInput = document.getElementById('quantityInput');
+            const increaseButton = document.getElementById('increase');
+            const decreaseButton = document.getElementById('decrease');
+
+            // Incrementar el valor
+            increaseButton.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value, 10);
+                if (currentValue < 99) {
+                    quantityInput.value = currentValue + 1;
+                }
+            });
+
+            // Decrementar el valor
+            decreaseButton.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value, 10);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

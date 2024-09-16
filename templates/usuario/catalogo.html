@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}">
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('inicio') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group2">
+            <ul class="navigation">
+                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+                <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <div class="user-profile" style="position: relative; display: inline-block;">
+                <i class="fas fa-user-circle" style="font-size: 40px; color: white; cursor: pointer;" onclick="toggleMenu()"></i>
+                <div class="dropdown-menu" id="userMenu" style="display: none; position: absolute; background-color: #333; color: white; border-radius: 5px; padding: 10px; z-index: 1; width: 200px;">
+                    <ul style="list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; width: 100%;">
+                        <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
+                            <a href="{{ url_for('perfil.perfil') }}" class="logout-btn" style="color: white; text-decoration: none;   ">Perfil</a>
+                        </li>
+                        <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
+                            <a href="{{ url_for('logout.logout') }}" class="logout-btn" style="color: white; text-decoration: none;  ">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+    </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}" id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Productos se añadirán dinámicamente aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr class="hr-color">
+
+    <section class="header-content container">
+        <div class="header-txt">
+            <span>Nueva Temporada</span>
+            <h1>¡Explora la colección exclusiva!</h1>
+            <p>Diseñados para los verdaderos fanáticos del death metal, cada pieza captura el espíritu rebelde y la intensidad emocional que define nuestra música. Cada compra apoya directamente a la banda, ayudándonos a seguir creando la música que amas.</p>
+            <a href="#product-content" class="btn-1">Comprar Ahora</a>
+        </div>
+        <div class="header-img">
+            <iframe src="https://www.youtube.com/embed/kTH0NJmFlMI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section class="information">
+        <div class="information-content">
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                    <path d="M36.8 192l566.3 0c20.3 0 36.8-16.5 36.8-36.8c0-7.3-2.2-14.4-6.2-20.4L558.2 21.4C549.3 8 534.4 0 518.3 0L121.7 0c-16 0-31 8-39.9 21.4L6.2 134.7c-4 6.1-6.2 13.2-6.2 20.4C0 175.5 16.5 192 36.8 192zM64 224l0 160 0 80c0 26.5 21.5 48 48 48l224 0c26.5 0 48-21.5 48-48l0-80 0-160-64 0 0 160-192 0 0-160-64 0zm448 0l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32l0-256-64 0z"/>
+                </svg>
+                <h3>Tienda virtual</h3>
+                <p>Nuestra tienda virtual ofrece la misma calidad que una tienda física.</p>
+            </div>
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path d="M512 80c8.8 0 16 7.2 16 16l0 32L48 128l0-32c0-8.8 7.2-16 16-16l448 0zm16 144l0 192c0 8.8-7.2 16-16 16L64 432c-8.8 0-16-7.2-16-16l0-192 480 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z"/>
+                </svg>
+                <h3>Medios de pago</h3>
+                <p>Aceptamos diferentes medios de pago</p>
+            </div>
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                    <path d="M112 0C85.5 0 64 21.5 64 48l0 48L16 96c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 208 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 160l-16 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l16 0 176 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 224l-48 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 144 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 288l0 128c0 53 43 96 96 96s96-43 96-96l128 0c0 53 43 96 96 96s96-43 96-96l32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64 0-32 0-18.7c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7L416 96l0-48c0-26.5-21.5-48-48-48L112 0zM544 237.3l0 18.7-128 0 0-64 0-18.7c0-9.7 3.7-18.7 10.3-25.4 6.6-6.6 15.6-10.3 25.3-10.3l53.7 0c9.7 0 18.7 3.7 25.3 10.3 6.6 6.6 10.3 15.6 10.3 25.3zM416 48L112 48c-8.8 0-16 7.2-16 16l0 48 0 16 320 0 0-16 0-48c0-8.8-7.2-16-16-16zM416 112l-128 0-0 64 128 0 0-64z"/>
+                </svg>
+                <h3>Envíos</h3>
+                <p>Realizamos envíos a nivel nacional.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="main-content-header">
+
+        </div>
+        <div class="product-content" id="product-content">
+            <section class="products">
+                <h2>Nuestros Productos</h2>
+                <div class="product-content">
+                    {% for producto in productos %}
+                    <div class="product">
+                        <a href="{{ url_for('producto_controller.producto', id=producto.idProducto) }}">
+                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
+                            <h3>{{ producto.nombre }}</h3>
+                            <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
+
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </section>
+
+    
+    
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('inicio') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SÍGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script_pro_true.js') }}"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    
+        // Ocultar el menú al hacer clic fuera
+        window.onclick = function(event) {
+            if (!event.target.matches('.fas')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+
+<script>
+    // Función para actualizar la visibilidad del botón "Explorar más productos"
+    function actualizarBotonExplorar() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const explorarBtn = document.getElementById('explorar');
+        
+        // Mostrar el botón si hay productos en el carrito, de lo contrario, ocultarlo
+        if (carrito.length > 0) {
+            explorarBtn.style.display = 'block';
+        } else {
+            explorarBtn.style.display = 'none';
+        }
+    }
+
+    // Función para agregar productos al carrito
+    function agregarAlCarrito(product) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const index = carrito.findIndex(item => item.name === product.name && item.size === product.size);
+
+        // Si el producto ya está en el carrito, aumentar la cantidad
+        if (index !== -1) {
+            carrito[index].quantity += 1;
+            mostrarMensaje(`Cantidad de "${product.name}" (${product.size}) aumentada. Ahora tienes ${carrito[index].quantity}.`, 'success');
+        } else {
+            // Si no, agregar el nuevo producto al carrito
+            carrito.push(product);
+            mostrarMensaje(`Nuevo producto "${product.name}" (${product.size}) agregado al carrito.`, 'success');
+        }
+
+        // Guardar el carrito en localStorage
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+
+        // Actualizar la visualización del carrito
+        actualizarCarrito();
+
+        // Actualizar la visibilidad del botón "Explorar más productos"
+        actualizarBotonExplorar();
+    }
+
+    // Ejecutar la función para actualizar el botón al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        actualizarBotonExplorar();
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Dashboard Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+
+    <!----css3---->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+    <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+
+
+    <!--google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+    <div class="wrapper">
+
+        <div class="body-overlay"></div>
+
+        <!-------sidebar--design------------>
+
+        <div id="sidebar">
+            <div class="sidebar-header">
+                <h3><img src="{{ url_for('static', filename='/images/icon-logo.ico') }}" class="img-fluid" /><span>Tears
+                        of Misery</span></h3>
+            </div>
+            <ul class="list-unstyled component m-0">
+                <li>
+                    <a href="{{ url_for('producto_controller.admin') }}" class="dashboard">
+                        <i class="material-icons">dashboard</i>Productos
+                    </a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="{{ url_for('usuarios_controller.listar_usuarios') }}" class="users">
+                        <i class="material-icons">people</i>Usuarios
+                    </a>
+                </li>
+
+                <!-- Pedidos -->
+                <li>
+                <li class="active">
+                    <a href="{{ url_for('pedidos_controller.ver_pedidos') }}" class="orders">
+                        <i class="material-icons">shopping_cart</i>Pedidos
+                    </a>
+                </li>
+                </li>
+
+        </div>
+
+
+        <!------top-navbar-start----------->
+
+
+
+
+
+
+    </div>
+    </div>
+
+
+    <div id="content">
+
+        <!------top-navbar-start----------->
+
+
+
+        <div class="top-navbar">
+            <div class="xd-topbar">
+                <div class="row">
+                    <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+                        <div class="xp-menubar">
+                            <span class="material-icons text-white">signal_cellular_alt</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-lg-3 order-3 order-md-2">
+                        <div class="xp-searchbar">
+                            <form id="searchForm">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" id="searchInput"
+                                        placeholder="Buscar por ID o Correo">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit" id="button-addon2">Ir</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                        <div class="xp-profilebar text-right">
+                            <nav class="navbar p-0">
+                                <ul class="nav navbar-nav flex-row ml-auto">
+
+
+
+
+                                    <li class="dropdown nav-item">
+                                        <a class="nav-link" href="#" data-toggle="dropdown">
+                                            <img src="{{ url_for('static', filename='/images/logoicon.png') }}"
+                                                style="width:40px; border-radius:50%;" />
+                                            <span class="xp-user-live"></span>
+                                        </a>
+                                        <ul class="dropdown-menu small-menu">
+
+                                            <li><a href="{{ url_for('logout.logout') }}" class="logout-btn">Cerrar
+                                                    sesión</a></li>
+
+                                        </ul>
+                                    </li>
+
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="xp-breadcrumbbar text-center">
+
+
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-curent="page"></li>
+                    </ol>
+                </div>
+
+
+            </div>
+        </div>
+        <!------top-navbar-end----------->
+
+
+        <!------main-content-start----------->
+
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrapper">
+
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+                                    <h2 class="ml-lg-2">Administrar pedidos</h2>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <table id="productosTable" class="table table-striped table-hover table-with-animation">
+                            <thead>
+                                <tr>
+                                  
+                                    <th>ID</th>
+                                    <th>Producto</th>
+                                    <th>Fecha Pedido</th>
+                                    <th>Usuario</th>
+                                    <th>Total Pedido</th>
+                                    <th>Estado</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                            <script>
+                                fetch('/api/pedidos')
+                                    .then(response => response.json())
+                                    .then(pedidos => {
+                                        console.log(pedidos); // Imprime los datos recibidos
+                                        const tableBody = document.getElementById('tableBody'); // Seleccionamos el elemento tbody por su id
+                                        console.log(tableBody); // Verifica que se esté seleccionando el elemento correcto
+                                        pedidos.forEach(pedido => {
+                                            const row = `
+                                                <tr>
+                                                
+                                                <td>${pedido.idCompra}</td> <!-- idCompra -->
+                                                <td>${pedido.nombreProducto}</td> <!-- nombreProducto -->
+                                                <td>${pedido.fechaCompra}</td> <!-- fechaCompra -->
+                                                <td>${pedido.email}</td> <!-- email -->
+                                                <td>${pedido.total}</td> <!-- total -->
+                                                <td>
+                                                        <form class="editPedidoForm" action="/api/actualizar_pedido" method="post">
+                <input type="hidden" name="idPedido" value="${pedido.idCompra}">
+                <select name="estado" class="form-control">
+                    <option value="Pendiente" ${pedido.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                    <option value="Enviado" ${pedido.estado === 'Enviado' ? 'selected' : ''}>Enviado</option>
+                    <option value="Cancelado" ${pedido.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                </select>
+                <button type="submit" class="btn btn-success btn-update">Actualizar</button>
+            </form>
+                                                    </td>
+                                                </tr>
+                                            `;
+                                            tableBody.innerHTML += row;
+                                            console.log(tableBody.innerHTML); // Verifica que el HTML esté siendo actualizado
+                                        });
+                                    })
+                                    .catch(error => console.error(error));
+                            </script>
+                        </table>
+
+
+
+
+                        </table>
+
+                        <div class="clearfix">
+                            <ul class="pagination" id="pagination">
+                                <li class="page-item disabled"><a href="#" class="page-link">Anterior</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Siguiente</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!----add-modal start--------->
+                <!-- Modal para Agregar Producto -->
+
+
+
+
+                <!----edit-modal end--------->
+
+
+
+
+                <!----edit-modal start--------->
+
+
+
+
+
+                <!----edit-modal end--------->
+
+
+                <!----delete-modal start--------->
+                <!-- Modal de Eliminación -->
+
+
+                <script>
+
+                </script>
+
+
+
+
+
+                <!----edit-modal end--------->
+
+
+
+
+            </div>
+        </div>
+
+        <!------main-content-end----------->
+
+
+
+        <!----footer-design------------->
+
+
+<script>
+    
+</script>
+
+
+    </div>
+
+    </div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const historialComprasTableBody = document.getElementById('tableBody');
+
+searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.trim();
+    const page = 1;
+    const itemsPerPage = 5;
+
+    if (searchTerm.length >= 1) {
+        fetch(`/api/historial-compras?query=${searchTerm}&page=${page}&items_per_page=${itemsPerPage}`)
+            .then(response => response.json())
+            .then(data => {
+                const historialCompras = data.historial_compras;
+                const total = data.total;
+
+                if (historialCompras.length > 0) {
+                    const rows = historialCompras.map(historial => {
+                        const fechaCompra = new Date(historial.fechaCompra);
+                        const fechaFormateada = fechaCompra.toISOString().slice(0, 10);
+                        const totalFormateado = new Intl.NumberFormat('es-CO', { 
+                        style: 'currency', 
+                        currency: 'COP', 
+                        minimumFractionDigits: 3 
+                        }).format(historial.total);
+
+                        return `
+                            <tr>
+                                <td>${historial.idCompra}</td>
+                                <td>${historial.nombreProducto}</td>
+                                <td>${fechaFormateada}</td>
+                                <td>${historial.email}</td>
+                                <td>${totalFormateado}</td>
+                                <td>
+                                    <form class="editPedidoForm" action="/api/actualizar_pedido" method="post">
+                    <input type="hidden" name="idPedido" value="${historial.idCompra}">
+                    <select name="estado" class="form-control">
+                        <option value="Pendiente" ${historial.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                        <option value="Enviado" ${historial.estado === 'Enviado' ? 'selected' : ''}>Enviado</option>
+                        <option value="Cancelado" ${historial.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                    </select>
+                    <button type="submit" class="btn btn-success btn-update">Actualizar</button>
+                </form>
+                                    
+                                    </td>
+                            </tr>
+                        `;
+                    });
+
+                    historialComprasTableBody.innerHTML = rows.join('');
+                } else {
+                    historialComprasTableBody.innerHTML = '<tr><td>No se encontraron resultados</td></tr>';
+                }
+            })
+            .catch(error => console.error('Error al buscar historial de compras:', error));
+    } else {
+        historialComprasTableBody.innerHTML = '';
+    }
+});
+</script>
+
+    <!-------complete html----------->
+
+    <!-- Optional JavaScript -->
+
+    <script src="{{ url_for('static', filename='js/barra-busqueda/barrauser.js') }}"></script>
+
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+
+    <!-- Incluir Popper.js -->
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+
+    <!-- Incluir Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            $(".xp-menubar").on('click', function () {
+                console.log("xp-menubar clicked");
+                $("#sidebar").toggleClass('active');
+                $("#content").toggleClass('active');
+            });
+
+            $('.xp-menubar, .body-overlay').on('click', function () {
+                console.log("Overlay or xp-menubar clicked");
+                $("#sidebar, .body-overlay").toggleClass('show-nav');
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

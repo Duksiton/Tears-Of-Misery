@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>Dashboard Admin</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<!----css3---->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+	<link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+
+	<!--google fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<!--google material icon-->
+	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+	<div class="wrapper">
+
+		<div class="body-overlay"></div>
+
+		<!-------sidebar--design------------>
+
+		<div id="sidebar">
+			<div class="sidebar-header">
+				<h3><img src="{{ url_for('static', filename='/images/icon-logo.ico') }}" class="img-fluid" /><span>Tears
+						of Misery</span></h3>
+			</div>
+			<ul class="list-unstyled component m-0">
+				<li class="">
+					<a href="{{ url_for('producto_controller.admin') }}" class="dashboard">
+						<i class="material-icons">dashboard</i>Productos
+					</a>
+				</li>
+
+
+				<li class="list-unstyled component m-0">
+				<li class="active">
+					<a href="{{ url_for('usuarios_controller.listar_usuarios') }}" class="users">
+						<i class="material-icons">people</i>Usuarios
+					</a>
+				</li>
+
+				<!-- Pedidos -->
+				<li >
+					<a href="{{ url_for('pedidos_controller.ver_pedidos') }}" class="orders">
+						<i class="material-icons">shopping_cart</i>Pedidos
+					</a>
+					
+				</li>
+		</div>
+
+	</div>
+	</div>
+
+
+	<div id="content">
+		<!------top-navbar-start----------->
+
+		<div class="top-navbar">
+			<div class="xd-topbar">
+				<div class="row">
+					<div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+						<div class="xp-menubar">
+							<span class="material-icons text-white">signal_cellular_alt</span>
+						</div>
+					</div>
+
+					<div class="col-md-5 col-lg-3 order-3 order-md-2">
+						<div class="xp-searchbar">
+							<form id="searchUserForm">
+								<div class="input-group">
+									<input type="search" class="form-control" placeholder="Buscar por rol o correo" id="searchInput">
+									<div class="input-group-append">
+										<button class="btn" type="submit" id="button-addon2">Ir</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+
+
+					<div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+						<div class="xp-profilebar text-right">
+							<nav class="navbar p-0">
+								<ul class="nav navbar-nav flex-row ml-auto">
+
+
+
+
+									<li class="dropdown nav-item">
+										<a class="nav-link" href="#" data-toggle="dropdown">
+											<img src="{{ url_for('static', filename='/images/logoicon.png') }}"
+												style="width:40px; border-radius:50%;" />
+											<span class="xp-user-live"></span>
+										</a>
+										<ul class="dropdown-menu small-menu">
+
+											<li><a href="{{ url_for('logout.logout') }}" class="logout-btn">Cerrar sesión</a></li>
+
+
+										</ul>
+									</li>
+
+
+								</ul>
+							</nav>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="xp-breadcrumbbar text-center">
+
+					
+					
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-curent="page"></li>
+					</ol>
+				</div>
+
+
+			</div>
+		</div>
+		<!------top-navbar-end----------->
+
+
+		<!------main-content-start----------->
+
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrapper">
+
+						<div class="table-title">
+							<div class="row">
+								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+									<h2 class="ml-lg-2">Administrar usuarios</h2>
+								</div>
+								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
+									<a href="#agregarUsuario" class="btn btn-success" data-toggle="modal">
+										<i class="material-icons">&#xE147;</i>
+										<span>Agregar nuevo usuario</span>
+									</a>
+
+								</div>
+							</div>
+						</div>
+
+						<table id="usuariosTable" class="table table-striped table-hover table-with-animation">
+							<thead>
+								<tr>
+									<th>
+									<th>Nombre</th>
+									<th>Email</th>
+									<th>Dirección</th>
+									<th>Teléfono</th>
+									<th>Rol</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if usuarios %}
+								{% for usuario in usuarios %}
+								<tr>
+									<th>
+									</th>
+									
+							
+								</tr>
+								{% endfor %}
+								{% else %}
+								<tr>
+									<td colspan="8">No hay usuarios disponibles.</td>
+								</tr>
+								{% endif %}
+							</tbody>
+						</table>
+
+
+						<div class="clearfix">
+							<ul class="pagination" id="pagination">
+								<!-- Los elementos de la paginación se generarán dinámicamente -->
+							</ul>
+						</div>
+
+
+
+					</div>
+				</div>
+
+
+				<!----add-modal start--------->
+				<div class="modal fade" id="agregarUsuario" tabindex="-1" role="dialog" aria-labelledby="agregarUsuarioLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="agregarUsuarioLabel">Agregar Usuario</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form action="{{ url_for('usuarios_controller.agregar_usuario') }}" method="post">
+								<div class="modal-body">
+									<div class="left-section">
+										<!-- Sección izquierda -->
+										<div class="form-group">
+											<label for="nombre">Nombre</label>
+											<input type="text" id="nombre" name="nombre" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="email">Email</label>
+											<input type="email" id="email" name="email" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="password">Contraseña</label>
+											<div class="input-group">
+												<input type="password" id="password" name="contraseña" class="form-control" required>
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="button" onclick="mostrarContrasena()">
+														<i id="eye-icon" class="far fa-eye"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="right-section">
+										<!-- Sección derecha -->
+										<div class="form-group">
+											<label for="direccion">Dirección</label>
+											<input type="text" id="direccion" name="direccion" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="telefono">Teléfono</label>
+											<input type="number" id="telefono" name="telefono" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="nombreRol">Rol</label>
+											<select id="nombreRol" name="nombreRol" class="form-control" required>
+												<option value="">Elige una opción</option>
+												<option value="Usuario">Usuario</option>
+												<option value="Administrador">Administrador</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-success">Añadir</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+
+
+				<!----edit-modal end--------->
+
+				<!----edit-modal start--------->
+				<div class="modal fade" id="editarUsuario" tabindex="-1" role="dialog" aria-labelledby="editarUsuarioLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="editarUsuarioLabel">Editar Usuario</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="editarUsuarioForm" action="/update_user" method="post">
+								<div class="modal-body">
+									<div class="left-section">
+										<!-- Sección izquierda -->
+										<div class="form-group">
+											<label for="nombreEditar">Nombre</label>
+											<input type="text" id="nombreEditar" name="nombre" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="emailEditar">Email</label>
+											<input type="email" id="emailEditar" name="email" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="contraseñaEditar">Contraseña Nueva</label>
+											<div class="input-group">
+												<input type="password" id="contraseñaEditar" name="contraseña" class="form-control" required>
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="button" id="togglePasswordButton">
+														<i id="eye-icon" class="far fa-eye"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="right-section">
+										<!-- Sección derecha -->
+										<div class="form-group">
+											<label for="direccionEditar">Dirección</label>
+											<input type="text" id="direccionEditar" name="direccion" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="telefonoEditar">Teléfono</label>
+											<input type="number" id="telefonoEditar" name="telefono" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="nombreRolEditar">Rol</label>
+											<select id="nombreRolEditar" name="nombreRol" class="form-control" required>
+												<option value="">Elige una opción</option>
+												<option value="Usuario">Usuario</option>
+												<option value="Administrador">Administrador</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-success">Actualizar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+
+
+
+				<!----edit-modal end--------->
+
+
+				<!----delete-modal start--------->
+				<!-- Modal para eliminar usuario -->
+				<div class="modal fade" tabindex="-1" id="eliminarUsuario" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Eliminar Usuario</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="deleteUserForm" action="/delete_user" method="post">
+								<div class="modal-body">
+									<p>¿Estás seguro de que deseas realizar esta acción?</p>
+									<p class="text-warning"><small>Esta acción es irreversible.</small></p>
+									<!-- Campo oculto para el ID del usuario -->
+									<input type="hidden" id="userIdToDelete" name="id">
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+				<!----edit-modal end--------->
+
+
+			</div>
+		</div>
+
+		<!------main-content-end----------->
+
+	</div>
+
+	</div>
+
+
+
+	<!-------complete html----------->
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- Incluir jQuery -->
+	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+
+	<!-- Incluir Popper.js -->
+	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+
+	<!-- Incluir Bootstrap JS -->
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".xp-menubar").on('click', function () {
+				$("#sidebar").toggleClass('active');
+				$("#content").toggleClass('active');
+			});
+
+			$('.xp-menubar,.body-overlay').on('click', function () {
+				$("#sidebar,.body-overlay").toggleClass('show-nav');
+			});
+
+		});
+	</script>
+
+
+
+	<script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+	<!--Mostrar contraseña por id-->
+	<script>
+		function mostrarContrasena(id) {
+			var input = document.getElementById(id);
+			if (input) {
+				input.type = input.type === "password" ? "text" : "password";
+			}
+		}
+	</script>
+
+
+	<!--Icono de ojo que funcione-->
+	<script>
+		function togglePasswordVisibility() {
+			const passwordField = document.getElementById('contraseña');
+			const eyeIcon = document.getElementById('eye-icon');
+
+			if (passwordField.type === 'password') {
+				passwordField.type = 'text';
+				eyeIcon.classList.remove('far', 'fa-eye');
+				eyeIcon.classList.add('fas', 'fa-eye-slash');
+			} else {
+				passwordField.type = 'password';
+				eyeIcon.classList.remove('fas', 'fa-eye-slash');
+				eyeIcon.classList.add('far', 'fa-eye');
+			}
+		}
+	</script>
+
+<!--Modal edit script-->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const editButtons = document.querySelectorAll('.edit-button');
+
+			editButtons.forEach(button => {
+				button.addEventListener('click', function () {
+					const usuarioId = this.getAttribute('data-id');
+					const form = document.getElementById('editarUsuarioForm');
+					form.action = `/update_user/${usuarioId}`;
+
+					fetch(`/usuarios/${usuarioId}`)
+						.then(response => {
+							if (!response.ok) {
+								throw new Error('Network response was not ok');
+							}
+							return response.json();
+						})
+						.then(data => {
+							console.log('Datos recibidos correctamente del servidor:');
+
+							// Asignar valores a los campos del formulario
+							document.getElementById('nombreEditar').value = data.nombre || '';
+							document.getElementById('emailEditar').value = data.email || '';
+							document.getElementById('contraseñaEditar').value = data.contraseña || '';
+							document.getElementById('direccionEditar').value = data.direccion || '';
+							document.getElementById('telefonoEditar').value = data.telefono || '';
+
+							// Para el select de rol
+							const selectRol = document.getElementById('nombreRolEditar');
+							if (selectRol) {
+								for (let i = 0; i < selectRol.options.length; i++) {
+									if (selectRol.options[i].value === data.nombreRol) {
+										selectRol.selectedIndex = i;
+										break;
+									}
+								}
+							}
+
+							// Verificar valores asignados
+							console.log('Nombre: OK')
+							console.log('Email: OK')
+							console.log('Contraseña: OK')
+							console.log('Dirección: OK')
+							console.log('Teléfono: OK')
+							console.log('NombreRol: OK')
+						})
+						.catch(error => {
+							console.error('Error al obtener datos del usuario:', error);
+						});
+				});
+			});
+
+			// Mostrar/ocultar contraseña
+			function togglePasswordVisibility() {
+				const passwordField = document.getElementById('contraseñaEditar');
+				const eyeIcon = document.getElementById('eye-icon');
+
+				if (passwordField.type === 'password') {
+					passwordField.type = 'text';
+					eyeIcon.classList.remove('far', 'fa-eye');
+					eyeIcon.classList.add('fas', 'fa-eye-slash');
+				} else {
+					passwordField.type = 'password';
+					eyeIcon.classList.remove('fas', 'fa-eye-slash');
+					eyeIcon.classList.add('far', 'fa-eye');
+				}
+			}
+
+			const togglePasswordButton = document.getElementById('togglePasswordButton');
+			if (togglePasswordButton) {
+				togglePasswordButton.addEventListener('click', togglePasswordVisibility);
+			} else {
+				console.error('Botón de alternar contraseña no encontrado');
+			}
+		});
+
+	</script>
+
+<!--Borrar usuario-->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const deleteButtons = document.querySelectorAll('.delete');
+
+			deleteButtons.forEach(button => {
+				button.addEventListener('click', function () {
+					const usuarioId = this.getAttribute('data-id');
+					const form = document.getElementById('deleteUserForm');
+					form.action = `/delete_user/${usuarioId}`;
+					document.getElementById('userIdToDelete').value = usuarioId;
+				});
+			});
+		});
+	</script>
+
+	<script>
+function mostrarContrasena() {
+    var passwordInput = document.getElementById("password");
+    var icon = document.getElementById("eye-icon");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+	</script>
+
+
+	<script src="{{ url_for('static', filename='js/barra-busqueda/barrauser.js') }}"></script>
+
+</body>
+
+</html>

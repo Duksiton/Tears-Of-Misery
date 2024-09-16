@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="../../../assets/css/login.css">
+    <link rel="stylesheet" href="../../../assets/css/styles_producto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../../../assets/images/icon-logo.ico">
+</head>
+
+<body>
+
+    <header>
+        <a href="../../../index.html" class="logo">
+            <img src="../../../assets/images/LOGO.png" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="../../../index.html">Inicio</a></li>
+                <li><a href="../../../productos.html">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="login.html">Iniciar sesión</a></li>
+                <li><a href="registro.html">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="../../../assets/images/white-shopping-cart-icon-9.jpg" id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+        
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Comprar Todo</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        
+    </header>
+<div class="hr-color">
+            <hr>
+        </div>
+
+    <div class="main-container">
+        
+        <video autoplay muted loop>
+            <source src="../../../assets/video/TEARS_LOGIN.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div cLass="box">
+        <div class="login-form">
+            <h2>¡Inicia sesión!</h2>
+        
+            <form method="post">
+                <div class="inputBox">
+                    <input type="email" id="email" name="Cor" required minlength="4" maxlength="60" placeholder="Ingrese su correo electrónico">
+                </div>
+        
+                <div class="inputBox password-container">
+                    <input id="Password" type="password" name="Con" required minlength="4" maxlength="30" placeholder="Ingrese su contraseña">
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+        
+                <input type="submit" value="Iniciar sesión">
+        
+                <div class="registration-link">
+                    <h5>¿No tienes una cuenta?</h5>
+                    <a href="registro.html">¡Regístrate!</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="../../../index.html" class="logo">
+                        <img src="../../../assets/images/LOGO.png" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr  class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+        <script>
+            function togglePassword() {
+                var x = document.getElementById("Password");
+                var btn = document.querySelector(".toggle-password i");
+                if (x.type === "password") {
+                    x.type = "text";
+                    btn.className = "fas fa-eye-slash";
+                } else {
+                    x.type = "password";
+                    btn.className = "fas fa-eye";
+                }
+            }
+            </script>
+            <script src="../../../assets/js/script_pro.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styles_producto.css">
+    <link rel="stylesheet" href="">
+    <title>Productos</title>
+    <link rel="icon" href="assets/images/icon-logo.ico">
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/images/LOGO.png" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="mvc/view/login/login.html">Iniciar sesión</a></li>
+                <li><a href="mvc/view/login/registro.html">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="assets/images/white-shopping-cart-icon-9.jpg" id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+        
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="./mvc/view/productos/compra.html" id="comprar-todo" class="btn-1">Comprar Todo</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        
+    </header>
+    <hr class="hr-color">
+
+
+
+    <section class="header-content container">
+        <div class="header-txt">
+            <span>Nueva Temporada</span>
+            <h1>¡Explora la colección exclusiva!</h1>
+            <p>Diseñados para los verdaderos fanáticos del death metal, cada pieza captura el espíritu rebelde y la intensidad emocional que define nuestra música. Cada compra apoya directamente a la banda, ayudándonos a seguir creando la música que amas.</p>
+            <a href="#product-content" class="btn-1">Comprar Ahora</a>
+        </div>
+        <div class="header-img">
+            <iframe src="https://www.youtube.com/embed/kTH0NJmFlMI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+    
+
+    <section class="information">
+        <div class="information-content">
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M36.8 192l566.3 0c20.3 0 36.8-16.5 36.8-36.8c0-7.3-2.2-14.4-6.2-20.4L558.2 21.4C549.3 8 534.4 0 518.3 0L121.7 0c-16 0-31 8-39.9 21.4L6.2 134.7c-4 6.1-6.2 13.2-6.2 20.4C0 175.5 16.5 192 36.8 192zM64 224l0 160 0 80c0 26.5 21.5 48 48 48l224 0c26.5 0 48-21.5 48-48l0-80 0-160-64 0 0 160-192 0 0-160-64 0zm448 0l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32l0-256-64 0z"/></svg>
+                <h3>Tienda virtual</h3>
+                <p>Nuestra tienda virtual ofrece la misma calidad que una tienda física.</p>
+            </div>
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M512 80c8.8 0 16 7.2 16 16l0 32L48 128l0-32c0-8.8 7.2-16 16-16l448 0zm16 144l0 192c0 8.8-7.2 16-16 16L64 432c-8.8 0-16-7.2-16-16l0-192 480 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z"/></svg>
+                <h3>Medios de pago</h3>
+                <p>Aceptamos diferentes medios de pago</p>
+            </div>
+            <div class="information-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M112 0C85.5 0 64 21.5 64 48l0 48L16 96c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 208 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 160l-16 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l16 0 176 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 224l-48 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 144 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 288l0 128c0 53 43 96 96 96s96-43 96-96l128 0c0 53 43 96 96 96s96-43 96-96l32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64 0-32 0-18.7c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7L416 96l0-48c0-26.5-21.5-48-48-48L112 0zM544 237.3l0 18.7-128 0 0-96 50.7 0L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z"/></svg>
+                <h3>Envíos contraentrega</h3>
+                <p>Poseemos una gran cobertura de envíos a la ciudad de Bogotá.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <h2 id="product-content" >Nuestros Productos</h2>
+        <div class="product-content">
+            <div class="product">
+                <img src="assets/images/productos/camisas/camisas_dobles_tears.jpg" alt="">
+                <h3>Camisetas conmemorativas de los 20 años de Tears of Misery</h3>
+                <p>$65.000</p>
+                <button class="btn-2" data-img="assets/images/productos/camisas/camisas_dobles_tears.jpg" data-product="1" data-name="Camiseta conmemorativa" data-price="65.000">Agregar al Carrito</button>
+            </div>
+            <div class="product">
+                <img src="assets/images/productos/sacos/saco_tears.jpg" alt="">
+                <h3>Hoodie conmemorativo + revista impresa</h3>
+                <p>$125.000</p>
+                <button class="btn-2" data-img="assets/images/productos/sacos/saco_tears.jpg" data-product="2" data-name="Hoodie conmemorativa" data-price="125.000">Agregar al Carrito</button>
+            </div>
+            <div class="product">
+                <img src="assets/images/productos/sacos/saco_capota_tears.jpg" alt="">
+                <h3>Saco de capota - Edición limitada</h3>
+                <p>$135.000</p>
+                <button class="btn-2" data-img="assets/images/productos/sacos/saco_capota_tears.jpg" data-product="3" data-name="Saco de capota" data-price="135.000">Agregar al Carrito</button>
+            </div>
+            <div class="product">
+                <img src="assets/images/productos/discos/cd.jpg" alt="">
+                <h3>CD + revista impresa Metal Live</h3>
+                <p>$25.000</p>
+                <button class="btn-2" data-img="assets/images/productos/discos/cd.jpg" data-product="4" data-name="CD + Revista impresa" data-price="25.000">Agregar al Carrito</button>
+            </div>
+
+            <div class="product">
+                <img src="assets/images/productos/discos/cd2.jpg" alt="">
+                <h3>CD roses's impalement</h3>
+                <p>$25.000</p>
+                <button class="btn-2" data-img="assets/images/productos/discos/cd2.jpg" data-product="5" data-name="CD Rose's impalement" data-price="25.000">Agregar al Carrito</button>
+            </div>
+
+            <div class="product">
+                <img src="assets/images/productos/camisas/camisa_unisex.jpg" alt="">
+                <h3>Camisa unisex</h3>
+                <p>$40.000</p>
+                <button class="btn-2" data-img="assets/images/productos/camisas/camisa_unisex.jpg" data-product="6" data-name="Camisa unisex" data-price="40.000">Agregar al Carrito</button>
+            </div>
+
+            <div class="product">
+                <img src="assets/images/productos/camisas/camisa_tears2.jpg" alt="">
+                <h3>Camisa negra + revista impresa</h3>
+                <p>$55.000</p>
+                <button class="btn-2" data-img="assets/images/productos/camisas/camisa_tears2.jpg" data-product="7" data-name="Camisa negra + revista impresa" data-price="55.000">Agregar al Carrito</button>
+            </div>
+
+            <div class="product">
+                <img src="assets/images/productos/camisas/camisa_blanca_tears.jpg" alt="">
+                <h3>Camisa blanca + revista impresa</h3>
+                <p>$55.000</p>
+                <button class="btn-2" data-img="assets/images/productos/camisas/camisa_blanca_tears.jpg" data-product="8" data-name="Camisa blanca + revista impresa" data-price="55.000">Agregar al Carrito</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="help">
+        <div class="help-container">
+            <h2>Ayuda y Soporte</h2>
+    
+          
+            <div class="faq">
+                <h3>Preguntas Frecuentes</h3>
+                <div class="faq-item">
+                    <h4>¿Cúanto se puede retrasar mi pedido?</h4>
+                    <p>Tu pedido se puede retrasar un máximo de 3 semanas</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Qué debo hacer si recibo un producto defectuoso?</h4>
+                    <p>Si recibes un producto defectuoso debes quedarte con la prenda y contactar rápidamente con el equipo técnico</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Tienes alguna queja o recomendación?</h4>
+                    <p>No olvides hacernos saber en qué podemos mejorar, es de gran ayuda para nuestros desarrolladores y clientes</p>
+                </div>
+                <div class="contactanos">
+                    <img class="img-contactanos" src="assets/images/phone-removebg-preview.png" alt="">
+                    <div class="contactanos-text">
+                        <h4>No olvides que puedes acceder al formulario de contacto a través del siguiente link</h4>
+                        <a href="contacto.html">Contactanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/LOGO.png" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr  class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+    <script src="assets/js/script_pro.js"></script>
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

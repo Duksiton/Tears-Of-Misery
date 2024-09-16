@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compra</title>
+    <link rel="stylesheet" href="../../../assets/css/styles_compra.css" />
+    <link rel="stylesheet" href="../../../assets/css/styles_producto.css" />
+</head>
+<body>
+    <header>
+        <a href="../../../index.html" class="logo">
+            <img src="../../../assets/images/LOGO.png" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="../../../index.html">Inicio</a></li>
+                <li><a href="../../../productos.html">Productos</a></li>
+            </ul>
+        </div>
+    </header>
+    <hr>
+    <div class="full-screen-form">
+        <h2>Finalizar Compra</h2>
+        <form id="checkoutForm">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" name="name" required />
+  
+          <label for="email">Correo Electrónico:</label>
+          <input type="email" id="email" name="email" required />
+  
+          <label for="address">Dirección de Envío:</label>
+          <input type="text" id="address" name="address" required />
+  
+          <label for="product">Producto Seleccionado:</label>
+          <input type="text" id="product" name="product" readonly />
+  
+          <label for="quantity">Cantidad:</label>
+          <input type="number" id="quantity" name="quantity" min="1" required />
+  
+          <button type="submit">Confirmar Compra</button>
+        </form>
+        <div id="message"></div>
+      </div>
+
+      <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="../../../index.html" class="logo">
+                        <img src="../../../assets/images/LOGO.png" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr  class="hr-color-gris">
+            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+      <script>
+        // Obtener el nombre del producto desde la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productName = urlParams.get("product");
+        document.getElementById("product").value = productName;
+  
+        document
+          .getElementById("checkoutForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+  
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
+            const product = document.getElementById("product").value;
+            const quantity = document.getElementById("quantity").value;
+  
+            const message = `Gracias, ${name}. Tu compra de ${quantity} unidad(es) de ${product} será enviada a ${address}. Se enviará una confirmación a ${email}. Te recordamos con los pagos son únicamente en efectivo ☺`;
+  
+            alert(message);
+  
+            window.location.href = '../../../index.html';
+          });
+      </script>
+    
+
+    
+</body>
+</html>
