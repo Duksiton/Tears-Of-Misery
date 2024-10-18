@@ -537,3 +537,46 @@ header {
 .modal-content .flash-message {
     color: white; /* Cambia el color del texto a blanco */
 }
+
+.alerta {
+    background-color: #1e1e1e; 
+    color: #ffffff; 
+    border: 1px solid #2e2e2e;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.alerta ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.alerta li {
+    padding: 5px;
+}
+
+.alerta-exito {
+    background-color: #444444; 
+    color: #00ff00; 
+    border-color: #00cc00;
+}
+
+.alerta-error {
+    background-color: #b30000; 
+    color: #ff9999; 
+    border-color: #800000; 
+}
+
+.alerta-advertencia {
+    background-color: #ffcc66; 
+    color: #664400; 
+    border-color: #cc9900;
+}
+
+.alerta-info {
+    background-color: #1e1e1e; 
+    color: #ffffff; 
+    border-color: #4c4c4c;
+}
