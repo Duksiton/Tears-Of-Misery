@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrusel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <a href="{{ url_for('index') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                        id="img-carrito" alt="carrito de compra">
+                    <div id="carrito" style="display: none;"> <!-- Asegúrate de que esté oculto inicialmente -->
+                        <button class="close-btn">&times;</button>
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Contenido dinámico aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <div class="hr-color">
+            <hr>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="slider-title"><strong>Galería de Productos</strong></div>
+        <div class="slider-container">
+            <div class="slider-content">
+              <div class="slider-single active">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="1" />
+              </div>
+              <div class="slider-single">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="2" />
+              </div>
+              <div class="slider-single">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="3" />
+              </div>
+              <div class="slider-single">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="4" />
+              </div>
+              <div class="slider-single">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="5" />
+              </div>
+              <div class="slider-single">
+                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/camisas/camisa_unisex.jpg') }}" alt="6" />
+              </div>
+            </div>
+            <div class="slider-left">‹</div>
+            <div class="slider-right">›</div>
+            <div class="bullet-container">
+              <!-- Suponiendo que tienes 6 imágenes -->
+              <div class="bullet active"></div>
+              <div class="bullet"></div>
+              <div class="bullet"></div>
+              <div class="bullet"></div>
+              <div class="bullet"></div>
+              <div class="bullet"></div>
+            </div>
+          </div>
+          
+          
+    </div>
+    </div>
+    
+
+    <section class="albums-section">
+        <div class="albums-title">
+            <h2 style="color: black;">Albums Musicales de Tears of Misery</h2>
+
+        </div>
+        <div class="album">
+            <h3>Tragedias Del Tercer Mundo</h3>
+            <a href="https://open.spotify.com/intl-es/album/6l8IE2U59Ymwe7RxEUmfnY?si=jXVLTB2iR42MADFkY9AUUw"
+                target="_blank">
+                <img src="{{ url_for('static', filename='images/Album1.jpg') }}" alt="Tragedias Del Tercer Mundo">
+            </a>
+        </div>
+        <div class="album">
+            <h3>Inconformity Manifesto</h3>
+            <a href="https://open.spotify.com/intl-es/album/6J43Bnpj3YUdWGEAOsGq9x?si=IyeFzWSXRumzgCYGitXJPQ"
+                target="_blank">
+                <img src="{{ url_for('static', filename='images/Album2.jpg') }}" alt="Inconformity Manifesto">
+            </a>
+        </div>
+        <div class="album">
+            <h3>Roses Impalement</h3>
+            <a href="https://open.spotify.com/intl-es/album/7mPabZnNwpk6adX8PE2P21?si=k7_5xecrTlydSBT1L1aPbw"
+                target="_blank">
+                <img src="{{ url_for('static', filename='images/Album3.jpg') }}" alt="Roses Impalement">
+            </a>
+        </div>
+    </section>
+
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SÍGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube"
+                        target="_blank"></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
+    </div>
+
+    
+</body>
+
+</html>

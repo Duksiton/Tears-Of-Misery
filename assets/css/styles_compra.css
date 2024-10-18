@@ -1,0 +1,250 @@
+/* General CSS for the full-screen layout */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: #111;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 60px; /* Espacio para el header fijo */
+}
+
+.full-screen-form {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #2e2e2e;
+    padding: 20px;
+}
+
+h2 {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    background: #3c3c3c;
+    border: none;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 12px;
+    background: linear-gradient(45deg, #8d4a4a, #5d2a2a);
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #a73a2a, #6c1b1b);
+    transform: scale(1.05);
+}
+
+button:active {
+    background: linear-gradient(45deg, #921004, #4b0000);
+    transform: scale(0.95);
+}
+
+#message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #ffbb00;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1d1e1e;
+    padding: 20px 0; /* Ajusta el padding para alinearse con el footer */
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+header .group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Asegura que el contenido del header no sea demasiado ancho */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+header .navigation {
+    display: flex;
+    gap: 15px;
+}
+
+header .navigation li {
+    list-style: none;
+}
+
+header .navigation a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: color 0.3s;
+}
+
+.logo {
+    margin-right: auto; /* Pushes the logo to the left */
+}
+
+.logo img {
+    max-width: 190px;
+    height: auto;
+    filter: brightness(1.5);
+}
+
+@media (max-width: 800px) {
+    header {
+        padding: 10px 0; /* Reduce padding en pantallas más pequeñas */
+    }
+
+    .logo img {
+        max-width: 150px;
+        margin-right: 10px;
+    }
+
+    .navigation {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navigation li {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 50%;
+    }
+
+    .logo {
+        font-size: 1.2em;
+    }
+
+    .navigation a {
+        font-size: 1em;
+        letter-spacing: 0.05em;
+    }
+
+    .logo img {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2em;
+    }
+
+    .navigation a {
+        font-size: 1em;
+        letter-spacing: 0.05em;
+    }
+
+    .logo img {
+        max-width: 120px;
+    }
+}
+
+/* FOOTER */
+.pie-pagina {
+    margin-top: 80px;
+    width: 100%;
+    background-color: #030303;
+    padding: 20px 0; /* Añade padding para asegurar que el contenido no esté pegado a los bordes */
+    box-sizing: border-box;
+}
+
+/* Ajustes para el grupo-1 */
+.pie-pagina .grupo-1 {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 50px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Ajuste para el grupo-2 */
+.pie-pagina .grupo-2 {
+    background-color: #000000;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+/* Añadir esta regla para evitar el overflow en dispositivos móviles */
+@media (max-width: 768px) {
+    .pie-pagina {
+        padding: 10px 0;
+    }
+
+    .pie-pagina .grupo-1 {
+        padding: 10px;
+    }
+
+    .pie-pagina .grupo-2 {
+        padding: 5px;
+    }
+}
+

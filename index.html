@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="assets/css/In.css">
+    <link rel="stylesheet" href="assets/css/styles_producto.css">
+    <link rel="icon" href="assets/images/icon-logo.ico">
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+    
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+        <img src="assets/images/LOGO.png" alt="Tears Of Misery Logo">
+    </a>
+    <div class="group">
+        <ul class="navigation">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="productos.html">Productos</a></li>
+        </ul>
+    </div>
+    <div class="group2">
+        <ul>
+            <li><a href="mvc/view/login/login.html">Iniciar sesión</a></li>
+            <li><a href="mvc/view/login/registro.html">Registrarse</a></li>
+        </ul>
+    </div>
+    <div class="group3">
+        <ul>
+            <li class="submenu">
+                <img src="assets/images/white-shopping-cart-icon-9.jpg" id="img-carrito" alt="carrito de compra">
+                <div id="carrito">
+                    <table id="lista-carrito">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Acción</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos">
+    
+                        </tbody>
+                    </table>
+                    <div id="ver-mas-container">
+                        <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                    </div>
+                    <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                    <a href="#" id="comprar-todo" class="btn-1">Comprar Todo</a>
+                    <a href="{{ url_for('') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                    <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    
+</header>
+
+
+    <div class="main-container">
+        <div class="hr-color">
+            <hr>
+        </div>
+        <video autoplay muted loop>
+            <source src="assets/video/TEARS HOME.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="contenido">
+            <h1>¿Qué es Tears of Misery?</h1>
+            <p>Banda colombiana de death metal formada en 2003 en Bogotá, Colombia. La banda ha lanzado 3 discos en sus 15 años de existencia.</p>
+            <p>Tears of Misery define su música como death metal latinoamericano con influencias del sonido tradicional del death metal norteamericano y del sonido melódico del death metal europeo.</p>
+            <p>En sus letras, la banda retrata la realidad del conflicto armado colombiano.</p>
+        </div>
+        <section class="albums-section">
+            <div class="albums-title">
+                <h2>Albums</h2>
+            </div>
+            <div class="album">
+                <h3>Tragedias Del Tercer Mundo</h3>
+                <a href="https://open.spotify.com/intl-es/album/6l8IE2U59Ymwe7RxEUmfnY?si=jXVLTB2iR42MADFkY9AUUw" target="_blank">
+                    <img src="assets/images/Album1.jpg" alt="Tragedias Del Tercer Mundo">
+                </a>
+            </div>
+            <div class="album">
+                <h3>Inconformity Manifesto</h3>
+                <a href="https://open.spotify.com/intl-es/album/6J43Bnpj3YUdWGEAOsGq9x?si=IyeFzWSXRumzgCYGitXJPQ" target="_blank">
+                    <img src="assets/images/Album2.jpg" alt="Inconformity Manifesto">
+                </a>
+            </div>
+            <div class="album">
+                <h3>Roses Impalement</h3>
+                <a href="https://open.spotify.com/intl-es/album/7mPabZnNwpk6adX8PE2P21?si=k7_5xecrTlydSBT1L1aPbw" target="_blank">
+                    <img src="assets/images/Album3.jpg" alt="Roses Impalement">
+                </a>
+            </div>
+        </section>
+
+        <footer class="pie-pagina">
+            <hr class="hr-color">
+            <div class="grupo-1">
+                <div class="box">
+                    <figure>
+                        <a href="index.html" class="logo">
+                            <img src="assets/images/LOGO.png" alt="Tears Of Misery Logo">
+                        </a>
+                    </figure>
+                </div>
+                <div class="box">
+                    <h2>SOBRE NOSOTROS</h2>
+                    <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+                </div>
+                <div class="box">
+                    <h2>SIGUENOS</h2>
+                    <div class="red-social">
+                        <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                        <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                        <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="grupo-2">
+                <hr  class="hr-color-gris">
+                <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+            </div>
+        </footer>
+        <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+        <script src="assets/js/script_pro_true.js"></script>
+
+        
+    </div>
+
+</body>
+
+</html>

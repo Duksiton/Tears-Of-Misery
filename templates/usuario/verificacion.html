@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/verificacion.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_producto.css') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}" />
+  <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+
+<body>
+  <header>
+    <a href="{{ url_for('inicio') }}" class="logo">
+      <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo" />
+    </a>
+    <div class="group2">
+      <ul class="navigation">
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
+      </ul>
+    </div>
+    <div class="group2">
+      <div class="user-profile" style="position: relative; display: inline-block">
+        <i class="fas fa-user-circle" style="font-size: 40px; color: white; cursor: pointer" onclick="toggleMenu()"></i>
+        <div class="dropdown-menu" id="userMenu" style="
+                display: none;
+                position: absolute;
+                background-color: #333;
+                color: white;
+                border-radius: 5px;
+                padding: 10px;
+                z-index: 1;
+                width: 200px;
+              ">
+          <ul style="
+                  list-style-type: none;
+                  padding: 0;
+                  margin: 0;
+                  display: flex;
+                  flex-direction: column;
+                  width: 100%;
+                ">
+            <li style="padding: 8px 12px; width: 100%; box-sizing: border-box">
+              <a href="{{ url_for('perfil.perfil') }}" class="logout-btn"
+                style="color: white; text-decoration: none">Perfil</a>
+            </li>
+            <li style="padding: 8px 12px; width: 100%; box-sizing: border-box">
+              <a href="{{ url_for('logout.logout') }}" class="logout-btn"
+                style="color: white; text-decoration: none">Cerrar sesión</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="group3">
+      <ul>
+        <li class="submenu">
+          <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}" id="img-carrito"
+            alt="carrito de compra" />
+          <div id="carrito">
+            <table id="lista-carrito">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Acción</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="productos">
+                <!-- Contenido dinámico aquí -->
+              </tbody>
+            </table>
+            <div id="ver-mas-container">
+              <a href="#" id="toggle-productos">Ver más productos agregados</a>
+            </div>
+            <p id="total-carrito">
+              Total: <span id="total-valor">0.00</span>
+            </p>
+            <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+            <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+            <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="verification-form-container">
+    <h1>Verificación de Datos de Compra</h1>
+    <form id="verification-form" method="POST" action="{{ url_for('usuarios_controller.verificar_usuario') }}"
+      class="verification-form">
+      <div class="form-column">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required value="{{ user.nombre }}">
+
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" name="correo" required value="{{ user.email }}">
+      </div>
+      <div class="form-column">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" name="telefono" required value="{{ user.telefono }}">
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" required value="{{ user.direccion }}">
+
+      </div>
+
+
+    </form>
+    <div class="form-submit-container">
+      <button type="submit" id="confirmar-datos">Confirmar Datos</button>
+    </div>
+  </div>
+
+
+
+
+  <footer class="pie-pagina">
+    <hr class="hr-color" />
+    <div class="grupo-1">
+      <div class="box">
+        <figure>
+          <a href="{{ url_for('inicio') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo" />
+          </a>
+        </figure>
+      </div>
+      <div class="box">
+        <h2>SOBRE NOSOTROS</h2>
+        <p>
+          Tears of Misery Death Metal Latinoamericano, Fundación año 2003
+          Bogotá D.C. Colombia
+        </p>
+      </div>
+      <div class="box">
+        <h2>SÍGUENOS</h2>
+        <div class="red-social">
+          <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+          <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+          <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube" target="_blank"></a>
+        </div>
+      </div>
+    </div>
+    <div class="grupo-2">
+      <hr class="hr-color-gris" />
+      <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos
+        Reservados.</small>
+    </div>
+  </footer>
+
+  <script>
+    // Función para alternar el menú
+    function toggleMenu() {
+      const menu = document.getElementById("userMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Ocultar el menú al hacer clic fuera
+    window.onclick = function (event) {
+      if (!event.target.matches(".fas")) {
+        const dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (let i = 0; i < dropdowns.length; i++) {
+          const openDropdown = dropdowns[i];
+          if (openDropdown.style.display === "block") {
+            openDropdown.style.display = "none";
+          }
+        }
+      }
+    };
+
+    // Función para abrir pestañas
+    function openTab(event, tabId) {
+      // Oculta todas las pestañas
+      var tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(function (tab) {
+        tab.style.display = 'none';
+      });
+
+      // Desactiva todos los botones
+      var buttons = document.querySelectorAll('.tablink');
+      buttons.forEach(function (button) {
+        button.classList.remove('active');
+      });
+
+      // Muestra la pestaña activa
+      document.getElementById(tabId).style.display = 'block';
+
+      // Activa el botón de la pestaña
+      event.currentTarget.classList.add('active');
+    }
+
+    // Abre la pestaña de compras si el fragmento de URL es '#compras'
+    document.addEventListener('DOMContentLoaded', function () {
+      const hash = window.location.hash;
+      if (hash === '#compras') {
+        document.querySelector('button[onclick="openTab(event, \'compras\')"]').click();
+      }
+    });
+
+    // Maneja la lógica para el botón "Confirmar Datos"
+    document.addEventListener('DOMContentLoaded', function () {
+      // Event listener para el botón "Confirmar Datos"
+      const confirmarDatosBtn = document.getElementById('confirmar-datos');
+
+      confirmarDatosBtn.addEventListener('click', function (event) {
+        // Evita el comportamiento predeterminado del botón
+        event.preventDefault();
+
+        // Obtén el formulario
+        const formulario = document.getElementById('verification-form');
+
+        // Obtén los datos del formulario
+        const formData = new FormData(formulario);
+
+        // Validación de campos
+        const nombre = formData.get('nombre').trim();
+        const correo = formData.get('correo').trim();
+        const telefono = formData.get('telefono').trim();
+        const direccion = formData.get('direccion').trim();
+
+        // Lógica de validación con SweetAlert2
+        if (!nombre || !correo || !telefono || !direccion) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Por favor, completa todos los campos.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+
+
+        // Envía el formulario usando fetch
+        fetch(formulario.action, {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            // Verifica si la respuesta HTTP es exitosa
+            if (!response.ok) {
+              return response.text().then(text => {
+                throw new Error(text || 'Error en la respuesta del servidor');
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              // Redirige a la página de perfil y abre la pestaña de compras
+              window.location.href = '/perfil#compras';
+            } else {
+              // Maneja el error de actualización aquí
+              alert(data.message || 'Error al actualizar los datos.');
+            }
+          })
+          .catch(error => {
+            console.error('Error al enviar el formulario:', error);
+            alert('Error al enviar el formulario: ' + error.message);
+          });
+      });
+
+      // Verifica el fragmento de URL para la sección de verificación
+      const hash = window.location.hash;
+      if (hash === '#verificacion') {
+        console.log('Redirigido a la sección de verificación');
+      }
+
+      // Actualiza la visibilidad del botón "Explorar más productos"
+      function actualizarBotonExplorar() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const explorarBtn = document.getElementById('explorar');
+
+        // Mostrar el botón si hay productos en el carrito, de lo contrario, ocultarlo
+        if (carrito.length > 0) {
+          explorarBtn.style.display = 'block';
+        } else {
+          explorarBtn.style.display = 'none';
+        }
+      }
+
+      // Ejecutar la función para actualizar el botón al cargar la página
+      actualizarBotonExplorar();
+    });
+
+    // Función para agregar productos al carrito
+    function agregarAlCarrito(product) {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const index = carrito.findIndex(item => item.name === product.name && item.size === product.size);
+
+      // Si el producto ya está en el carrito, aumentar la cantidad
+      if (index !== -1) {
+        carrito[index].quantity += 1;
+        mostrarMensaje(`Cantidad de "${product.name}" (${product.size}) aumentada. Ahora tienes ${carrito[index].quantity}.`, 'success');
+      } else {
+        // Si no, agregar el nuevo producto al carrito
+        carrito.push(product);
+        mostrarMensaje(`Nuevo producto "${product.name}" (${product.size}) agregado al carrito.`, 'success');
+      }
+
+      // Guardar el carrito en localStorage
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+
+      // Actualizar la visualización del carrito
+      actualizarCarrito();
+
+      // Actualizar la visibilidad del botón "Explorar más productos"
+      actualizarBotonExplorar();
+    }
+
+    // Mostrar el ID del usuario para depuración
+    const userId = "{{ user_id }}";
+    console.log("User ID:", userId); // Verifica que userId esté definido correctamente
+  </script>
+
+
+
+  <script src="{{ url_for('static', filename='js/script_pro_true.js') }}"></script>
+  <!-- Incluir SweetAlert2 desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</body>

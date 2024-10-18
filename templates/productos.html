@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}">
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                        id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Productos se añadirán dinámicamente aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más
+                            productos</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr class="hr-color">
+
+    <section class="header-content container">
+        <div class="header-txt">
+            <span>Nueva Temporada</span>
+            <h1>¡Explora la colección exclusiva!</h1>
+            <p>Diseñados para los verdaderos fanáticos del death metal, cada pieza captura el espíritu rebelde y la
+                intensidad emocional que define nuestra música. Cada compra apoya directamente a la banda, ayudándonos a
+                seguir creando la música que amas.</p>
+            <a href="#product-content" class="btn-1">Comprar Ahora</a>
+        </div>
+        <div class="header-img">
+            <style>
+                .carrusel-contenedor {
+                    width: 600px;
+                    height: 250px;
+                    overflow: hidden;
+                    position: relative;
+                    margin: 20px auto;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    border: 3px solid rgba(255, 0, 0, 0.5); /* Bordes iniciales de fuego */
+                    animation: fireAnimation 2s infinite;
+                }
+        
+                
+                .carrusel {
+                    display: flex;
+                    width: 2800px; /* Ajustar para imágenes adicionales */
+                    animation: deslizar 20s linear infinite; /* Animación fluida */
+                }
+        
+                .carrusel img {
+                    width: 400px;
+                    height: 250px;
+                    object-fit: cover;
+                }
+        
+                @keyframes deslizar {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(-1600px); /* Mover todo el carrusel */
+                    }
+                }
+            </style>
+        
+            <div class="carrusel-contenedor">
+                <div class="carrusel">
+                    <!-- Clonar las imágenes para el bucle continuo -->
+                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="Foto 1">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="Foto 2">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="Foto 3">
+                    <img src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="Foto 4">
+                    <img src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="Foto 5">
+        
+                    <!-- Clonar las mismas imágenes para bucle -->
+                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="Foto 1">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="Foto 2">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="Foto 3">
+                    <img src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="Foto 4">
+                    <img src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="Foto 5">
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <br>
+    <br>
+
+    <section class="main-content">
+        <div class="main-content-header">
+            <!-- Aquí puedes agregar encabezados o elementos adicionales -->
+        </div>
+        <div class="product-content" id="product-content">
+            <section class="products">
+                <h2>Nuestros Productos</h2>
+                <div class="product-content">
+                    {% for producto in productos %}
+                    <div class="product">
+                        <a href="{{ url_for('check_product', id_producto=producto.idProducto) }}">
+                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                                alt="{{ producto.nombre }}">
+                            <h3>{{ producto.nombre }}</h3>
+                            <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SÍGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube"
+                        target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+</body>
+
+</html>

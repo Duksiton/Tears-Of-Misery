@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagina Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_check_product.css') }}" />
+    
+
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+        </a>
+        <div class="group">
+            <ul class="navigation">
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+            </ul>
+        </div>
+        <div class="group2">
+            <ul>
+                <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+            </ul>
+        </div>
+        <div class="group3">
+            <ul>
+                <li class="submenu">
+                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                        id="img-carrito" alt="carrito de compra">
+                    <div id="carrito">
+                        <table id="lista-carrito">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos">
+                                <!-- Contenido dinámico aquí -->
+                            </tbody>
+                        </table>
+                        <div id="ver-mas-container">
+                            <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                        </div>
+                        <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                        <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr class="hr-color">
+    <center>
+        <div class="container-title">
+            <h2>{{ producto.nombre }}</h2>
+        </div>
+    </center>
+    <main>
+        {% if producto %}
+        <div class="container-img">
+            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                alt="{{ producto.nombre }}">
+        </div>
+        <div class="container-info-product">
+            <div class="container-price">
+                <span>${{ "{:,.0f}".format(producto.precio).replace(',', 'X').replace('.', ',').replace('X', '.') }}</span>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+    
+            <div class="container-details-product">
+                <div class="form-group" id="tallas-section">
+                    <label>Tallas</label>
+                    <div class="tallas-container">
+                        {% for talla, stock in producto.tallas_stock.items() %}
+                        <div class="talla-item">
+                            <input type="checkbox" id="talla{{ talla }}" name="tallas" value="{{ talla }}"
+                                class="talla-checkbox">
+                            <label for="talla{{ talla }}" class="talla-button">{{ talla }}</label>
+                            <div class="stock-section" style="display: none;"> <!-- Inicialmente oculto -->
+                                <label class="stock-label">Disponible</label>
+                                <input type="number" id="stock{{ talla }}" name="stock{{ talla }}"
+                                    class="form-control stock-input" min="0" readonly value="{{ stock }}">
+                                <div id="stock{{ talla }}-error" class="error-message"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    
+            <div class="container-quantity">
+                <input type="number" placeholder="1" value="1" min="1" class="input-quantity" />
+                <div class="btn-increment-decrement">
+                    <i class="fa-solid fa-chevron-up"></i>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+    
+            <center>
+                <div class="product">
+                    <button id="add-to-cart" class="btn-2"
+                    data-img="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                    data-product-id="{{ producto.idProducto }}"
+                    data-name="{{ producto.nombre }}"
+                    data-price="{{ producto.precio }}"
+                    data-size="{% if producto.tallas_stock and producto.tallas_stock|length > 0 %}required{% else %}optional{% endif %}">
+                    Agregar al carrito
+                </button>
+            
+                </div>
+            </center>
+    
+            <div class="container-description">
+                <div class="title-description">
+                    <h4>Descripción</h4>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <br>
+                <br>
+                <div class="descripcion-container">
+                    <p>{{ producto.descripcion }}</p>
+                </div>
+    
+                <style>
+                    .descripcion-container {
+                        max-width: 500px;
+                        word-wrap: break-word;
+                        margin: 0 auto;
+                    }
+    
+                    .descripcion-container p {
+                        margin: 0;
+                    }
+                </style>
+    
+            </div>
+        </div>
+        {% else %}
+        <p>El producto que estás buscando no existe.</p>
+        {% endif %}
+    </main>
+    
+
+
+
+    <style>
+        .tallas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            /* Espacio entre los elementos */
+        }
+
+        .talla-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            /* Espacio entre los elementos dentro de cada item */
+            width: 70px;
+            /* Ancho del contenedor del item */
+        }
+
+        .talla-item input[type="checkbox"] {
+            display: none;
+            /* Oculta el checkbox real */
+        }
+
+        .talla-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            /* Ancho del botón */
+            height: 40px;
+            /* Altura del botón */
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            /* Tamaño del texto */
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+            /* Evita la selección de texto */
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .talla-button:hover,
+        .talla-item input[type="checkbox"]:checked+.talla-button {
+            background-color: #ffbb00;
+            color: rgb(0, 0, 0);
+        }
+
+        .stock-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            /* Centra el texto */
+        }
+
+        .stock-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            /* Espacio entre la etiqueta y el número de stock */
+        }
+
+        .stock-input {
+            width: 60px;
+            /* Ajusta el ancho del campo de stock */
+            height: 30px;
+            /* Ajusta la altura del campo de stock */
+            text-align: center;
+            border: 2px solid #ffbb00;
+            /* Borde azul */
+            border-radius: 5px;
+            /* Bordes redondeados */
+            padding: 5px;
+            /* Espacio interno */
+            background-color: #f9f9f9;
+            /* Color de fondo */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil */
+            font-size: 14px;
+            /* Tamaño del texto */
+            color: #333;
+            /* Color del texto */
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .stock-input:focus {
+            border-color: #0056b3;
+            /* Color del borde cuando está enfocado */
+            background-color: #fff;
+            /* Color de fondo cuando está enfocado */
+        }
+    </style>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tallaCheckboxes = document.querySelectorAll('#tallas-section .talla-checkbox');
+    
+        tallaCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Muestra el stock de la talla seleccionada y oculta el stock de las demás
+                tallaCheckboxes.forEach(cb => {
+                    const stockInput = document.querySelector(`#stock${cb.value}`);
+                    if (cb.checked) {
+                        stockInput.parentElement.style.display = 'flex'; // Mostrar el stock de la talla seleccionada
+                    } else {
+                        stockInput.parentElement.style.display = 'none'; // Ocultar el stock de la talla no seleccionada
+                    }
+                });
+    
+                // Deseleccionar otras checkboxes si esta está marcada
+                if (checkbox.checked) {
+                    tallaCheckboxes.forEach(cb => {
+                        if (cb !== checkbox) {
+                            cb.checked = false; // Deseleccionar otras checkboxes
+                            const stockInput = document.querySelector(`#stock${cb.value}`);
+                            stockInput.parentElement.style.display = 'none'; // Ocultar el stock de las tallas no seleccionadas
+                        }
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+
+
+
+
+
+
+    <footer class="pie-pagina">
+        <hr class="hr-color">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Tears of Misery Death Metal Latinoamericano, Fundación año 2003 Bogotá D.C. Colombia</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="https://www.facebook.com/tearsofmisery" class="fa-brands fa-facebook" target="_blank"></a>
+                    <a href="https://www.instagram.com/tearsof.misery/" class="fa fa-instagram" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fa fa-youtube"
+                        target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <hr class="hr-color-gris">
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener los elementos de incremento y decremento
+            const incrementBtn = document.getElementById('increment');
+            const decrementBtn = document.getElementById('decrement');
+            const quantityInput = document.querySelector('.input-quantity');
+            const sizeSelector = document.querySelector('#size-selector'); // Asegúrate de tener un selector para la talla
+
+            // Función para actualizar la cantidad en el carrito
+            function updateCart(quantity, size) {
+                // Aquí deberías hacer una solicitud a tu servidor para actualizar el carrito
+                fetch('/update-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        quantity: quantity,
+                        size: size
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error al actualizar el carrito');
+                    }
+                }).then(data => {
+                    // Manejar la respuesta del servidor
+                    console.log('Carrito actualizado:', data);
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            // Evento de clic para el botón de incremento
+            incrementBtn.addEventListener('click', function () {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity < 99) { // Establece un límite máximo si lo deseas
+                    quantity++;
+                    quantityInput.value = quantity;
+                    updateCart(quantity, sizeSelector.value); // Llama a la función para actualizar el carrito
+                }
+            });
+
+            // Evento de clic para el botón de decremento
+            decrementBtn.addEventListener('click', function () {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityInput.value = quantity;
+                    updateCart(quantity, sizeSelector.value); // Llama a la función para actualizar el carrito
+                }
+            });
+
+            // Evento para actualizar la talla seleccionada
+            sizeSelector.addEventListener('change', function () {
+                updateCart(parseInt(quantityInput.value), sizeSelector.value); // Llama a la función para actualizar el carrito
+            });
+        });
+
+    </script>
+
+
+    <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+</body>
+
+</html>

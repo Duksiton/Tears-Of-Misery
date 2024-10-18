@@ -1,0 +1,65 @@
+/* Estilos específicos para el formulario de verificación */
+.verification-form-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.verification-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.verification-form .form-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.verification-form .form-column label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.verification-form .form-column input {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.verification-form .form-column input:focus {
+    border-color: #ffbb00;
+    outline: none;
+}
+
+.form-submit-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-submit-container button {
+    padding: 15px 25px;
+    background-color: #ffbb00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit-container button:hover {
+    background-color: #e6a800;
+}

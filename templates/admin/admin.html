@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>Dashboard Admin</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+
+	<!----css3---->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+	<link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
+
+
+	<!--google fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+	<!--google material icon-->
+	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+	<div class="wrapper">
+
+		<div class="body-overlay"></div>
+
+		<!-------sidebar--design------------>
+
+		<div id="sidebar">
+			<div class="sidebar-header">
+				<h3><img src="{{ url_for('static', filename='/images/icon-logo.ico') }}" class="img-fluid" /><span>Tears
+						of Misery</span></h3>
+			</div>
+			<ul class="list-unstyled component m-0">
+				<li class="active">
+					<a href="{{ url_for('producto_controller.admin') }}" class="dashboard">
+						<i class="material-icons">dashboard</i>Productos
+					</a>
+				</li>
+
+				<li class="dropdown">
+					<a href="{{ url_for('usuarios_controller.listar_usuarios') }}" class="users">
+						<i class="material-icons">people</i>Usuarios
+					</a>
+				</li>
+
+				<!-- Pedidos -->
+				<li>
+					<a href="{{ url_for('pedidos_controller.ver_pedidos') }}" class="orders">
+						<i class="material-icons">shopping_cart</i>Pedidos
+					</a>
+
+				</li>
+
+		</div>
+
+
+		<!------top-navbar-start----------->
+
+
+
+
+
+
+	</div>
+	</div>
+
+
+	<div id="content">
+
+		<!------top-navbar-start----------->
+
+
+
+		<div class="top-navbar">
+			<div class="xd-topbar">
+				<div class="row">
+					<div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+						<div class="xp-menubar">
+							<span class="material-icons text-white">signal_cellular_alt</span>
+						</div>
+					</div>
+
+					<div class="col-md-5 col-lg-3 order-3 order-md-2">
+						<div class="xp-searchbar">
+							<form id="searchForm">
+								<div class="input-group">
+									<input type="search" class="form-control" id="searchInput"
+										placeholder="Buscar productos">
+									<div class="input-group-append">
+										<button class="btn" type="submit" id="button-addon2">Ir</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+
+
+					<div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+						<div class="xp-profilebar text-right">
+							<nav class="navbar p-0">
+								<ul class="nav navbar-nav flex-row ml-auto">
+
+
+
+
+									<li class="dropdown nav-item">
+										<a class="nav-link" href="#" data-toggle="dropdown">
+											<img src="{{ url_for('static', filename='/images/logoicon.png') }}"
+												style="width:40px; border-radius:50%;" />
+											<span class="xp-user-live"></span>
+										</a>
+										<ul class="dropdown-menu small-menu">
+
+											<li><a href="{{ url_for('logout.logout') }}" class="logout-btn">Cerrar
+													sesión</a></li>
+
+										</ul>
+									</li>
+
+
+								</ul>
+							</nav>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="xp-breadcrumbbar text-center">
+
+
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-curent="page"></li>
+					</ol>
+				</div>
+
+
+			</div>
+		</div>
+		<!------top-navbar-end----------->
+
+
+		<!------main-content-start----------->
+
+		<div class="main-content">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrapper">
+
+						<div class="table-title">
+							<div class="row">
+								<div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+									<h2 class="ml-lg-2">Administrar productos</h2>
+								</div>
+								<div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
+									<a href="#agregarProducto" class="btn btn-success" data-toggle="modal">
+										<i class="material-icons">&#xE147;</i>
+										<span>Agregar nuevo producto</span>
+									</a>
+
+
+								</div>
+							</div>
+						</div>
+
+						<table id="productosTable" class="table table-striped table-hover table-with-animation">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Imagen</th>
+									<th>Nombre</th>
+									<th>Precio</th>
+									<th>Categoría</th>
+									<th>Tallas y Stock</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if productos %}
+								{% for producto in productos %}
+								<tr>
+									<th></th>
+									<td>
+										<img src="{{ url_for('static', filename='images/productos-insertados/' + producto['imagen']) }}"
+											alt="{{ producto['nombre'] }}" style="width: 50px; height: 50px;">
+									</td>
+									<td>{{ producto['nombre'] }}</td>
+									<td>${{ "{:,.0f}".format(producto['precio']).replace(',', '.') }}</td>
+									<td>{{ producto['categoria'] }}</td>
+									<td>
+										{% if producto['tallas_stock'] %}
+										{% for talla_stock in producto['tallas_stock'].split(', ') %}
+										{% set talla, stock = talla_stock.split(':') %}
+										<span class="badge badge-info-custom">{{ talla }}: {{ stock }}</span>
+										{% endfor %}
+										{% else %}
+										<span class="badge badge-secondary-custom">Sin tallas</span>
+										{% endif %}
+									</td>
+									<td>
+										<a href="#editarProducto" class="edit-button" data-toggle="modal"
+											data-id="{{ producto['idProducto'] }}">
+											<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+										</a>
+										<a href="#eliminarProducto" class="delete" data-toggle="modal"
+											data-id="{{ producto['idProducto'] }}">
+											<i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+										</a>
+									</td>
+								</tr>
+								{% endfor %}
+								{% else %}
+								<tr>
+									<td colspan="7">No hay productos disponibles.</td>
+								</tr>
+								{% endif %}
+							</tbody>
+						</table>
+<style>
+	/* Estilo para las badges personalizadas */
+.badge-info-custom {
+    background-color: #6c757d; /* Azul claro */
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
+    padding: 0.5rem 1rem; /* Aumentar el padding */
+    border-radius: 0.5rem; /* Redondear los bordes */
+}
+
+.badge-secondary-custom {
+    background-color: #6c757d; /* Gris oscuro */
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
+    padding: 0.5rem 1rem; /* Aumentar el padding */
+    border-radius: 0.5rem; /* Redondear los bordes */
+}
+
+</style>
+
+
+
+						</table>
+
+						<div class="clearfix">
+							<ul class="pagination" id="pagination">
+								<li class="page-item disabled"><a href="#" class="page-link">Anterior</a></li>
+								<li class="page-item active"><a href="#" class="page-link">1</a></li>
+								<li class="page-item"><a href="#" class="page-link">2</a></li>
+								<li class="page-item"><a href="#" class="page-link">3</a></li>
+								<li class="page-item"><a href="#" class="page-link">4</a></li>
+								<li class="page-item"><a href="#" class="page-link">5</a></li>
+								<li class="page-item"><a href="#" class="page-link">Siguiente</a></li>
+							</ul>
+						</div>
+
+
+
+
+
+
+
+
+
+					</div>
+				</div>
+
+
+				<!----add-modal start--------->
+				<!-- Modal para Agregar Producto -->
+				<div class="modal fade" id="agregarProducto" tabindex="-1" role="dialog"
+					aria-labelledby="agregarProductoLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="agregarProductoLabel">Agregar Producto</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<!-- Formulario completo para añadir productos -->
+							<form id="addProductForm" method="POST" enctype="multipart/form-data"
+								action="{{ url_for('producto_controller.add_product') }}">
+								<div class="modal-body">
+									<div class="left-section">
+										<!-- Sección izquierda -->
+										<div class="file-upload-container">
+											<div class="form-group">
+												<input type="file" id="imagen" name="imagen" class="file-upload-input"
+													required>
+												<label for="imagen" class="file-upload-label">
+													<i class="fas fa-cloud-upload-alt"></i>
+													<span>Selecciona una imagen</span>
+												</label>
+												<div class="file-name"></div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="nombre">Nombre</label>
+											<input type="text" id="nombre" name="nombre" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="descripcion">Descripción</label>
+											<textarea id="descripcion" name="descripcion" class="form-control" rows="4"
+												required></textarea>
+										</div>
+									</div>
+
+									<div class="right-section">
+										<!-- Sección derecha -->
+										<div class="form-group">
+											<label for="precio">Precio</label>
+											<input type="text" id="precio" name="precio" class="form-control" required>
+										</div>
+										<div class="form-group">
+											<label for="idCat">Categorías</label>
+											<select id="idCat" name="idCat" class="form-control" required
+												onchange="toggleTallas()">
+												<option value="">Elige una opción</option>
+												<option value="1">Camisas</option>
+												<option value="3">Sacos</option>
+											</select>
+											<div id="category-error" class="error-message"></div>
+										</div>
+
+										<div class="form-group" id="tallas-section">
+											<label>Tallas</label>
+											<div class="tallas-container">
+												<!-- Botón de tamaño S -->
+												<div class="talla-item">
+													<input type="checkbox" id="tallaS" name="tallas" value="S">
+													<label for="tallaS" class="talla-button">S</label>
+													<label class="stock-label" for="stockS">Stock</label>
+													<input type="number" id="stockS" name="stockS"
+														class="form-control stock-input" min="0">
+													<div id="stockS-error" class="error-message"></div>
+												</div>
+
+												<!-- Botón de tamaño M -->
+												<div class="talla-item">
+													<input type="checkbox" id="tallaM" name="tallas" value="M">
+													<label for="tallaM" class="talla-button">M</label>
+													<label class="stock-label" for="stockM">Stock</label>
+													<input type="number" id="stockM" name="stockM"
+														class="form-control stock-input" min="0">
+													<div id="stockM-error" class="error-message"></div>
+												</div>
+
+												<!-- Botón de tamaño L -->
+												<div class="talla-item">
+													<input type="checkbox" id="tallaL" name="tallas" value="L">
+													<label for="tallaL" class="talla-button">L</label>
+													<label class="stock-label" for="stockL">Stock</label>
+													<input type="number" id="stockL" name="stockL"
+														class="form-control stock-input" min="0">
+													<div id="stockL-error" class="error-message"></div>
+												</div>
+
+												<!-- Botón de tamaño XL -->
+												<div class="talla-item">
+													<input type="checkbox" id="tallaXL" name="tallas" value="XL">
+													<label for="tallaXL" class="talla-button">XL</label>
+													<label class="stock-label" for="stockXL">Stock</label>
+													<input type="number" id="stockXL" name="stockXL"
+														class="form-control stock-input" min="0">
+													<div id="stockXL-error" class="error-message"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-success">Añadir</button>
+								</div>
+							</form>
+
+							<!-- Agregar estilo para los mensajes de error -->
+							<style>
+								.error-message {
+									color: red;
+									font-size: 0.875em;
+									margin-top: 0.25em;
+								}
+							</style>
+
+							<script>
+								function toggleTallas() {
+									const categoria = document.getElementById('idCat').value;
+									const tallasSection = document.getElementById('tallas-section');
+
+									if (categoria === "2") {  // Discos
+										tallasSection.style.display = 'none';
+									} else {
+										tallasSection.style.display = 'block';
+									}
+								}
+
+								function validateForm() {
+									const categoria = document.getElementById('idCat').value;
+									let isValid = true;
+
+									// Limpiar mensajes de error
+									document.querySelectorAll('.error-message').forEach(element => {
+										element.textContent = '';
+									});
+
+									// Verificar si se ha seleccionado una categoría
+									if (categoria === "") {
+										const categoryError = document.getElementById('category-error');
+										if (categoryError) {
+											categoryError.textContent = "Debe seleccionar una categoría.";
+										}
+										isValid = false;
+									}
+
+									// Verificar si la categoría es Camisa o Saco
+									if (categoria === "1" || categoria === "3") { // Camisas o Sacos
+										let tallasSeleccionadas = 0;
+										let tallasConStock = 0;
+
+										document.querySelectorAll('.talla-item').forEach(item => {
+											const checkbox = item.querySelector('input[type="checkbox"]');
+											const stockInput = item.querySelector('input[type="number"]');
+											const stockError = item.querySelector('.error-message');
+
+											if (checkbox.checked) {
+												tallasSeleccionadas++;
+
+												if (stockInput.value === "" || parseInt(stockInput.value) <= 0) {
+													if (stockError) {
+														stockError.textContent = "Debe ingresar un stock válido para esta talla.";
+													}
+													isValid = false;
+												} else {
+													tallasConStock++;
+												}
+											}
+										});
+
+										// Si no se selecciona ninguna talla o no todas las tallas seleccionadas tienen stock
+										if (tallasSeleccionadas === 0 || tallasSeleccionadas !== tallasConStock) {
+											const categoryError = document.getElementById('category-error');
+											if (categoryError) {
+												categoryError.textContent = "Debe seleccionar al menos una talla y agregar su stock correspondiente.";
+											}
+											isValid = false;
+										}
+									}
+
+									return isValid;
+								}
+
+								document.addEventListener("DOMContentLoaded", function () {
+									toggleTallas();
+
+									// Asegurarse de validar el formulario antes del envío
+									const form = document.getElementById('addProductForm');
+									if (form) {
+										form.addEventListener('submit', function (event) {
+											event.preventDefault(); // Siempre prevenir el envío por defecto
+											if (validateForm()) {
+												// Si la validación es exitosa, enviar el formulario
+												form.submit();
+											} else {
+												// Si la validación falla, mostrar un mensaje de error general
+
+											}
+										});
+									}
+
+									// Revalidar al cambiar la categoría
+									const categoriaSelect = document.getElementById('idCat');
+									if (categoriaSelect) {
+										categoriaSelect.addEventListener('change', function () {
+											toggleTallas();
+											validateForm();
+										});
+									}
+
+									// Añadir validación en tiempo real para las tallas y stocks
+									document.querySelectorAll('.talla-item input[type="checkbox"], .talla-item input[type="number"]').forEach(input => {
+										input.addEventListener('change', validateForm);
+									});
+								});
+							</script>
+
+
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+				<!----edit-modal end--------->
+
+
+
+
+				<!----edit-modal start--------->
+				<div class="modal fade" id="editarProducto" tabindex="-1" role="dialog"
+					aria-labelledby="editarProductoLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="editarProductoLabel">Editar Producto</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="editarProductoForm" method="POST" enctype="multipart/form-data" action="">
+								<input type="hidden" id="productoIdEdit" name="productoId">
+								<div class="modal-body">
+									<div class="left-section">
+										<!-- Sección izquierda -->
+										<div class="file-upload-container-edit">
+											<div class="form-group-edit">
+												<input type="file" id="imagenEdit" name="imagen"
+													class="file-upload-input-edit" data-image="">
+												<label for="imagenEdit" class="file-upload-label-edit">
+													<i class="fas fa-cloud-upload-alt"></i>
+													<span>Selecciona una imagen</span>
+												</label>
+												<div class="file-name-edit"></div>
+												<input type="hidden" id="imagenActual" name="imagenActual" value="">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="nombreEdit">Nombre</label>
+											<input type="text" id="nombreEdit" name="nombre" class="form-control"
+												required>
+										</div>
+										<div class="form-group">
+											<label for="descripcionEdit">Descripción</label>
+											<textarea id="descripcionEdit" name="descripcion" class="form-control"
+												rows="4" required></textarea>
+										</div>
+									</div>
+									<div class="right-section">
+										<!-- Sección derecha -->
+										<div class="form-group">
+											<label for="precioEdit">Precio</label>
+											<input type="text" id="precioEdit" name="precio" class="form-control"
+												required>
+										</div>
+										
+
+										<div class="form-group">
+											<label for="idCatEdit">Categorías</label>
+											<select id="idCatEdit" name="idCat" class="form-control" required onchange="toggleTallasEdit()">
+												<option value="">Elige una opción</option>
+												<option value="1">Camisas</option>
+												<option value="3">Sacos</option>
+											</select>
+										</div>
+										<!-- Tallas y stock -->
+										<div class="form-group" id="tallas-section-edit">
+											<label>Tallas</label>
+											<div class="tallas-container-edit">
+												<!-- Botón de tamaño S -->
+												<div class="talla-item-edit">
+													<input type="checkbox" id="tallaSEdit" name="tallas" value="S">
+													<label for="tallaSEdit" class="talla-button-edit">S</label>
+													<label class="stock-label-edit" for="stockSEdit">Stock</label>
+													<input type="number" id="stockSEdit" name="stockS"
+														class="form-control stock-input-edit" min="0">
+													<div id="stockSEdit-error" class="error-message-edit"></div>
+												</div>
+
+												<!-- Botón de tamaño M -->
+												<div class="talla-item-edit">
+													<input type="checkbox" id="tallaMEdit" name="tallas" value="M">
+													<label for="tallaMEdit" class="talla-button-edit">M</label>
+													<label class="stock-label-edit" for="stockMEdit">Stock</label>
+													<input type="number" id="stockMEdit" name="stockM"
+														class="form-control stock-input-edit" min="0">
+													<div id="stockMEdit-error" class="error-message-edit"></div>
+												</div>
+
+												<!-- Botón de tamaño L -->
+												<div class="talla-item-edit">
+													<input type="checkbox" id="tallaLEdit" name="tallas" value="L">
+													<label for="tallaLEdit" class="talla-button-edit">L</label>
+													<label class="stock-label-edit" for="stockLEdit">Stock</label>
+													<input type="number" id="stockLEdit" name="stockL"
+														class="form-control stock-input-edit" min="0">
+													<div id="stockLEdit-error" class="error-message-edit"></div>
+												</div>
+
+												<!-- Botón de tamaño XL -->
+												<div class="talla-item-edit">
+													<input type="checkbox" id="tallaXLEdit" name="tallas" value="XL">
+													<label for="tallaXLEdit" class="talla-button-edit">XL</label>
+													<label class="stock-label-edit" for="stockXLEdit">Stock</label>
+													<input type="number" id="stockXLEdit" name="stockXL"
+														class="form-control stock-input-edit" min="0">
+													<div id="stockXLEdit-error" class="error-message-edit"></div>
+												</div>
+											</div>
+										</div>
+
+
+
+
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-success">Guardar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+				<!----edit-modal end--------->
+
+
+				<!----delete-modal start--------->
+				<!-- Modal de Eliminación -->
+				<div class="modal fade" id="eliminarProducto" tabindex="-1" role="dialog"
+					aria-labelledby="eliminarProductoLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="eliminarProductoLabel">Eliminar producto</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>¿Estás seguro de querer realizar esta acción?</p>
+								<p class="text-warning"><small>Esta acción es irreversible.</small></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+								<form id="deleteForm" method="post" action="">
+									<button type="submit" class="btn btn-success">Eliminar</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script>
+					// Configuración del botón de eliminación
+					document.addEventListener('DOMContentLoaded', function () {
+						const deleteButtons = document.querySelectorAll('.delete');
+
+						deleteButtons.forEach(button => {
+							button.addEventListener('click', function () {
+								const productoId = this.getAttribute('data-id');
+								const deleteForm = document.getElementById('deleteForm');
+								deleteForm.action = `/delete_product/${productoId}`;
+								$('#eliminarProducto').modal('show');
+							});
+						});
+					});
+
+				</script>
+
+
+				<!----edit-modal end--------->
+
+
+
+
+			</div>
+		</div>
+
+		<!------main-content-end----------->
+
+
+
+		<!----footer-design------------->
+
+
+
+
+
+	</div>
+
+	</div>
+
+
+
+	<!-------complete html----------->
+
+	<!-- Optional JavaScript -->
+
+
+
+
+	<script>
+		document.querySelector('.custom-file-label').addEventListener('click', function () {
+			document.querySelector('#file-upload').click();
+		});
+	</script>
+
+	<!--Script para la carga de imágenes-->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const fileInput = document.getElementById('imagen');
+			const fileLabel = document.querySelector('.file-upload-label');
+			const fileName = document.querySelector('.file-name');
+			const container = document.querySelector('.file-upload-container');
+
+			fileInput.addEventListener('change', function (e) {
+				if (this.files && this.files[0]) {
+					fileName.textContent = this.files[0].name;
+					container.classList.add('file-selected');
+				} else {
+					fileName.textContent = '';
+					container.classList.remove('file-selected');
+				}
+			});
+
+			['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, preventDefaults, false);
+				document.body.addEventListener(eventName, preventDefaults, false);
+			});
+
+			function preventDefaults(e) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+
+			['dragenter', 'dragover'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, highlight, false);
+			});
+
+			['dragleave', 'drop'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, unhighlight, false);
+			});
+
+			function highlight() {
+				container.classList.add('file-dragging');
+			}
+
+			function unhighlight() {
+				container.classList.remove('file-dragging');
+			}
+
+			fileLabel.addEventListener('drop', handleDrop, false);
+
+			function handleDrop(e) {
+				const dt = e.dataTransfer;
+				const files = dt.files;
+				fileInput.files = files;
+
+				if (files && files[0]) {
+					fileName.textContent = files[0].name;
+					container.classList.add('file-selected');
+				}
+			}
+		});
+	</script>
+
+	<!--Script para la carga de imágenes en-->
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const fileInput = document.getElementById('imagenEdit');
+			const fileLabel = document.querySelector('.file-upload-label-edit');
+			const fileName = document.querySelector('.file-name-edit');
+			const container = document.querySelector('.file-upload-container-edit');
+
+			fileInput.addEventListener('change', function () {
+				if (this.files && this.files[0]) {
+					fileName.textContent = this.files[0].name;
+					container.classList.add('file-selected-edit');
+				} else {
+					fileName.textContent = '';
+					container.classList.remove('file-selected-edit');
+				}
+			});
+
+			['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, preventDefaults, false);
+				document.body.addEventListener(eventName, preventDefaults, false);
+			});
+
+			function preventDefaults(e) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+
+			['dragenter', 'dragover'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, highlight, false);
+			});
+
+			['dragleave', 'drop'].forEach(eventName => {
+				fileLabel.addEventListener(eventName, unhighlight, false);
+			});
+
+			function highlight() {
+				container.classList.add('file-dragging-edit');
+			}
+
+			function unhighlight() {
+				container.classList.remove('file-dragging-edit');
+			}
+
+			fileLabel.addEventListener('drop', handleDrop, false);
+
+			function handleDrop(e) {
+				const dt = e.dataTransfer;
+				const files = dt.files;
+				fileInput.files = files;
+
+				if (files && files[0]) {
+					fileName.textContent = files[0].name;
+					container.classList.add('file-selected-edit');
+				}
+			}
+		});
+	</script>
+
+	<!--Script para modal edit update-->
+	<script>
+		function toggleTallasEdit() {
+    const categoriaSelect = document.getElementById('idCatEdit');
+    const selectedCategory = categoriaSelect.value;
+    
+    // Lógica para mostrar/ocultar tallas basadas en la categoría seleccionada
+    // Ejemplo: Mostrar u ocultar inputs de talla dependiendo de la categoría seleccionada
+    const tallasFields = document.querySelectorAll('input[name^="talla"]');
+    tallasFields.forEach(field => {
+        field.parentElement.style.display = selectedCategory ? 'block' : 'none';
+    });
+}
+
+		function gatherTallasAndStock() {
+			const tallasDisponibles = ['S', 'M', 'L', 'XL'];
+			const tallas = [];
+			const stocks = [];
+	
+			tallasDisponibles.forEach(talla => {
+				const tallaCheckbox = document.getElementById(`talla${talla}Edit`);
+				const stockInput = document.getElementById(`stock${talla}Edit`);
+				
+				if (tallaCheckbox.checked) {
+					tallas.push(talla);
+					stocks.push(stockInput.value);
+				}
+			});
+	
+			return {
+				tallas: tallas.join(','),
+				stocks: stocks.join(',')
+			};
+		}
+	
+		function attachEventListeners() {
+			// Configuración del botón de edición
+			const editButtons = document.querySelectorAll('.edit-button');
+			editButtons.forEach(button => {
+				button.addEventListener('click', function () {
+					const productoId = this.getAttribute('data-id');
+					const form = document.getElementById('editarProductoForm');
+					form.action = `/update_product/${productoId}`;
+	
+					fetch(`/producto/data/${productoId}`)
+						.then(response => response.json())
+						.then(data => {
+							console.log('Datos recibidos del servidor:', data);
+	
+							// Rellenar el formulario
+							document.getElementById('nombreEdit').value = data.nombre || '';
+							document.getElementById('descripcionEdit').value = data.descripcion || '';
+							document.getElementById('precioEdit').value = data.precio || '';
+	
+							// Manejo de la imagen
+							const fileName = document.querySelector('.file-name-edit');
+							const container = document.querySelector('.file-upload-container-edit');
+							const imagenActualInput = document.getElementById('imagenActual');
+	
+							if (data.imagen) {
+								fileName.textContent = data.imagen;
+								container.classList.add('file-selected-edit');
+								container.classList.add('file-has-image');
+								imagenActualInput.value = data.imagen; // Guardar el nombre de la imagen actual
+							} else {
+								fileName.textContent = '';
+								container.classList.remove('file-selected-edit');
+								container.classList.remove('file-has-image');
+								imagenActualInput.value = '';
+							}
+	
+							// Procesar las tallas y el stock
+							const stockPorTalla = {};
+							data.tallas_stock.forEach(item => {
+								stockPorTalla[item.talla] = item.stock;
+							});
+	
+							// Tallas y stock disponibles
+							const tallasDisponibles = ['S', 'M', 'L', 'XL'];
+	
+							tallasDisponibles.forEach(talla => {
+								const tallaCheckbox = document.getElementById(`talla${talla}Edit`);
+								const stockInput = document.getElementById(`stock${talla}Edit`);
+	
+								// Si la talla existe en los datos del producto, selecciona el checkbox y llena el stock
+								if (stockPorTalla[talla] !== undefined) {
+									tallaCheckbox.checked = true;
+									stockInput.value = stockPorTalla[talla];  // Asignar el stock de la talla correspondiente
+									stockInput.disabled = false;  // Habilitar el campo de stock
+								} else {
+									tallaCheckbox.checked = false;
+									stockInput.value = '';  // Limpiar el stock si la talla no está disponible
+									stockInput.disabled = true;  // Deshabilitar el campo de stock
+								}
+							});
+						})
+						.catch(error => console.error('Error:', error));
+				});
+			});
+	
+			// Manejo del envío del formulario
+			document.getElementById('editarProductoForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevenir el envío del formulario por defecto
+    
+    const formData = new FormData(this);
+
+    const { tallas, stocks } = gatherTallasAndStock();
+
+    // Agregar tallas y stocks al FormData
+    formData.append('talla', tallas);
+    formData.append('stock', stocks);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        // Verifica si la respuesta es JSON
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json(); // Parsear la respuesta JSON
+        } else {
+            return response.text().then(text => {
+                throw new Error(`No se recibió JSON. Respuesta HTML: ${text}`);
+            });
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Producto actualizado exitosamente.');
+            // Volver a cargar la tabla o actualizar los datos mostrados
+        } else {
+            console.error('Error al actualizar el producto:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+	
+			// Evento para habilitar/deshabilitar el input de stock al seleccionar una talla
+			document.querySelectorAll('input[name="tallas"]').forEach(checkbox => {
+				checkbox.addEventListener('change', function () {
+					const talla = this.value; // Obtener el valor de la talla seleccionada (S, M, L, XL)
+					const stockInput = document.getElementById(`stock${talla}Edit`);
+					stockInput.disabled = !this.checked;  // Habilitar o deshabilitar el input de stock basado en si la talla está seleccionada
+				});
+			});
+	
+			// Configuración del botón de eliminación
+			const deleteButtons = document.querySelectorAll('.delete');
+			deleteButtons.forEach(button => {
+				button.addEventListener('click', function () {
+					const productoId = this.getAttribute('data-id');
+					const deleteForm = document.getElementById('deleteForm');
+					deleteForm.action = `/delete_product/${productoId}`;
+					$('#eliminarProducto').modal('show');
+				});
+			});
+		}
+	
+		// Llamada a la función para adjuntar los eventos
+		document.addEventListener('DOMContentLoaded', attachEventListeners);
+	</script>
+	
+
+
+
+	<script src="{{ url_for('static', filename='js/barra-busqueda/barra_productos.js') }}"></script>
+
+
+
+	<script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+
+	<!-- Incluir Popper.js -->
+	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+
+	<!-- Incluir Bootstrap JS -->
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+	<script>
+		$(document).ready(function () {
+			console.log("Document ready");
+
+			$(".xp-menubar").on('click', function () {
+				console.log("xp-menubar clicked");
+				$("#sidebar").toggleClass('active');
+				$("#content").toggleClass('active');
+			});
+
+			$('.xp-menubar, .body-overlay').on('click', function () {
+				console.log("Overlay or xp-menubar clicked");
+				$("#sidebar, .body-overlay").toggleClass('show-nav');
+			});
+		});
+	</script>
+
+	<style>
+		.tallas-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.talla-item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 5px;
+			width: 80px;
+		}
+
+		.talla-item input[type="checkbox"] {
+			display: none;
+			/* Oculta el checkbox real */
+		}
+
+		.talla-button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 60px;
+			height: 60px;
+			background-color: #f0f0f0;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			font-size: 18px;
+			color: #333;
+			cursor: pointer;
+			user-select: none;
+			/* Evita la selección de texto */
+			transition: background-color 0.3s, border-color 0.3s;
+		}
+
+		.talla-button:hover,
+		.talla-item input[type="checkbox"]:checked+.talla-button {
+			background-color: #007bff;
+			border-color: #007bff;
+			color: white;
+		}
+
+		.stock-label {
+			font-size: 14px;
+			color: #333;
+		}
+
+		.stock-input {
+			width: 60px;
+			text-align: center;
+		}
+
+		.tallas-container-edit {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.talla-item-edit {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 5px;
+			width: 80px;
+		}
+
+		.talla-item-edit input[type="checkbox"] {
+			display: none;
+			/* Oculta el checkbox real */
+		}
+
+		.talla-button-edit {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 60px;
+			height: 60px;
+			background-color: #f0f0f0;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			font-size: 18px;
+			color: #333;
+			cursor: pointer;
+			user-select: none;
+			/* Evita la selección de texto */
+			transition: background-color 0.3s, border-color 0.3s;
+		}
+
+		.talla-button-edit:hover,
+		.talla-item-edit input[type="checkbox"]:checked+.talla-button-edit {
+			background-color: #007bff;
+			border-color: #007bff;
+			color: white;
+		}
+
+		.stock-label-edit {
+			font-size: 14px;
+			color: #333;
+		}
+
+		.stock-input-edit {
+			width: 60px;
+			text-align: center;
+		}
+	</style>
+
+</body>
+
+</html>
