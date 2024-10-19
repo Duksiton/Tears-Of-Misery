@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const imgCarrito = document.getElementById('img-carrito');
     const verMasContainer = document.getElementById('ver-mas-container');
     const verMasLink = document.getElementById('toggle-productos');
+    const cartCountSpan = document.getElementById('cart-count');
     let mostrarMas = false;
     let usuarioLogueado = false;
     let idUsuario = null;
@@ -61,12 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         parteEntera = parteEntera.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         return `$${parteEntera}.${parteDecimal}`;
     }
-    
-      
-    
-    
-    
-
 
     function mostrarMensaje(mensaje, tipo = 'success') {
         modalContent.innerHTML = `
@@ -92,6 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 modal.style.display = 'none';
             }
         });
+    }
+
+    function updateCartCount() {
+        const totalItems = carrito.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountSpan.textContent = totalItems;
+        cartCountSpan.style.display = totalItems > 0 ? 'block' : 'none';
     }
 
     function actualizarCarrito() {
@@ -129,10 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
         verMasLink.textContent = mostrarMas ? 'Ocultar productos' : 'Ver más productos agregados';
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
+        updateCartCount();
     }
 
     function agregarAlCarrito(product) {
-        // Verificar el stock antes de agregar el producto al carrito
         fetch('/api/verificar_stock', {
             method: 'POST',
             headers: {
@@ -149,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     const index = carrito.findIndex(item => item.name === product.name && item.size === product.size);
                     if (index !== -1) {
-                        // Asegurarse de que no exceda el stock disponible
                         const nuevaCantidad = carrito[index].quantity + product.quantity;
                         if (nuevaCantidad > data.stock_disponible) {
                             mostrarMensaje(`No puedes agregar más de ${data.stock_disponible} unidades de "${product.name}" (${product.size}) al carrito.`, 'error');
@@ -173,14 +173,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-
-    // Obtener el estado de inicio de sesión del servidor
     fetch('/api/estado_sesion')
         .then(response => response.json())
         .then(data => {
             usuarioLogueado = data.usuarioLogueado;
             idUsuario = data.idUsuario;
-            actualizarCarrito();  // Actualizar el carrito en caso de que se necesite después de verificar el estado de inicio de sesión
+            actualizarCarrito();
         })
         .catch(error => {
             console.error('Error al obtener el estado de inicio de sesión:', error);
@@ -233,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const total = carrito.reduce((sum, item) => sum + item.price * item.quantity, 0);
         mostrarMensaje(`La suma de tus productos es de: ${formatearPrecio(total)}, serás redirigido para confirmar tus datos, ¡gracias por la compra!`);
 
-        // Preparar los datos del carrito para enviarlos a la API
         const productosCarrito = carrito.map(item => ({
             idProducto: item.id,
             nombreProducto: item.name,
@@ -242,7 +239,6 @@ document.addEventListener('DOMContentLoaded', function () {
             total: item.price * item.quantity
         }));
 
-        // Actualizar stock para cada producto en el carrito
         productosCarrito.forEach(product => {
             actualizarStock(product.idProducto, product.talla, product.cantidad);
         });
@@ -250,10 +246,8 @@ document.addEventListener('DOMContentLoaded', function () {
         carrito.length = 0;
         actualizarCarrito();
 
-        // Verificar datos antes de enviar
         console.log("Datos del carrito antes de enviar:", carrito);
 
-        // Realizar la petición a la API para guardar la compra
         setTimeout(function () {
             fetch('/api/guardar_compra', {
                 method: 'POST',
@@ -263,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({
                     productos: productosCarrito,
                     total: total,
-                    fechaCompra: new Date().toISOString().split('T')[0]  // Formato YYYY-MM-DD
+                    fechaCompra: new Date().toISOString().split('T')[0]
                 })
             })
                 .then(response => response.json())
@@ -278,55 +272,45 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Error al guardar la compra:', error);
                 });
 
-            // Redirigir a la página de verificación del usuario
             window.location.href = '/verificar_usuario';
         }, 2500);
     });
-
-
-
 
     verMasLink.addEventListener('click', function () {
         mostrarMas = !mostrarMas;
         actualizarCarrito();
     });
 
-    // Agrega el evento para el botón "Agregar al carrito" en la página de detalles del producto
     const addToCartButton = document.getElementById('add-to-cart');
     if (addToCartButton) {
         addToCartButton.addEventListener('click', () => {
-            // Verifica el valor del atributo data-size
             const requiereTalla = addToCartButton.getAttribute('data-size');
-            console.log('Valor de data-size:', requiereTalla); // Debería mostrar "required" o "optional"
+            console.log('Valor de data-size:', requiereTalla);
 
-            // Verifica si se requiere una talla
+            
+
             const requiresSize = requiereTalla === 'required';
             console.log('Requiere talla:', requiresSize);
 
-            // Verifica las checkboxes y muestra los estados de selección
             const checkboxes = Array.from(document.querySelectorAll('#tallas-section .talla-checkbox'));
             checkboxes.forEach(checkbox => {
                 console.log(`Checkbox con valor ${checkbox.value} está ${checkbox.checked ? 'seleccionado' : 'no seleccionado'}`);
             });
 
-            // Obtén todas las checkboxes de talla seleccionadas
             const selectedSizes = Array.from(document.querySelectorAll('#tallas-section .talla-checkbox:checked'))
                 .map(checkbox => checkbox.value);
 
             console.log('Tallas seleccionadas:', selectedSizes);
 
-            // Obtén la cantidad del producto
             const quantity = parseInt(document.getElementById('quantityInput').value, 10);
             console.log('Cantidad:', quantity);
 
-            // Verifica si se ha seleccionado una talla cuando es requerida
             if (requiresSize && selectedSizes.length === 0) {
                 console.log('Por favor selecciona una talla antes de agregar al carrito.');
                 mostrarMensaje('Por favor selecciona una talla antes de agregar al carrito.', 'info');
                 return;
             }
 
-            // Si no hay tallas seleccionadas pero se requiere, usa "Album" como talla predeterminada
             const size = selectedSizes.length > 0 ? selectedSizes[0] : "Album";
 
             const product = {
@@ -345,12 +329,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     actualizarCarrito();
-
-
-
 });
 
-// Preparar los datos del carrito para enviarlos a la API
 function actualizarStock(idProducto, talla, cantidad) {
     fetch('/api/actualizar_stock', {
         method: 'POST',
@@ -375,4 +355,3 @@ function actualizarStock(idProducto, talla, cantidad) {
             console.error('Error al conectar con la API:', error);
         });
 }
-
