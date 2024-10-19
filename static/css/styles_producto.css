@@ -22,28 +22,7 @@ html {
     font-family: "Montserrat", sans-serif;
     scroll-behavior: smooth;
 }
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2rem;
-    
-    
-}
 
-header {
-    position: fixed; /* Fija el header */
-    top: 0; /* Posición en la parte superior de la página */
-    left: 0;
-    width: 100%; /* Abarca todo el ancho */
-    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
-    background-color: #1d1e1e;; /* Fondo del header (puedes cambiar el color si es necesario) */
-    padding: 10px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra para resaltar el header */
-}
-
-body {
-    padding-top: 100px; /* Agrega espacio en la parte superior del contenido para evitar que el contenido quede oculto debajo del header */
-}
 
 .logo {
     color: #fff;
@@ -413,7 +392,7 @@ input:valid {
 
 .information {
     width: 70%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 0 20px #0000001a; 
     padding: 35px 75px;
     background-color: #f4f4f4; 
     margin: 50px auto; 

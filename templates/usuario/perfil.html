@@ -1,92 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proyecto</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/index.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/perfil.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles_producto.css') }}"
-    />
-    <link
-      rel="icon"
-      href="{{ url_for('static', filename='images/icon-logo.ico') }}"
-    />
-    <script
-      src="https://kit.fontawesome.com/eb496ab1a0.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_producto.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}" />
+  <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-  <body>
+</head>
 
-    <style>
-        .password-container {
-    position: relative;
-}
+<body>
 
-.password-container input {
-    width: calc(100% - 40px); /* Ajustar según el tamaño del botón */
-}
+  <style>
+    .password-container {
+      position: relative;
+    }
 
-.password-container .toggle-password {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-}
+    .password-container input {
+      width: calc(100% - 40px);
+      /* Ajustar según el tamaño del botón */
+    }
 
-.password-container .toggle-password i {
-    font-size: 18px;
-}
+    .password-container .toggle-password {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+    }
 
-    </style>
-    <header>
-      <a href="{{ url_for('inicio') }}" class="logo">
-        <img
-          src="{{ url_for('static', filename='images/LOGO.png') }}"
-          alt="Tears Of Misery Logo"
-        />
-      </a>
-      <div class="group2">
-        <ul class="navigation">
-          <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-          <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
-        </ul>
-      </div>
-      <div class="group2">
-        <div
-          class="user-profile"
-          style="position: relative; display: inline-block"
-        >
-          <i
-            class="fas fa-user-circle"
-            style="font-size: 40px; color: white; cursor: pointer"
-            onclick="toggleMenu()"
-          ></i>
-          <div
-            class="dropdown-menu"
-            id="userMenu"
-            style="
+    .password-container .toggle-password i {
+      font-size: 18px;
+    }
+  </style>
+  <header>
+    <a href="{{ url_for('inicio') }}" class="logo">
+      <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo" />
+    </a>
+    <div class="group2">
+      <ul class="navigation">
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
+      </ul>
+    </div>
+    <div class="group2">
+      <div class="user-profile" style="position: relative; display: inline-block">
+        <i class="fas fa-user-circle" style="font-size: 40px; color: white; cursor: pointer" onclick="toggleMenu()"></i>
+        <div class="dropdown-menu" id="userMenu" style="
               display: none;
               position: absolute;
               background-color: #333;
@@ -95,91 +65,75 @@
               padding: 10px;
               z-index: 1;
               width: 200px;
-            "
-          >
-            <ul
-              style="
+            ">
+          <ul style="
                 list-style-type: none;
                 padding: 0;
                 margin: 0;
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-              "
-            >
-              <li
-                style="padding: 8px 12px; width: 100%; box-sizing: border-box"
-              >
-                <a
-                  href="{{ url_for('perfil.perfil') }}"
-                  class="logout-btn"
-                  style="color: white; text-decoration: none"
-                  >Perfil</a
-                >
-              </li>
-              <li
-                style="padding: 8px 12px; width: 100%; box-sizing: border-box"
-              >
-                <a
-                  href="{{ url_for('logout.logout') }}"
-                  class="logout-btn"
-                  style="color: white; text-decoration: none"
-                  >Cerrar sesión</a
-                >
-              </li>
-            </ul>
-          </div>
+              ">
+            <li style="padding: 8px 12px; width: 100%; box-sizing: border-box">
+              <a href="{{ url_for('perfil.perfil') }}" class="logout-btn"
+                style="color: white; text-decoration: none">Perfil</a>
+            </li>
+            <li style="padding: 8px 12px; width: 100%; box-sizing: border-box">
+              <a href="{{ url_for('logout.logout') }}" class="logout-btn"
+                style="color: white; text-decoration: none">Cerrar sesión</a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="group3">
-        <ul>
-          <li class="submenu">
-            <img
-              src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
-              id="img-carrito"
-              alt="carrito de compra"
-            />
-            <div id="carrito">
-              <table id="lista-carrito">
-                <thead>
-                  <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Acción</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="productos">
-                  <!-- Contenido dinámico aquí -->
-                </tbody>
-              </table>
-              <div id="ver-mas-container">
-                <a href="#" id="toggle-productos"
-                  >Ver más productos agregados</a
-                >
-              </div>
-              <p id="total-carrito">
-                Total: <span id="total-valor">0.00</span>
-              </p>
-              <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
-              <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
-              <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </header>
-    <div class="hr-color">
-      <hr />
     </div>
-    <br />
-    <br />
-    <center><h1>Bienvenido/a, {{ perfil.nombre }}</h1></center>
+    <div class="group3">
+      <ul>
+        <li class="submenu">
+          <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}" id="img-carrito"
+            alt="carrito de compra" />
+          <div id="carrito">
+            <table id="lista-carrito">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Acción</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="productos">
+                <!-- Contenido dinámico aquí -->
+              </tbody>
+            </table>
+            <div id="ver-mas-container">
+              <a href="#" id="toggle-productos">Ver más productos agregados</a>
+            </div>
+            <p id="total-carrito">
+              Total: <span id="total-valor">0.00</span>
+            </p>
+            <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+            <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+            <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="hr-color">
+    <hr />
+  </div>
+  <br />
+  <br />
+  <center>
+    <h1>Bienvenido/a, {{ perfil.nombre }}</h1>
+  </center>
 
-<br />
-<center><h2>¡Recuerda, el pago es unicamente contra entrega!</h2></center>
-<div class="container">
+  <br />
+  <center>
+    <h2>¡Recuerda, el pago es unicamente contra entrega!</h2>
+  </center>
+  <div class="container">
     <h1>Perfil de Usuario</h1>
     <div class="profile-menu">
       <button class="tablink active" onclick="openTab(event, 'cuenta')">Datos de la Cuenta</button>
@@ -187,149 +141,105 @@
       <button class="tablink" onclick="openTab(event, 'direcciones')">Dirección</button>
       <button class="tablink" onclick="openTab(event, 'compras')">Historial de Compras</button>
     </div>
-  
+
     <!-- Sección de Datos de la Cuenta -->
     <div class="tab-content" id="cuenta">
       <h2>Datos de la Cuenta</h2>
       <p>Aquí puedes actualizar tu nombre, correo y teléfono.</p>
-  
+
       <!-- Formulario de Datos de la Cuenta -->
       <form action="{{ url_for('perfil.actualizar_perfil') }}" method="post" class="account-form">
-          <div class="form-group">
+        <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            placeholder="Ingresa tu nombre"
-            required
-            value="{{ perfil.nombre }}"
-            maxlength="20"
-          />
+          <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required
+            value="{{ perfil.nombre }}" maxlength="20" />
         </div>
-  
+
         <div class="form-group">
           <label for="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Ingresa tu email"
-            required
-            value="{{ perfil.email }}"
-            maxlength="60"
-          />
+          <input type="email" id="email" name="email" placeholder="Ingresa tu email" required value="{{ perfil.email }}"
+            maxlength="60" />
         </div>
-  
+
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
-          <input
-            type="tel"
-            id="telefono"
-            name="telefono"
-            placeholder="Ingresa tu teléfono"
-            required
-            value="{{ perfil.telefono }}"
-            maxlength="10"
-          />
+          <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" required
+            value="{{ perfil.telefono }}" maxlength="10" />
         </div>
-  
+
         <div class="form-group">
           <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
       </form>
     </div>
-  
+
     <!-- Sección de Seguridad -->
     <div class="tab-content" id="seguridad">
       <h2>Seguridad</h2>
       <p>Aquí puedes cambiar tu contraseña.</p>
-  
+
       <!-- Formulario para cambiar la contraseña -->
       <form id="passwordForm" action="{{ url_for('perfil.update_password') }}" method="post" class="password-form">
         <div id="alert-container" style="display: none; color: red;"></div> <!-- Contenedor de alerta -->
-        
+
         <div class="form-group">
-            <label for="nueva-password">Contraseña Actual:</label>
-            <div class="password-container">
-                <input
-                    type="password"
-                    id="actual-password"
-                    name="actual-password"
-                    placeholder="Ingresa tu contraseña actual"
-                    required
-                    maxlength="20"
-                />
-                <button type="button" class="toggle-password" onclick="togglePassword('actual-password', this)">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
+          <label for="nueva-password">Contraseña Actual:</label>
+          <div class="password-container">
+            <input type="password" id="actual-password" name="actual-password"
+              placeholder="Ingresa tu contraseña actual" required maxlength="20" />
+            <button type="button" class="toggle-password" onclick="togglePassword('actual-password', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
         </div>
-      
+
         <div class="form-group">
-            <label for="nueva-password">Contraseña Nueva:</label>
-            <div class="password-container">
-                <input
-                    type="password"
-                    id="nueva-password"
-                    name="nueva-password"
-                    placeholder="Ingresa la nueva contraseña"
-                    required
-                    maxlength="20"
-                />
-                <button type="button" class="toggle-password" onclick="togglePassword('nueva-password', this)">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
+          <label for="nueva-password">Contraseña Nueva:</label>
+          <div class="password-container">
+            <input type="password" id="nueva-password" name="nueva-password" placeholder="Ingresa la nueva contraseña"
+              required maxlength="20" />
+            <button type="button" class="toggle-password" onclick="togglePassword('nueva-password', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
         </div>
-        
+
         <div class="form-group">
-            <label for="repetir-password">Repetir Contraseña:</label>
-            <div class="password-container">
-                <input
-                    type="password"
-                    id="repetir-password"
-                    name="repetir-password"
-                    placeholder="Repite la nueva contraseña"
-                    required
-                />
-                <button type="button" class="toggle-password" onclick="togglePassword('repetir-password', this)">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
+          <label for="repetir-password">Repetir Contraseña:</label>
+          <div class="password-container">
+            <input type="password" id="repetir-password" name="repetir-password"
+              placeholder="Repite la nueva contraseña" required />
+            <button type="button" class="toggle-password" onclick="togglePassword('repetir-password', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
         </div>
-        
+
         <div id="alert-container" style="display: none; color: green;"></div>
-      
+
         <div class="form-group">
           <button type="submit" class="btn-submit">Cambiar Contraseña</button>
         </div>
       </form>
     </div>
-  
+
     <!-- Sección de Direcciones -->
     <div class="tab-content" id="direcciones">
       <h2>Direcciones</h2>
       <p>Aquí puedes gestionar tu dirección de envío.</p>
-  
+
       <!-- Formulario para añadir una nueva dirección -->
       <form action="{{ url_for('perfil.add_direccion') }}" method="post" class="address-form">
         <div class="form-group">
           <label for="direccion">Cambio de Dirección:</label>
-          <input
-            type="text"
-            id="direccion"
-            name="direccion"
-            placeholder="Ingresa la nueva dirección"
-            required
-            maxlength="60"
-          />
+          <input type="text" id="direccion" name="direccion" placeholder="Ingresa la nueva dirección" required
+            maxlength="60" />
         </div>
-  
+
         <div class="form-group">
           <button type="submit" class="btn-submit">Guardar Dirección</button>
         </div>
-      
+
         <!-- Lista de direcciones existentes -->
         <div class="address-list">
           <h3>Dirección Guardada</h3>
@@ -337,400 +247,383 @@
             <!-- Ejemplo de dirección -->
             <li class="address-item">
               <div class="address-info">
-                  <span>{{ perfil.direccion }}</span>
+                <span>{{ perfil.direccion }}</span>
               </div>
               <div class="address-actions">
                 <button class="btn-delete" data-id="{{ perfil['idUsuario'] }}">Eliminar</button>
               </div>
               <script>
-       document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.btn-delete').forEach(button => {
-        button.addEventListener('click', function() {
-            const userId = this.getAttribute('data-id');
-            if (!userId) {
-                console.error('ID de usuario no encontrado');
-                return;
-            }
+                document.addEventListener('DOMContentLoaded', function () {
+                  document.querySelectorAll('.btn-delete').forEach(button => {
+                    button.addEventListener('click', function () {
+                      const userId = this.getAttribute('data-id');
+                      if (!userId) {
+                        console.error('ID de usuario no encontrado');
+                        return;
+                      }
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Una vez eliminada, la dirección no podrá ser recuperada.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                customClass: {
-                    container: 'swal-container',
-                    title: 'swal-title',
-                    text: 'swal-text',
-                    confirmButton: 'swal-confirm-button',
-                    cancelButton: 'swal-cancel-button'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`/perfil/eliminar_direccion/${userId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
+                      Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "Una vez eliminada, la dirección no podrá ser recuperada.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar',
+                        customClass: {
+                          container: 'swal-container',
+                          title: 'swal-title',
+                          text: 'swal-text',
+                          confirmButton: 'swal-confirm-button',
+                          cancelButton: 'swal-cancel-button'
                         }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            const addressContainer = this.closest('.address-container');
-                            if (addressContainer) {
-                                addressContainer.remove();
-                                Swal.fire(
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          fetch(`/perfil/eliminar_direccion/${userId}`, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                            }
+                          })
+                            .then(response => {
+                              if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                              }
+                              return response.json();
+                            })
+                            .then(data => {
+                              if (data.success) {
+                                const addressContainer = this.closest('.address-container');
+                                if (addressContainer) {
+                                  addressContainer.remove();
+                                  Swal.fire(
                                     'Eliminado!',
                                     'La dirección ha sido eliminada con éxito.',
                                     'success',
                                     {
-                                        customClass: {
-                                            container: 'swal-container',
-                                            title: 'swal-title',
-                                            text: 'swal-text',
-                                            confirmButton: 'swal-confirm-button'
-                                        }
-                                    }
-                                );
-                            } else {
-                                console.warn('No se encontró el contenedor de la dirección para eliminar');
-                                location.reload();
-                            }
-                        } else {
-                            Swal.fire(
-                                'Error!',
-                                'Hubo un error al eliminar la dirección.',
-                                'error',
-                                {
-                                    customClass: {
+                                      customClass: {
                                         container: 'swal-container',
                                         title: 'swal-title',
                                         text: 'swal-text',
                                         confirmButton: 'swal-confirm-button'
+                                      }
                                     }
+                                  );
+                                } else {
+                                  console.warn('No se encontró el contenedor de la dirección para eliminar');
+                                  location.reload();
                                 }
-                            );
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        Swal.fire(
-                            'Error!',
-                            'Ocurrió un error al intentar eliminar la dirección.',
-                            'error',
-                            {
-                                customClass: {
+                              } else {
+                                Swal.fire(
+                                  'Error!',
+                                  'Hubo un error al eliminar la dirección.',
+                                  'error',
+                                  {
+                                    customClass: {
+                                      container: 'swal-container',
+                                      title: 'swal-title',
+                                      text: 'swal-text',
+                                      confirmButton: 'swal-confirm-button'
+                                    }
+                                  }
+                                );
+                              }
+                            })
+                            .catch(error => {
+                              console.error('Error:', error);
+                              Swal.fire(
+                                'Error!',
+                                'Ocurrió un error al intentar eliminar la dirección.',
+                                'error',
+                                {
+                                  customClass: {
                                     container: 'swal-container',
                                     title: 'swal-title',
                                     text: 'swal-text',
                                     confirmButton: 'swal-confirm-button'
+                                  }
                                 }
-                            }
-                        );
+                              );
+                            });
+                        }
+                      });
                     });
-                }
-            });
-        });
-    });
-});
+                  });
+                });
               </script>
-            
-              
-              
-              
-            
+
+
+
+
+
 
             </li>
           </ul>
         </div>
       </form>
     </div>
-  
+
     <!-- Sección de Compras -->
     <div class="tab-content" id="compras">
-        <h2>Historial de Compras</h2>
-        <p>Aquí puedes ver tus compras y su estado.</p>
-        <section class="purchase-history" id="compras">
-          <table>
-              <thead>
-                  <tr>
-                      <th>ID Pedido</th>
-                      <th>Producto</th>
-                      <th>Fecha</th>
-                      <th>Cantidad</th>
-                      <th>Total</th>
-                      <th>Estado</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% if compras %}
-                      {% for compra in compras %}
-                      <tr>
-                          <td>{{ compra.idCompra }}</td>
-                          <td>{{ compra.nombreProducto }}</td>
-                          <td>{{ compra.fechaCompra }}</td>
-                          <td>{{ compra.cantidad }}</td>
-                          <td>{{ "{:,.3f}".format(compra.total).replace('.', '#').replace(',', '.').replace('#', ',') }}</td>
-                          <td>{{ compra.estado }}</td>
-                      </tr>
-                      {% endfor %}
-                  {% else %}
-                      <tr>
-                          <td colspan="7">No hay compras registradas.</td>
-                      </tr>
-                  {% endif %}
-              </tbody>
-          </table>
-        </section>
+      <h2>Historial de Compras</h2>
+      <p>Aquí puedes ver tus compras y su estado.</p>
+      <section class="purchase-history" id="compras">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              <th>Producto</th>
+              <th>Fecha</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if compras %}
+            {% for compra in compras %}
+            <tr>
+              <td>{{ compra.idCompra }}</td>
+              <td>{{ compra.nombreProducto }}</td>
+              <td>{{ compra.fechaCompra }}</td>
+              <td>{{ compra.cantidad }}</td>
+              <td>{{ "{:,.3f}".format(compra.total).replace('.', '#').replace(',', '.').replace('#', ',') }}</td>
+              <td>{{ compra.estado }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="7">No hay compras registradas.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
     </div>
-</div>
+  </div>
 
-          
-        </div>
-    </div>
-            
-      
-      
 
-    <footer class="pie-pagina">
-      <hr class="hr-color" />
-      <div class="grupo-1">
-        <div class="box">
-          <figure>
-            <a href="{{ url_for('inicio') }}" class="logo">
-              <img
-                src="{{ url_for('static', filename='images/LOGO.png') }}"
-                alt="Tears Of Misery Logo"
-              />
-            </a>
-          </figure>
-        </div>
-        <div class="box">
-          <h2>SOBRE NOSOTROS</h2>
-          <p>
-            Tears of Misery Death Metal Latinoamericano, Fundación año 2003
-            Bogotá D.C. Colombia
-          </p>
-        </div>
-        <div class="box">
-          <h2>SÍGUENOS</h2>
-          <div class="red-social">
-            <a
-              href="https://www.facebook.com/tearsofmisery"
-              class="fab fa-facebook"
-              target="_blank"
-            ></a>
-            <a
-              href="https://www.instagram.com/tearsof.misery/"
-              class="fab fa-instagram"
-              target="_blank"
-            ></a>
-            <a
-              href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q"
-              class="fab fa-youtube"
-              target="_blank"
-            ></a>
-          </div>
+  </div>
+  </div>
+
+
+
+
+  <footer class="pie-pagina">
+    <hr class="hr-color" />
+    <div class="grupo-1">
+      <div class="box">
+        <figure>
+          <a href="{{ url_for('inicio') }}" class="logo">
+            <img src="{{ url_for('static', filename='images/LOGO.png') }}" alt="Tears Of Misery Logo" />
+          </a>
+        </figure>
+      </div>
+      <div class="box">
+        <h2>SOBRE NOSOTROS</h2>
+        <p>
+          Tears of Misery Death Metal Latinoamericano, Fundación año 2003
+          Bogotá D.C. Colombia
+        </p>
+      </div>
+      <div class="box">
+        <h2>SÍGUENOS</h2>
+        <div class="red-social">
+          <a href="https://www.facebook.com/tearsofmisery" class="fab fa-facebook" target="_blank"></a>
+          <a href="https://www.instagram.com/tearsof.misery/" class="fab fa-instagram" target="_blank"></a>
+          <a href="https://www.youtube.com/channel/UCjcaDSYUyl_VjlU31vPeH6Q" class="fab fa-youtube" target="_blank"></a>
         </div>
       </div>
-      <div class="grupo-2">
-        <hr class="hr-color-gris" />
-        <small
-          >&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos
-          Reservados.</small
-        >
-      </div>
-    </footer>
+    </div>
+    <div class="grupo-2">
+      <hr class="hr-color-gris" />
+      <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos
+        Reservados.</small>
+    </div>
+  </footer>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var updateForm = document.getElementById("update-profile");
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var updateForm = document.getElementById("update-profile");
 
-        // Asegúrate de que el formulario de actualización esté oculto por defecto
-        updateForm.classList.remove("show"); // El formulario de actualización no debe ser visible al cargar la página
+      // Asegúrate de que el formulario de actualización esté oculto por defecto
+      updateForm.classList.remove("show"); // El formulario de actualización no debe ser visible al cargar la página
 
-        // Agregar el evento de clic al botón
-        document
-          .getElementById("toggle-update")
-          .addEventListener("click", function () {
-            if (updateForm.classList.contains("show")) {
-              updateForm.classList.remove("show"); // Ocultar el formulario
-            } else {
-              updateForm.classList.add("show"); // Mostrar el formulario
-            }
-          });
-      });
-    </script>
+      // Agregar el evento de clic al botón
+      document
+        .getElementById("toggle-update")
+        .addEventListener("click", function () {
+          if (updateForm.classList.contains("show")) {
+            updateForm.classList.remove("show"); // Ocultar el formulario
+          } else {
+            updateForm.classList.add("show"); // Mostrar el formulario
+          }
+        });
+    });
+  </script>
 
-    <script>
-      function toggleMenu() {
-        const menu = document.getElementById("userMenu");
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
-      }
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("userMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
 
-      // Ocultar el menú al hacer clic fuera
-      window.onclick = function (event) {
-        if (!event.target.matches(".fas")) {
-          const dropdowns = document.getElementsByClassName("dropdown-menu");
-          for (let i = 0; i < dropdowns.length; i++) {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-            }
+    // Ocultar el menú al hacer clic fuera
+    window.onclick = function (event) {
+      if (!event.target.matches(".fas")) {
+        const dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (let i = 0; i < dropdowns.length; i++) {
+          const openDropdown = dropdowns[i];
+          if (openDropdown.style.display === "block") {
+            openDropdown.style.display = "none";
           }
         }
-      };
-    </script>
+      }
+    };
+  </script>
 
-<script>
-    document.getElementById('passwordForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el envío del formulario
+  <script>
+    document.getElementById('passwordForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevenir el envío del formulario
 
-        // Obtener las contraseñas del formulario
-        const actualPassword = document.getElementById('actual-password').value;
-        const nuevaPassword = document.getElementById('nueva-password').value;
-        const repetirPassword = document.getElementById('repetir-password').value;
-        
-        // Contenedor de alerta
-        const alertContainer = document.getElementById('alert-container');
-        alertContainer.style.display = 'none'; // Ocultar el contenedor de alerta antes de mostrar un nuevo mensaje
-        
-        // Verificar si las contraseñas coinciden
-        if (nuevaPassword !== repetirPassword) {
-            // Mostrar la alerta si no coinciden
+      // Obtener las contraseñas del formulario
+      const actualPassword = document.getElementById('actual-password').value;
+      const nuevaPassword = document.getElementById('nueva-password').value;
+      const repetirPassword = document.getElementById('repetir-password').value;
+
+      // Contenedor de alerta
+      const alertContainer = document.getElementById('alert-container');
+      alertContainer.style.display = 'none'; // Ocultar el contenedor de alerta antes de mostrar un nuevo mensaje
+
+      // Verificar si las contraseñas coinciden
+      if (nuevaPassword !== repetirPassword) {
+        // Mostrar la alerta si no coinciden
+        alertContainer.style.display = 'block';
+        alertContainer.textContent = 'Las contraseñas no coinciden.';
+        alertContainer.style.color = 'red'; // Rojo para error
+      } else {
+        // Enviar la solicitud al servidor
+        fetch('{{ url_for("perfil.update_password") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            'actual-password': actualPassword,
+            'nueva-password': nuevaPassword,
+            'repetir-password': repetirPassword
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Mostrar el mensaje de éxito
+              alertContainer.style.display = 'block';
+              alertContainer.textContent = data.message;
+              alertContainer.style.color = 'green'; // Verde para éxito
+
+              // Esperar 3 segundos antes de actualizar la página
+              setTimeout(function () {
+                window.location.reload(); // Recargar la página para reflejar el cambio
+              }, 3000); // 3000 ms = 3 segundos
+            } else {
+              // Mostrar el mensaje de error
+              alertContainer.style.display = 'block';
+              alertContainer.textContent = data.message;
+              alertContainer.style.color = 'red'; // Rojo para error
+            }
+          })
+          .catch(error => {
             alertContainer.style.display = 'block';
-            alertContainer.textContent = 'Las contraseñas no coinciden.';
+            alertContainer.textContent = 'Error al procesar la solicitud.';
             alertContainer.style.color = 'red'; // Rojo para error
-        } else {
-            // Enviar la solicitud al servidor
-            fetch('{{ url_for("perfil.update_password") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    'actual-password': actualPassword,
-                    'nueva-password': nuevaPassword,
-                    'repetir-password': repetirPassword
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Mostrar el mensaje de éxito
-                    alertContainer.style.display = 'block';
-                    alertContainer.textContent = data.message;
-                    alertContainer.style.color = 'green'; // Verde para éxito
-
-                    // Esperar 3 segundos antes de actualizar la página
-                    setTimeout(function() {
-                        window.location.reload(); // Recargar la página para reflejar el cambio
-                    }, 3000); // 3000 ms = 3 segundos
-                } else {
-                    // Mostrar el mensaje de error
-                    alertContainer.style.display = 'block';
-                    alertContainer.textContent = data.message;
-                    alertContainer.style.color = 'red'; // Rojo para error
-                }
-            })
-            .catch(error => {
-                alertContainer.style.display = 'block';
-                alertContainer.textContent = 'Error al procesar la solicitud.';
-                alertContainer.style.color = 'red'; // Rojo para error
-            });
-        }
+          });
+      }
     });
 
-</script>
+  </script>
 
-    
-    
-    <script>
-        function togglePassword(fieldId, button) {
-    var input = document.getElementById(fieldId);
-    var icon = button.querySelector('i');
-    
-    if (input.type === "password") {
+
+
+  <script>
+    function togglePassword(fieldId, button) {
+      var input = document.getElementById(fieldId);
+      var icon = button.querySelector('i');
+
+      if (input.type === "password") {
         input.type = "text";
         icon.className = "fas fa-eye-slash";
-    } else {
+      } else {
         input.type = "password";
         icon.className = "fas fa-eye";
+      }
     }
-}
 
-    </script>
+  </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Obtén el fragmento de la URL
-        const hash = window.location.hash;
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Obtén el fragmento de la URL
+      const hash = window.location.hash;
 
-        // Si el fragmento es '#compras', abre la pestaña de compras
-        if (hash === '#compras') {
-            // Simula el clic en el botón de la pestaña de compras
-            document.querySelector('button[onclick="openTab(event, \'compras\')"]').click();
-        }
+      // Si el fragmento es '#compras', abre la pestaña de compras
+      if (hash === '#compras') {
+        // Simula el clic en el botón de la pestaña de compras
+        document.querySelector('button[onclick="openTab(event, \'compras\')"]').click();
+      }
     });
-</script>
-<script>
+  </script>
+  <script>
     function openTab(event, tabId) {
-        // Oculta todas las pestañas
-        var tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(function(tab) {
-            tab.style.display = 'none';
-        });
+      // Oculta todas las pestañas
+      var tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(function (tab) {
+        tab.style.display = 'none';
+      });
 
-        // Desactiva todos los botones
-        var buttons = document.querySelectorAll('.tablink');
-        buttons.forEach(function(button) {
-            button.classList.remove('active');
-        });
+      // Desactiva todos los botones
+      var buttons = document.querySelectorAll('.tablink');
+      buttons.forEach(function (button) {
+        button.classList.remove('active');
+      });
 
-        // Muestra la pestaña activa
-        document.getElementById(tabId).style.display = 'block';
+      // Muestra la pestaña activa
+      document.getElementById(tabId).style.display = 'block';
 
-        // Activa el botón de la pestaña
-        event.currentTarget.classList.add('active');
+      // Activa el botón de la pestaña
+      event.currentTarget.classList.add('active');
     }
-</script>
+  </script>
 
-<script>
-  // Función para actualizar la visibilidad del botón "Explorar más productos"
-  function actualizarBotonExplorar() {
+  <script>
+    // Función para actualizar la visibilidad del botón "Explorar más productos"
+    function actualizarBotonExplorar() {
       const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const explorarBtn = document.getElementById('explorar');
-      
+
       // Mostrar el botón si hay productos en el carrito, de lo contrario, ocultarlo
       if (carrito.length > 0) {
-          explorarBtn.style.display = 'block';
+        explorarBtn.style.display = 'block';
       } else {
-          explorarBtn.style.display = 'none';
+        explorarBtn.style.display = 'none';
       }
-  }
+    }
 
-  // Función para agregar productos al carrito
-  function agregarAlCarrito(product) {
+    // Función para agregar productos al carrito
+    function agregarAlCarrito(product) {
       const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const index = carrito.findIndex(item => item.name === product.name && item.size === product.size);
 
       // Si el producto ya está en el carrito, aumentar la cantidad
       if (index !== -1) {
-          carrito[index].quantity += 1;
-          mostrarMensaje(`Cantidad de "${product.name}" (${product.size}) aumentada. Ahora tienes ${carrito[index].quantity}.`, 'success');
+        carrito[index].quantity += 1;
+        mostrarMensaje(`Cantidad de "${product.name}" (${product.size}) aumentada. Ahora tienes ${carrito[index].quantity}.`, 'success');
       } else {
-          // Si no, agregar el nuevo producto al carrito
-          carrito.push(product);
-          mostrarMensaje(`Nuevo producto "${product.name}" (${product.size}) agregado al carrito.`, 'success');
+        // Si no, agregar el nuevo producto al carrito
+        carrito.push(product);
+        mostrarMensaje(`Nuevo producto "${product.name}" (${product.size}) agregado al carrito.`, 'success');
       }
 
       // Guardar el carrito en localStorage
@@ -741,48 +634,58 @@
 
       // Actualizar la visibilidad del botón "Explorar más productos"
       actualizarBotonExplorar();
-  }
+    }
 
-  // Ejecutar la función para actualizar el botón al cargar la página
-  document.addEventListener('DOMContentLoaded', function() {
+    // Ejecutar la función para actualizar el botón al cargar la página
+    document.addEventListener('DOMContentLoaded', function () {
       actualizarBotonExplorar();
-  });
-</script>
+    });
+  </script>
 
 
-<style>
-/* Estilo personalizado para SweetAlert2 */
-.swal2-popup {
-    width: 80vw; /* Ajusta el ancho del modal */
-    max-width: 600px; /* Establece un ancho máximo para el modal */
-    padding: 20px; /* Ajusta el relleno dentro del modal */
-    font-family: 'DM Sans', sans-serif; /* Asegúrate de usar la misma fuente que en tu proyecto */
-}
+  <style>
+    /* Estilo personalizado para SweetAlert2 */
+    .swal2-popup {
+      width: 80vw;
+      /* Ajusta el ancho del modal */
+      max-width: 600px;
+      /* Establece un ancho máximo para el modal */
+      padding: 20px;
+      /* Ajusta el relleno dentro del modal */
+      font-family: 'DM Sans', sans-serif;
+      /* Asegúrate de usar la misma fuente que en tu proyecto */
+    }
 
-.swal2-title {
-    font-size: 40px; /* Tamaño de fuente para el título */
-}
+    .swal2-title {
+      font-size: 40px;
+      /* Tamaño de fuente para el título */
+    }
 
-.swal2-text {
-    font-size: 1.5em; /* Tamaño de fuente para el texto */
-}
+    .swal2-text {
+      font-size: 1.5em;
+      /* Tamaño de fuente para el texto */
+    }
 
-.swal2-confirm, 
-.swal2-cancel {
-    font-size: 1.5em; /* Tamaño de fuente para los botones */
-    padding: 15px 30px; /* Espaciado de los botones */
-    margin: 5px; /* Margen entre los botones */
-}
+    .swal2-confirm,
+    .swal2-cancel {
+      font-size: 1.5em;
+      /* Tamaño de fuente para los botones */
+      padding: 15px 30px;
+      /* Espaciado de los botones */
+      margin: 5px;
+      /* Margen entre los botones */
+    }
 
-.swal2-actions {
-    padding: 10px 0; /* Espaciado en la parte inferior de las acciones */
-}
+    .swal2-actions {
+      padding: 10px 0;
+      /* Espaciado en la parte inferior de las acciones */
+    }
+  </style>
 
-</style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script_pro_true.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+</body>
 
-    <script src="{{ url_for('static', filename='js/script_pro_true.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
-  </body>
 </html>

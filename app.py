@@ -1,6 +1,7 @@
 # Importaciones
 import MySQLdb
 from flask import Flask, abort, render_template, flash, jsonify, request, send_from_directory,session,redirect, url_for
+from flask_mail import Mail, Message
 from mvc.model.db_connection import create_connection, close_connection
 from mvc.controller.producto_controller import producto_controller
 from mvc.controller.usuarios_controller import usuarios_controller, verificar_usuario
@@ -29,8 +30,15 @@ app.register_blueprint(logout_controller)
 app.register_blueprint(pedidos_controller)
 app.register_blueprint(compras_controller)
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com' 
+app.config['MAIL_PORT'] = 587  
+app.config['MAIL_USE_TLS'] = True  
+app.config['MAIL_USE_SSL'] = False 
+app.config['MAIL_USERNAME'] = 'tearsofmisery.13@gmail.com'  
+app.config['MAIL_PASSWORD'] = 'oaif rsnb gchj mkxh'  
+app.config['MAIL_DEFAULT_SENDER'] = ('TearsOfMisery', 'tearsofmisery.13@gmail.com')
 
-
+mail = Mail(app)
 
 
 
@@ -71,9 +79,6 @@ def verificacion(id):
     return verificar_usuario(id)  # Redirige a la función que proporciona los datos del usuario
 
 
-
-
-
 @app.route('/static/images/historial/<filename>')
 def serve_image(filename):
     return send_from_directory(os.path.join('static', 'images', 'historial'), filename)
@@ -110,8 +115,7 @@ def guardar_compra():
                 nombre_imagen_historial,
                 fechaCompra,
                 producto['cantidad'],
-                "{:,.2f}".format(float(producto['total']))
-
+                "{:,.0f}".format(float(producto['total']))
             ))
 
         conn.commit()
@@ -490,6 +494,7 @@ def actualizar_stock():
             cursor.close()
         if conn:
             conn.close()
+
 
 
 

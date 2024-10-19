@@ -22,28 +22,7 @@ html {
     font-family: "Montserrat", sans-serif;
     scroll-behavior: smooth;
 }
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2rem;
-    
-    
-}
 
-header {
-    position: fixed; /* Fija el header */
-    top: 0; /* Posición en la parte superior de la página */
-    left: 0;
-    width: 100%; /* Abarca todo el ancho */
-    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
-    background-color: #1d1e1e;; /* Fondo del header (puedes cambiar el color si es necesario) */
-    padding: 10px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra para resaltar el header */
-}
-
-body {
-    padding-top: 100px; /* Agrega espacio en la parte superior del contenido para evitar que el contenido quede oculto debajo del header */
-}
 .logo {
     color: #fff;
     text-decoration: none;
@@ -386,9 +365,9 @@ img {
 
 .container-title {
 	padding: 30px;
-	background-color: #eee;
+	background-color: #1d1e1e7a;
 	margin-bottom: 50px;
-	color: #222;
+	color: #ffffff;
 }
 
 main {
@@ -420,6 +399,7 @@ main {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+    color: white;
 }
 
 .container-price {
@@ -433,10 +413,12 @@ main {
 .container-price span {
 	font-size: 24px;
 	font-weight: 300;
+    color: white;
 }
 
 .container-details-product {
 	padding: 30px 0;
+    
 }
 
 .form-group {
@@ -448,7 +430,7 @@ main {
 
 .form-group label {
 	width: 100px;
-	color: #222;
+	color: #868686;
 	font-weight: 700;
 }
 
@@ -555,11 +537,11 @@ main {
 }
 
 .fa-chevron-down:hover {
-    color: #000000;
+    color: #ffffff;
 }
 
 .fa-chevron-up:hover {
-    color: #000000;
+    color: #ffffff;
 }
 
 
@@ -606,7 +588,7 @@ main {
 .title-additional-information h4,
 .title-reviews h4 {
 	font-weight: 300;
-	color: #666;
+	color: #ffffff;
 	font-size: 14px;
 }
 
@@ -614,7 +596,7 @@ main {
 .text-additional-information,
 .text-reviews {
 	font-size: 13px;
-	color: #252525;
+	color: #ffffff;
 	line-height: 22px;
 	margin-top: 25px;
 }
@@ -681,7 +663,7 @@ main {
 }
 
 .text-product {
-	color: #252525;
+	color: #ffffff;
 	font-weight: 300;
 	line-height: 1.4;
 }
@@ -697,7 +679,7 @@ main {
 }
 
 .text-product p{
-    color: #666;
+    color: #ffffff;
     font-size: 13px;
 }
 

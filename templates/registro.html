@@ -100,6 +100,7 @@
         <div class="hr-color">
             <hr>
         </div>
+       
 
         <div class="box">
             <div class="login-form">
@@ -109,7 +110,7 @@
                 {% if messages %}
                 <ul class="flashes">
                     {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li class="alerta">{{ message }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}

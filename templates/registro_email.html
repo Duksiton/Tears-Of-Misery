@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #212121;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tears Of Misery - Registro exitoso</h1>
+        </div>
+
+        <div class="content">
+            <p>¡Hola {{ nombre }}!</p>
+            <p>Gracias por registrarte en <b>Tears Of Misery</b>. Tu cuenta ha sido creada con éxito.</p>
+            <p>Puedes iniciar sesión usando tu correo <b>{{ email }}</b>.</p>
+        </div>
+        <div class="footer">
+            <p>© 2024 TearsOfMisery. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>
