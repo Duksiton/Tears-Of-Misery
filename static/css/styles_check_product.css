@@ -23,6 +23,9 @@ html {
     scroll-behavior: smooth;
 }
 
+
+
+
 .logo {
     color: #fff;
     text-decoration: none;
@@ -365,7 +368,7 @@ img {
 
 .container-title {
 	padding: 30px;
-	background-color: #1d1e1e7a;
+	background-color: #4547477a;
 	margin-bottom: 50px;
 	color: #ffffff;
 }
@@ -531,7 +534,7 @@ main {
 
 .btn-increment-decrement i {
     font-size: 16px; /* Tamaño de las flechas */
-    color: #333;
+    color: #686868;
     cursor: pointer;
     margin: 2px 0; /* Espacio entre las flechas */
 }
