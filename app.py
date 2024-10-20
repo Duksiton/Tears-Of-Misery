@@ -36,7 +36,8 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False 
 app.config['MAIL_USERNAME'] = 'tearsofmisery.13@gmail.com'  
 app.config['MAIL_PASSWORD'] = 'oaif rsnb gchj mkxh'  
-app.config['MAIL_DEFAULT_SENDER'] = ('TearsOfMisery', 'tearsofmisery.13@gmail.com')
+app.config['MAIL_DEFAULT_SENDER'] = ('Tears Of Misery', 'noreply@tearsofmisery.com')
+
 
 mail = Mail(app)
 
@@ -512,13 +513,6 @@ def actualizar_stock():
         if conn:
             conn.close()
 
-
-
-
-
-
-
-    
 
 if __name__ == '__main__':
     print("Iniciando la aplicación...")

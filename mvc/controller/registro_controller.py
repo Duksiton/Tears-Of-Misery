@@ -54,7 +54,7 @@ def registro():
             )
             connection.commit()
 
-            msg = Message('Bienvenido a TearsOfMisery', recipients=[email])
+            msg = Message('Bienvenido a Tears Of Misery', recipients=[email])
             msg.html = render_template('registro_email.html', nombre=nombre, email=email)
             
             mail.send(msg)
