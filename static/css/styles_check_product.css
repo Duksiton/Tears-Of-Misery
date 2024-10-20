@@ -116,6 +116,11 @@ body {
     background: #ff0000;
 }
 
+.navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
+}
+
 .group2 {
     margin-left: 260px; 
 }

@@ -52,14 +52,14 @@
         </a>
         <div class="group">
             <ul class="navigation">
-                <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a href="{{ url_for('productos') }}">Productos</a></li>
             </ul>
         </div>
         <div class="group2">
-            <ul>
-                <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
-                <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+            <ul class="navigation">
+                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
+                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
             </ul>
         </div>
         <div class="group3">

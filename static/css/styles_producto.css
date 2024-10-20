@@ -110,6 +110,11 @@ body {
     transform-origin: right;
 }
 
+.group2 navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
+}
+
 .group ul li a:hover::before,
 .group2 ul li a:hover::before {
     transform: scaleX(1);

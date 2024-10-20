@@ -87,6 +87,11 @@ body {
     margin: 0;
 }
 
+.group2 navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
+}
+
 .group ul li a,
 .group2 ul li a {
     position: relative;

@@ -155,21 +155,72 @@ def obtener_pedidos():
     
 
 @app.route('/api/actualizar_pedido', methods=['POST'])
-def actualizar_pedido():
+def actualizar_estado_pedido():
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+
     try:
-        data = request.form
-        idPedido = data.get('idPedido')
-        estado = data.get('estado')
-        conn = create_connection()
-        cursor = conn.cursor()
-        query = "UPDATE historial_compras SET estado = %s WHERE idCompra = %s"
-        cursor.execute(query, (estado, idPedido))
+        # Obtener idPedido y estado desde el formulario
+        id_pedido = request.form['idPedido']
+        estado = request.form['estado']
+
+        # Actualizar el estado del pedido en la base de datos
+        query = """
+        UPDATE historial_compras
+        SET estado = %s
+        WHERE idCompra = %s
+        """
+        cursor.execute(query, (estado, id_pedido))
         conn.commit()
+
+        # Obtener el idUsuario del pedido actualizado
+        cursor.execute('SELECT idUsuario FROM historial_compras WHERE idCompra = %s', (id_pedido,))
+        id_usuario_result = cursor.fetchone()
+
+        if not id_usuario_result:
+            return jsonify({'error': 'No se encontró el usuario asociado al pedido'}), 404
+
+        id_usuario = id_usuario_result['idUsuario']
+
+        # Obtener el correo del usuario
+        cursor.execute('SELECT email FROM usuario WHERE idUsuario = %s', (id_usuario,))
+        usuario = cursor.fetchone()
+
+        if not usuario:
+            return jsonify({'error': 'No se encontró el correo del usuario asociado al pedido'}), 404
+
+        email = usuario['email']
+        print(f"Email del usuario: {email}")  # Depuración
+
+        # Enviar correo de notificación
+        enviar_correo_actualizacion(email, estado)
+
+        return jsonify({'mensaje': 'Estado actualizado y correo enviado correctamente'})
+
+    except Exception as e:
+        print('Error al actualizar estado:', e)
+        return jsonify({'error': str(e)}), 500
+
+    finally:
         cursor.close()
         conn.close()
-        return '', 204  # Devolvemos una respuesta vacía con código 204
+
+
+def enviar_correo_actualizacion(email, estado):
+    """
+    Función para enviar un correo cuando el estado de un pedido cambia.
+    """
+    from app import mail
+    from flask_mail import Message
+
+    try:
+        msg = Message('Actualización de Estado de Pedido', recipients=[email])
+        msg.body = f'El estado de tu pedido ha cambiado a: {estado}.'
+        mail.send(msg)
+        print(f"Correo enviado a: {email}")  # Confirmación de envío
+
     except Exception as e:
-        return jsonify({'success': False, 'message': str(e)})
+        print(f'Error al enviar el correo: {e}')
 
     
 @app.route('/api/historial-compras', methods=['GET'])
@@ -214,30 +265,6 @@ def get_historial_compras():
         conn.close()
 
 
-@app.route('/api/actualizar_pedido', methods=['POST'])
-def actualizar_estado_pedido():
-    conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    try:
-        id_pedido = request.form['idPedido']
-        estado = request.form['estado']
-
-        query = """
-        UPDATE historial_compras
-        SET estado = %s
-        WHERE idCompra = %s
-        """
-        cursor.execute(query, (estado, id_pedido))
-        conn.commit()
-
-        return jsonify({'mensaje': 'Estado actualizado correctamente'})
-    except Exception as e:
-        print('Error al actualizar estado:', e)
-        return jsonify({'error': str(e)}), 500
-    finally:
-        cursor.close()
-        conn.close()
 
 @app.route('/productos')
 def mostrar_productos():

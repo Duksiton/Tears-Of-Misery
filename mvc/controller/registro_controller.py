@@ -28,7 +28,7 @@ def registro():
             return redirect(url_for('registro_controller.registro'))
         
         
-        dominios_permitidos = ['@gmail.com', '@hotmail.com', '@yahoo.com', '@outlook.com', '@live.com']
+        dominios_permitidos = ['@gmail.com', '@hotmail.com', '@yahoo.com', '@outlook.com', '@live.com', '@arp.edu.co']
 
         if len(email) < 5 or '@' not in email or not any(email.endswith(dominio) for dominio in dominios_permitidos):
             flash('Por favor, ingrese un correo electrónico válido' , 'error')

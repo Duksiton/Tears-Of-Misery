@@ -124,6 +124,11 @@ header {
     padding: 0;
 }
 
+.navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
+}
+
 .navigation li {
     margin: 0;
 }
@@ -494,8 +499,6 @@ footer {
  .hr-color-gris{
     border-color: #2e2e2e;
  }
-
- 
 
 
 

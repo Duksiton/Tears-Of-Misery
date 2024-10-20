@@ -19,8 +19,8 @@
         </a>
         <div class="group2">
             <ul class="navigation">
-                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-                <li><a href="{{ url_for('catalogo') }}">Productos</a></li>
+                <li class="{% if request.path == url_for('inicio') %}active{% endif %}"><a href="{{ url_for('inicio') }}">Inicio</a></li>
+                <li class="{% if request.path == url_for('catalogo') %}active{% endif %}"><a href="{{ url_for('catalogo') }}">Productos</a></li>
             </ul>
         </div>
         <div class="group2">

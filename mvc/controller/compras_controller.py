@@ -32,12 +32,16 @@ def guardar_compra():
             cantidad = producto.get('cantidad', 0)
             total_producto = producto.get('total', 0)
 
-            cursor.execute('''
+            cursor.execute(''' 
                 INSERT INTO historial_compras (idUsuario, idProducto, nombreProducto, imagenProducto, fechaCompra, cantidad, total)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             ''', (id_usuario, id_producto, nombre_producto, imagen_producto, fecha_compra, cantidad, total_producto))
 
         conn.commit()
+
+        # Llamar a la función para enviar el correo
+        send_confirmation_email(id_usuario, total)
+
         return jsonify({'success': True, 'message': 'Compra guardada exitosamente'}), 200
 
     except Exception as e:
@@ -48,6 +52,42 @@ def guardar_compra():
     finally:
         cursor.close()
         close_connection(conn)
+
+def send_confirmation_email(id_usuario, total):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    from app import mail
+    from flask_mail import Message
+
+    try:
+        # Obtener el correo del usuario a partir del ID
+        cursor.execute('SELECT email FROM usuario WHERE idUsuario = %s', (id_usuario,))
+        usuario = cursor.fetchone()
+
+        if usuario:
+            email = usuario[0]  # Suponiendo que el correo es el primer campo
+
+            with open('templates/confirmation_email.html', 'r') as file:
+                html_body = file.read()
+
+            html_body = html_body.replace('{{ total }}', str(total))
+
+            msg = Message('Confirmación de Compra',
+                          recipients=[email],
+                          html=html_body)
+            
+            msg.body = f'Tu compra ha sido realizada exitosamente. Total: {total}'
+            mail.send(msg)
+        else:
+            print("Usuario no encontrado.")
+
+    except Exception as e:
+        print(f'Error al enviar el correo: {e}')
+    finally:
+        cursor.close()
+        close_connection(conn)
+
 
 
 @compras_controller.route('/api/verificar_stock', methods=['POST'])
@@ -87,3 +127,4 @@ def verificar_stock():
     finally:
         cursor.close()
         close_connection(conn)
+

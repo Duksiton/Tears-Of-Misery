@@ -38,15 +38,16 @@ def editar_estado_pedido():
     idPedido = request.form.get('idPedido')
     estado = request.form.get('estado')
 
-    print(f'Recibido idPedido: {idPedido}, estado: {estado}')  # Depuración
+    print(f'Recibido idPedido: {idPedido}, estado: {estado}, idUsuario: {id_usuario}')  # Depuración
 
-    if not idPedido or not estado:
+    if not idPedido or not estado or not id_usuario:
         return jsonify({'success': False, 'message': 'Datos incompletos'}), 400
 
     conn = create_connection()
     cursor = conn.cursor()
 
     try:
+        # Actualizar el estado del pedido en la base de datos
         query = """
         UPDATE historial_compras
         SET estado = %s
@@ -54,10 +55,51 @@ def editar_estado_pedido():
         """
         cursor.execute(query, (estado, idPedido))
         conn.commit()
-        return jsonify({'success': True, 'message': 'Estado del pedido actualizado'})
+
+        # Obtener el idUsuario asociado al pedido
+        cursor.execute('SELECT idUsuario FROM historial_compras WHERE idCompra = %s', (idPedido,))
+        id_usuario_result = cursor.fetchone()
+
+        if not id_usuario_result:
+            return jsonify({'success': False, 'message': 'No se encontró el usuario asociado al pedido'}), 404
+
+        id_usuario = id_usuario_result[0]
+        print(f"idUsuario: {id_usuario}")
+
+        # Obtener el correo del usuario
+        cursor.execute('SELECT email FROM usuario WHERE idUsuario = %s', (id_usuario,))
+        usuario = cursor.fetchone()
+
+        if not usuario:
+            return jsonify({'success': False, 'message': 'Correo del usuario no encontrado'}), 404
+
+        email = usuario[0]
+        print(f"Email del usuario: {email}")
+
+        # Enviar correo de notificación
+        enviar_correo_actualizacion(email, estado)
+
+        return jsonify({'success': True, 'message': 'Estado del pedido actualizado y correo enviado'})
+
     except Error as e:
         print('Error al actualizar el estado del pedido:', e)
         return jsonify({'success': False, 'message': str(e)}), 500
     finally:
         cursor.close()
         conn.close()
+
+def enviar_correo_actualizacion(email, estado):
+    """
+    Función para enviar un correo cuando el estado de un pedido cambia.
+    """
+    from app import mail
+    from flask_mail import Message
+
+    try:
+        msg = Message('Actualización de Estado de Pedido', recipients=[email])
+        msg.body = f'El estado de tu pedido ha cambiado a: {estado}.'
+        mail.send(msg)
+        print(f"Correo enviado a: {email}")  # Confirmación de envío
+
+    except Exception as e:
+        print(f'Error al enviar el correo: {e}')
