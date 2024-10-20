@@ -109,8 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return parteDecimal === '00' ? `$${parteEnteraFormateada}` : `$${parteEnteraFormateada},${parteDecimal}`;
     }
     
-    
-
     function mostrarMensaje(mensaje, tipo = 'success') {
         modalContent.innerHTML = `
             <h2 style="color: ${tipo === 'success' ? '#ffbb00' : tipo === 'info' ? '#ffbb00' : '#dc3545'}; font-size: 36px; margin-bottom: 20px;">
@@ -135,6 +133,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'none';
             }
         });
+    }
+
+    function actualizarContadorCarrito() {
+        const totalItems = carrito.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = totalItems;
+            cartCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
     }
 
     function actualizarCarrito() {
@@ -181,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
+        actualizarContadorCarrito();
     }
 
     function agregarAlCarrito(product) {

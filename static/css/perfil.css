@@ -363,11 +363,13 @@ footer {
     width: 300px;
     padding: 10px;
     z-index: 1000;
+    color: black;
 }
 
 .cart-details table {
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .cart-details th, .cart-details td {

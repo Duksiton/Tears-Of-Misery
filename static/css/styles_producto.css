@@ -192,6 +192,7 @@ html {
     overflow-y: auto;
     z-index: 10;
     animation: slideIn 0.5s forwards;
+    
 }
 
 /* Botón de cerrar ("X") */
@@ -245,6 +246,7 @@ html {
 #lista-carrito th {
     background-color: #f4f4f4;
     font-weight: bold;
+    color: black;
 }
 
 /* Botones dentro del carrito */
@@ -271,6 +273,7 @@ html {
     font-size: 1.5em;
     font-weight: bold;
     margin: 10px 0;
+    color: black;
 }
 
 #comprar-todo {

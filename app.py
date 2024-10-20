@@ -471,13 +471,30 @@ def actualizar_stock():
         conn = create_connection()
         cursor = conn.cursor()
 
-        # Actualizar el stock en la base de datos
-        query = """
+        # Primero obtenemos el stock actual del producto en la talla solicitada
+        query_select = """
+        SELECT stock FROM producto_tallas
+        WHERE idProducto = %s AND talla = %s
+        """
+        cursor.execute(query_select, (id_producto, talla))
+        result = cursor.fetchone()
+
+        if result is None:
+            return jsonify({'success': False, 'message': 'Producto o talla no encontrada'}), 404
+
+        stock_actual = result[0]
+
+        # Verificamos si hay suficiente stock para realizar la operación
+        if stock_actual < cantidad:
+            return jsonify({'success': False, 'message': 'Stock insuficiente'}), 400
+
+        # Actualizar el stock en la base de datos (restar la cantidad)
+        query_update = """
         UPDATE producto_tallas
         SET stock = stock - %s
         WHERE idProducto = %s AND talla = %s
         """
-        cursor.execute(query, (cantidad, id_producto, talla))
+        cursor.execute(query_update, (cantidad, id_producto, talla))
 
         # Confirmar los cambios en la base de datos
         conn.commit()
@@ -494,6 +511,7 @@ def actualizar_stock():
             cursor.close()
         if conn:
             conn.close()
+
 
 
 
