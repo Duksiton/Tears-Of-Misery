@@ -66,6 +66,9 @@ def login():
 def registro():
     return render_template('registro.html')
 
+import MySQLdb
+import MySQLdb.cursors
+
 @app.route('/inicio')
 def inicio():
     if 'idUsuario' not in session:
@@ -73,7 +76,7 @@ def inicio():
     
     idUsuario = session['idUsuario']
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(MySQLdb.cursors.DictCursor)  # Usa DictCursor para obtener resultados como diccionarios
     
     try:
         cursor.execute("SELECT nombre FROM usuario WHERE idUsuario = %s", (idUsuario,))
@@ -86,6 +89,7 @@ def inicio():
     finally:
         cursor.close()
         conn.close()
+
 
 
 @app.route('/catalogo')
