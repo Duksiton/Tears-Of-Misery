@@ -13,12 +13,23 @@ def login():
         connection = None
         try:
             connection = create_connection()
-            cursor = connection.cursor(dictionary=True)
+            if not connection:
+                flash("No se pudo conectar a la base de datos.")
+                return redirect(url_for('login_controller.login'))
+            
+            cursor = connection.cursor()
             cursor.execute(
                 "SELECT * FROM usuario WHERE email = %s",
                 (email,)
             )
-            user = cursor.fetchone()
+            result = cursor.fetchone()
+
+            # Procesar resultados en formato de diccionario
+            if result:
+                columns = [col[0] for col in cursor.description]
+                user = dict(zip(columns, result))
+            else:
+                user = None
 
             # Verifica si el usuario existe
             if user:
@@ -36,7 +47,6 @@ def login():
                 else:
                     flash("Correo o contraseña incorrectos.")  # Mensaje para contraseña incorrecta
                     return redirect(url_for('login_controller.login'))
-
             else:
                 flash("Correo o contraseña incorrectos.")  
                 return redirect(url_for('login_controller.login'))
@@ -46,7 +56,7 @@ def login():
             return redirect(url_for('login_controller.login'))
         
         finally:
-            if connection and connection.is_connected():
+            if connection:
                 cursor.close()
                 connection.close()
     
