@@ -374,9 +374,12 @@ def mostrar_productos_invitado():
             abort(500, description="Error de conexión a la base de datos")
 
         # Crear el cursor y ejecutar la consulta
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM producto")
         productos = cursor.fetchall()
+
+        # Convertir el resultado a un diccionario
+        productos = [dict(zip([column[0] for column in cursor.description], row)) for row in productos]
 
         # Formatear el precio de cada producto
         for producto in productos:
@@ -393,6 +396,7 @@ def mostrar_productos_invitado():
             close_connection(conn)
 
     return render_template('productos.html', productos=productos)
+
 
 
 
