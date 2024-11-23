@@ -1,13 +1,16 @@
 import mysql.connector
 from mysql.connector import Error
+from flask import current_app
+import MySQLdb as mysql
 
 def create_connection():
     try:
         connection = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='tearsOfMisery'
+            host=current_app.config['MYSQL_HOST'],
+            user=current_app.config['MYSQL_USER'],
+            password=current_app.config['MYSQL_PASSWORD'],
+            database=current_app.config['MYSQL_DB'],
+            port=current_app.config['MYSQL_PORT']
         )
         if connection.is_connected():
             return connection
