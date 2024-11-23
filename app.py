@@ -430,10 +430,13 @@ def users():
 
 
 
+import MySQLdb
+from flask import jsonify
+
 @app.route('/api/productos', methods=['GET'])
 def get_productos():
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(MySQLdb.cursors.DictCursor)  # Cambiar a DictCursor para resultados como diccionarios
 
     try:
         query = """
