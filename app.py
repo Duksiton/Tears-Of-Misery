@@ -1,6 +1,7 @@
 # Importaciones
 import MySQLdb
 from flask import Flask, abort, render_template, flash, jsonify, request, send_from_directory,session,redirect, url_for
+from waitress import serve
 from flask_mail import Mail, Message
 from mvc.model.db_connection import create_connection, close_connection
 from mvc.controller.producto_controller import producto_controller
@@ -590,7 +591,8 @@ def actualizar_stock():
 
 
 
-
+if __name__ == "__main__":
+    serve(app, host='0.0.0.0', port=8080)
 
     
 
