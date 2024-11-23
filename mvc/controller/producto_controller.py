@@ -126,17 +126,24 @@ def producto(id):
             # Convertir tallas_stock a un diccionario
             tallas_stock_dict = {item['talla']: item['stock'] for item in tallas_stock}
             producto['tallas_stock'] = tallas_stock_dict
+
+            # Retornar la plantilla con los datos del producto
+            return render_template('usuario/producto.html', producto=producto)  
+            
         else:
-            return redirect(url_for('productos'))  # Redirigir si no se encuentra el producto
-        
+            # Redirigir si no se encuentra el producto
+            return redirect(url_for('producto_controller.catalogo'))  
+            
     except Exception as e:
-        flash("Error al obtener datos del producto")
-        abort(500, description="Error al obtener datos del producto")
+        # Manejo de errores
+        print(f"Error al obtener los datos del producto: {e}")
+        abort(500, description="Error al obtener los datos del producto")
+        
     finally:
+        # Cerrar el cursor y la conexión
         cursor.close()
         close_connection(conn)
-    
-    return render_template('usuario/producto.html', producto=producto)
+
   # Asegúrate de que el nombre de la plantilla sea correcto
 
 # Controlador del catálogo

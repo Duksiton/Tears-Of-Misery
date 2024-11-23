@@ -66,7 +66,8 @@ def verificar_usuario():
                 WHERE idUsuario = %s
             """, (nombre, correo, telefono, direccion, user_id))
             conn.commit()
-            
+
+            # Actualizar la sesión con los nuevos datos
             user['nombre'] = nombre
             user['email'] = correo
             user['telefono'] = telefono
@@ -78,9 +79,13 @@ def verificar_usuario():
             print(f"Error al actualizar los datos: {e}")
             return jsonify({"success": False, "message": "Error al actualizar los datos."}), 500
         finally:
-            cursor.close()
-            close_connection(conn)
+            # Verificamos si el cursor y la conexión fueron inicializados antes de cerrarlos
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                close_connection(conn)
 
+    # Código para la parte GET
     conn = create_connection()
     if conn is None:
         abort(500, description="Error de conexión a la base de datos")
@@ -99,10 +104,14 @@ def verificar_usuario():
         print(f"Error al obtener usuario: {e}")
         usuario = {}
     finally:
-        cursor.close()
-        close_connection(conn)
-    
+        # Verificamos si el cursor y la conexión fueron inicializados antes de cerrarlos
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            close_connection(conn)
+
     return render_template('usuario/verificacion.html', user=usuario)
+
 
 
 
