@@ -1,5 +1,7 @@
-import MySQLdb
+import mysql.connector
+from mysql.connector import Error
 from flask import current_app
+import MySQLdb as mysql
 import logging
 
 def create_connection():
@@ -16,3 +18,7 @@ def create_connection():
     except MySQLdb.Error as e:
         logging.error(f"Error connecting to MySQL Platform: {e}")
         return None
+
+def close_connection(connection):
+    if connection and connection.is_connected():
+        connection.close()
