@@ -1,7 +1,5 @@
-import mysql.connector
-from mysql.connector import Error
-from flask import current_app
 import MySQLdb as mysql
+from flask import current_app
 import logging
 
 def create_connection():
@@ -13,12 +11,16 @@ def create_connection():
             database=current_app.config['MYSQL_DB'],
             port=current_app.config['MYSQL_PORT']
         )
-        logging.info("Database connection successful")
+        logging.info("Conexión a la base de datos exitosa")
         return connection
     except mysql.Error as e:
-        logging.error(f"Error connecting to MySQL Platform: {e}")
+        logging.error(f"Error al conectar con la base de datos MySQL: {e}")
         return None
 
 def close_connection(connection):
-    if connection and connection.is_connected():
-        connection.close()
+    try:
+        if connection:
+            connection.close()
+            logging.info("Conexión cerrada exitosamente")
+    except Exception as e:
+        logging.error(f"Error al cerrar la conexión: {e}")

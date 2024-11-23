@@ -530,8 +530,8 @@ def get_usuarios():
 def actualizar_contrasenas_usuarios():
     usuarios = [
         {
-            'email': 'admin@gmail.com',
-            'contrasena': 'administrador$mvc.2024.tears',
+            'email': 'admin1@gmail.com',
+            'contrasena': 'miContraseñaAdmin',
             'rol': 'Administrador'
         },
         {
@@ -574,6 +574,7 @@ def actualizar_contrasenas_usuarios():
             cursor.close()
         if connection:
             close_connection(connection)
+
 
 
 # Llama a la función de actualización antes de iniciar la aplicación
