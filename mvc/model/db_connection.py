@@ -6,7 +6,7 @@ import logging
 
 def create_connection():
     try:
-        connection = MySQLdb.connect(
+        connection = mysql.connect(
             host=current_app.config['MYSQL_HOST'],
             user=current_app.config['MYSQL_USER'],
             password=current_app.config['MYSQL_PASSWORD'],
@@ -15,7 +15,7 @@ def create_connection():
         )
         logging.info("Database connection successful")
         return connection
-    except MySQLdb.Error as e:
+    except mysql.Error as e:
         logging.error(f"Error connecting to MySQL Platform: {e}")
         return None
 
