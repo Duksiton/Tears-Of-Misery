@@ -157,15 +157,18 @@
                 <div class="product-content">
                     {% for producto in productos %}
                     <div class="product">
-                        <a href="{{ url_for('check_product', id_producto=producto.idProducto) }}">
-                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
-                            <h3>{{ producto.nombre }}</h3>
-                            <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
+                        <a href="{{ url_for('check_product', id_producto=producto['idProducto']) }}">
+                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto['imagen']) }}" alt="{{ producto['nombre'] }}">
+                            <h3>{{ producto['nombre'] }}</h3>
+                            <p>${{ producto['precio'] }}</p>
                         </a>
                     </div>
+                    {% else %}
+                    <p>No hay productos disponibles.</p>
                     {% endfor %}
                 </div>
             </section>
+            
             
             
         </div>

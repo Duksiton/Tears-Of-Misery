@@ -35,6 +35,8 @@ def ver_pedidos():
 
     return render_template('admin/pedidos.html', pedidos=pedidos)
 
+from MySQLdb.cursors import DictCursor  # Asegúrate de importar DictCursor
+
 @pedidos_controller.route('/editar_estado_pedido', methods=['POST'])
 def editar_estado_pedido():
     idPedido = request.form.get('idPedido')
@@ -46,7 +48,7 @@ def editar_estado_pedido():
         return jsonify({'success': False, 'message': 'Datos incompletos'}), 400
 
     conn = create_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(DictCursor)  # Usar DictCursor
 
     try:
         # Actualizar el estado del pedido en la base de datos
@@ -65,7 +67,7 @@ def editar_estado_pedido():
         if not id_usuario_result:
             return jsonify({'success': False, 'message': 'No se encontró el usuario asociado al pedido'}), 404
 
-        id_usuario = id_usuario_result[0]
+        id_usuario = id_usuario_result['idUsuario']  # Usar el nombre de la columna
         print(f"idUsuario: {id_usuario}")
 
         # Obtener el correo del usuario
@@ -75,7 +77,7 @@ def editar_estado_pedido():
         if not usuario:
             return jsonify({'success': False, 'message': 'Correo del usuario no encontrado'}), 404
 
-        email = usuario[0]
+        email = usuario['email']  # Usar el nombre de la columna
         print(f"Email del usuario: {email}")
 
         # Enviar correo de notificación
