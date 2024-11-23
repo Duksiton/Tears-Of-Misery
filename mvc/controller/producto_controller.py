@@ -1,6 +1,6 @@
 # Importaciones
 import shutil
-from flask import Blueprint, render_template, abort, flash, request, redirect, url_for, jsonify
+from flask import Blueprint, app, render_template, abort, flash, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 import os
 from mvc.model.db_connection import create_connection, close_connection
@@ -366,12 +366,14 @@ def delete_product(id):
 
 @producto_controller.route('/productos', methods=['GET'])
 def mostrar_productos_invitado():
-    conn = create_connection()
-    if conn is None:
-        flash("Error de conexión a la base de datos")
-        abort(500, description="Error de conexión a la base de datos")
-    
     try:
+        # Intentar establecer la conexión
+        conn = create_connection()
+        if conn is None:
+            flash("Error de conexión a la base de datos")
+            abort(500, description="Error de conexión a la base de datos")
+
+        # Crear el cursor y ejecutar la consulta
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM producto")
         productos = cursor.fetchall()
@@ -379,14 +381,18 @@ def mostrar_productos_invitado():
         # Formatear el precio de cada producto
         for producto in productos:
             producto['precio'] = f"{int(producto['precio']):,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-        
+
     except Exception as e:
-        
-        productos = []
+        app.logger.error(f"Error en mostrar_productos_invitado: {e}")
+        productos = []  # Devolver una lista vacía si hay un error
     finally:
-        cursor.close()
-        close_connection(conn)
-    
+        # Asegurarse de cerrar los recursos
+        if 'cursor' in locals() and cursor is not None:
+            cursor.close()
+        if conn is not None:
+            close_connection(conn)
+
     return render_template('productos.html', productos=productos)
+
 
 
