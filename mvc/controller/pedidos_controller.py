@@ -2,6 +2,8 @@ import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from mvc.model.db_connection import create_connection
 from mysql.connector import Error
+import MySQLdb
+
 
 pedidos_controller = Blueprint('pedidos_controller', __name__)
 
@@ -13,7 +15,7 @@ def ver_pedidos():
         return redirect(url_for('login_controller.login'))
 
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(MySQLdb.cursors.DictCursor)  # Usar DictCursor para obtener los resultados como diccionarios
 
     try:
         query = """
