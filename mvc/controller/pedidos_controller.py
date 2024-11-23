@@ -34,10 +34,7 @@ def ver_pedidos():
         conn.close()
 
     return render_template('admin/pedidos.html', pedidos=pedidos)
-
 from MySQLdb.cursors import DictCursor  # Asegúrate de importar DictCursor
-
-from MySQLdb.cursors import DictCursor  # Importa DictCursor
 
 @pedidos_controller.route('/editar_estado_pedido', methods=['POST'])
 def editar_estado_pedido():
@@ -109,3 +106,4 @@ def enviar_correo_actualizacion(email, estado):
 
     except Exception as e:
         print(f'Error al enviar el correo: {e}')
+
