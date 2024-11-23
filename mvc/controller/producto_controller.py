@@ -364,7 +364,41 @@ def delete_product(id):
     return redirect(url_for('producto_controller.admin'))
 
 
-@producto_controller.route('/productos', methods=['GET'])
+from flask import Flask, render_template, flash, abort
+import os
+from dotenv import load_dotenv
+import mysql.connector
+
+# Cargar variables de entorno
+load_dotenv()
+
+# Configuración de la aplicación Flask
+app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'tearsofmiseryconexion')
+
+# Configuración de la base de datos
+def create_connection():
+    try:
+        return mysql.connector.connect(
+            host=os.getenv("MYSQL_HOST", "mysql.railway.internal"),
+            user=os.getenv("MYSQL_USER", "root"),
+            password=os.getenv("MYSQL_PASSWORD", ""),
+            database=os.getenv("MYSQL_DB", "tearsOfMisery"),
+            port=int(os.getenv("MYSQL_PORT", 3306)),
+        )
+    except Exception as e:
+        app.logger.error(f"Error al crear la conexión: {e}")
+        return None
+
+def close_connection(connection):
+    if connection:
+        try:
+            connection.close()
+        except Exception as e:
+            app.logger.error(f"Error al cerrar la conexión: {e}")
+
+# Ruta para mostrar los productos
+@app.route('/productos', methods=['GET'])
 def mostrar_productos_invitado():
     try:
         # Intentar establecer la conexión
@@ -390,12 +424,31 @@ def mostrar_productos_invitado():
         productos = []  # Devolver una lista vacía si hay un error
     finally:
         # Asegurarse de cerrar los recursos
-        if 'cursor' in locals() and cursor is not None:
+        if 'cursor' in locals() and cursor:
             cursor.close()
-        if conn is not None:
+        if conn:
             close_connection(conn)
 
     return render_template('productos.html', productos=productos)
+
+# Ruta de prueba para la conexión a la base de datos
+@app.route('/test_db')
+def test_db():
+    try:
+        conn = create_connection()
+        if conn:
+            return "Conexión exitosa a la base de datos."
+        else:
+            return "Error al conectar con la base de datos.", 500
+    except Exception as e:
+        return f"Error al conectar: {e}", 500
+    finally:
+        if conn:
+            close_connection(conn)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
 
