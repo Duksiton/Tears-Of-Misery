@@ -530,8 +530,8 @@ def get_usuarios():
 def actualizar_contrasenas_usuarios():
     usuarios = [
         {
-            'email': 'admin1@gmail.com',
-            'contrasena': 'miContraseñaAdmin',
+            'email': 'admin@gmail.com',
+            'contrasena': 'administrador$mvc.2024.tears',
             'rol': 'Administrador'
         },
         {
@@ -540,31 +540,41 @@ def actualizar_contrasenas_usuarios():
             'rol': 'Usuario'
         }
     ]
-    
+
     connection = None
     try:
+        # Crear conexión a la base de datos
         connection = create_connection()
+        if connection is None:
+            print("No se pudo establecer conexión con la base de datos.")
+            return
+
         cursor = connection.cursor()
-        
+
         for usuario in usuarios:
+            # Hashear la contraseña
             hashed_password = bcrypt.hashpw(usuario['contrasena'].encode('utf-8'), bcrypt.gensalt())
-            
-            # Actualiza la contraseña del usuario
+
+            # Actualizar la contraseña del usuario
             update_query = "UPDATE usuario SET contraseña = %s WHERE email = %s AND nombreRol = %s"
             cursor.execute(update_query, (hashed_password.decode('utf-8'), usuario['email'], usuario['rol']))
-        
+
+        # Confirmar los cambios
         connection.commit()
         print("Contraseñas de usuarios actualizadas con éxito.")
-    
+
     except Exception as e:
         print(f"Error al actualizar las contraseñas de usuarios: {e}")
         if connection:
             connection.rollback()
-    
+
     finally:
-        if connection and connection.is_connected():
+        # Cerrar recursos de forma segura
+        if 'cursor' in locals() and cursor:
             cursor.close()
-            connection.close()
+        if connection:
+            close_connection(connection)
+
 
 # Llama a la función de actualización antes de iniciar la aplicación
 actualizar_contrasenas_usuarios()
