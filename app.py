@@ -344,11 +344,30 @@ def get_historial_compras():
 
 @app.route('/productos')
 def mostrar_productos():
-    connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM producto")
-    productos = cursor.fetchall()
-    return render_template('productos.html', productos=productos)
+    try:
+        # Intentar establecer la conexión
+        connection = create_connection()
+        if connection is None:
+            app.logger.error("Error: No se pudo establecer conexión con la base de datos.")
+            return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+
+        # Crear el cursor y ejecutar la consulta
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM producto")
+        productos = cursor.fetchall()
+
+        # Renderizar los productos
+        return render_template('productos.html', productos=productos)
+    except Exception as e:
+        app.logger.error(f"Error al mostrar productos: {e}")
+        return jsonify({'error': str(e)}), 500
+    finally:
+        # Cerrar el cursor y la conexión de manera segura
+        if 'cursor' in locals() and cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
 
 @app.route('/check_product/<int:id_producto>', methods=['GET'])
 def check_product(id_producto):
