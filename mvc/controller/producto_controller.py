@@ -380,11 +380,11 @@ app.secret_key = os.getenv('SECRET_KEY', 'tearsofmiseryconexion')
 def create_connection():
     try:
         return mysql.connector.connect(
-            host=os.getenv("MYSQL_HOST", "mysql.railway.internal"),
+            host=os.getenv("MYSQL_HOST", "autorack.proxy.rlwy.net"),
             user=os.getenv("MYSQL_USER", "root"),
-            password=os.getenv("MYSQL_PASSWORD", ""),
-            database=os.getenv("MYSQL_DB", "tearsOfMisery"),
-            port=int(os.getenv("MYSQL_PORT", 3306)),
+            password=os.getenv("MYSQL_PASSWORD", "ZSOWJGjemzeQLMBMkAEKaIJIwbZWECwA"),
+            database=os.getenv("MYSQL_DB", "Tears of Misery"),
+            port=int(os.getenv("MYSQL_PORT", 35827)),
         )
     except Exception as e:
         app.logger.error(f"Error al crear la conexión: {e}")
