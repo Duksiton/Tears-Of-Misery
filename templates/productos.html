@@ -152,23 +152,21 @@
             <!-- Aquí puedes agregar encabezados o elementos adicionales -->
         </div>
         <div class="product-content" id="product-content">
-            <section class="product-detail">
-                <div class="product-info">
-                    <h2>{{ producto.nombre }}</h2>
-                    <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" 
-                         alt="{{ producto.nombre }}">
-                    <p>Precio: ${{ producto.precio }}</p>
-            
-                    <h3>Tallas disponibles:</h3>
-                    <ul>
-                        {% for talla, stock in producto.tallas_stock.items() %}
-                            <li>{{ talla }} - {{ stock }} unidades</li>
-                        {% endfor %}
-                    </ul>
-                    
-                    <!-- Aquí puedes agregar el formulario para seleccionar talla, cantidad, etc. -->
+            <section class="products">
+                <h2>Nuestros Productos</h2>
+                <div class="product-content">
+                    {% for producto in productos %}
+                    <div class="product">
+                        <a href="{{ url_for('check_product', id_producto=producto.idProducto) }}">
+                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
+                            <h3>{{ producto.nombre }}</h3>
+                            <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
             </section>
+            
             
         </div>
     </section>
