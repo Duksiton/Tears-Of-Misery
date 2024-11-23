@@ -168,10 +168,23 @@ def eliminar_direccion(idUsuario):
             return jsonify({'success': False, 'message': 'No autorizado'}), 403
         return redirect(url_for('login_controller.login'))
 
-    connection = create_connection()
-    cursor = connection.cursor()
-
+    connection = None
+    cursor = None
     try:
+        # Asegurarse de que la conexión se haga correctamente en Render
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        # Verificar si el idUsuario existe en la base de datos
+        cursor.execute("SELECT idUsuario FROM usuario WHERE idUsuario = %s", (idUsuario,))
+        if cursor.fetchone() is None:
+            message = 'Usuario no encontrado.'
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return jsonify({'success': False, 'message': message}), 404
+            flash(message, "warning")
+            return redirect(url_for('perfil.perfil'))
+
+        # Actualizar la dirección a NULL
         cursor.execute("""
             UPDATE usuario
             SET direccion = NULL
@@ -180,23 +193,33 @@ def eliminar_direccion(idUsuario):
 
         connection.commit()
         success = cursor.rowcount > 0
-        message = 'Dirección eliminada con éxito.' if success else 'Dirección no encontrada o ya era NULL.'
-        
+        message = 'Dirección eliminada con éxito.' if success else 'La dirección ya era NULL o no se encontró.'
+
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return jsonify({'success': success, 'message': message})
         
         flash(message, "success" if success else "warning")
         return redirect(url_for('perfil.perfil'))
-        
+
     except Exception as e:
+        # En Render, los errores se deben manejar con más detalle
         message = f"Error al eliminar la dirección: {e}"
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return jsonify({'success': False, 'message': message}), 500
         flash(message, "danger")
         return redirect(url_for('perfil.perfil'))
+
     finally:
-        cursor.close()
-        connection.close()
+        # Cerrar el cursor y la conexión de manera segura
+        if cursor:
+            cursor.close()
+        if connection:
+            try:
+                connection.close()  # Asegúrate de cerrar la conexión de la base de datos
+            except Exception as e:
+                # Si hay un error al cerrar la conexión, lo manejamos aquí
+                print(f"Error al cerrar la conexión: {e}")
+
 
 
 

@@ -52,7 +52,7 @@ def registro():
             connection.commit()
 
             # Enviar correo de bienvenida
-            msg = Message('Bienvenido a TearsOfMisery', recipients=[email])
+            msg = Message('¡Bienvenid@ a Tears Of Misery!', recipients=[email])
             msg.html = render_template('registro_email.html', nombre=nombre, email=email)
             mail.send(msg)
 
