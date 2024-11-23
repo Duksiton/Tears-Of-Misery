@@ -25,11 +25,11 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'tearsofmiseryconexion')
 
 # Configuración de la base de datos
-app.config['MYSQL_HOST'] = os.getenv('MYSQLHOST', 'mysql.railway.internal')
-app.config['MYSQL_USER'] = os.getenv('MYSQLUSER', 'root')
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQLPASSWORD', 'ZSOWJGjemzeQLMBMkAEKaIJIwbZWECwA')
-app.config['MYSQL_DB'] = os.getenv('MYSQLDATABASE', 'Tears of Misery')
-app.config['MYSQL_PORT'] = int(os.getenv('MYSQLPORT', 3306))
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'autorack.proxy.rlwy.net')  # Host público de Railway
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')  # Usuario de la base de datos
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', 'ZSOWJGjemzeQLMBMkAEKaIJIwbZWECwA')  # Contraseña de la base de datos
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'Tears of Misery')  # Nombre de la base de datos
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT', 35827))  # Puerto público de Railway
 
 # Registro de los blueprints
 app.register_blueprint(producto_controller)
