@@ -1,3 +1,4 @@
+import MySQLdb
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from mvc.model.db_connection import create_connection
 import bcrypt
@@ -16,7 +17,7 @@ def perfil():
         return redirect(url_for('login_controller.login'))  # Redirige a iniciar sesión si no hay un usuario autenticado
 
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(MySQLdb.cursors.DictCursor)  # Usar DictCursor
 
     try:
         # Consulta para obtener los datos del perfil del usuario
@@ -43,6 +44,7 @@ def perfil():
     return render_template('usuario/perfil.html', perfil=perfil_data, compras=compras)
 
 
+
 # Ruta para actualizar los datos del perfil
 @perfil_controller.route('/perfil/actualizar', methods=['POST'])
 def actualizar_perfil():
@@ -67,17 +69,20 @@ def actualizar_perfil():
         connection.commit()
 
         # Actualizar los datos en la sesión
-        session['user']['nombre'] = nombre
-        session['user']['email'] = email
-        session['user']['telefono'] = telefono
+        session['user'].update({
+            'nombre': nombre,
+            'email': email,
+            'telefono': telefono
+        })
 
-    except Error as e:
+    except Exception as e:
         flash(f"Error al actualizar el perfil: {e}", "danger")
     finally:
         cursor.close()
         connection.close()
 
     return redirect(url_for('perfil.perfil'))
+
 
 # Ruta para cambiar la contraseña
 @perfil_controller.route('/perfil/cambiar_contrasena', methods=['POST'])
@@ -91,7 +96,7 @@ def update_password():
     repetir_password = request.form.get('repetir-password')
 
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = connection.cursor(MySQLdb.cursors.DictCursor)
 
     try:
         # Verificar la contraseña actual
@@ -117,11 +122,12 @@ def update_password():
 
         connection.commit()
         return jsonify({'success': True, 'message': 'Contraseña actualizada correctamente.'}), 200
-    except Error as e:
+    except Exception as e:
         return jsonify({'success': False, 'message': f'Error al cambiar la contraseña: {e}'}), 500
     finally:
         cursor.close()
         connection.close()
+
 
 # Ruta para añadir una nueva dirección
 @perfil_controller.route('/perfil/añadir_direccion', methods=['POST'])
@@ -143,13 +149,14 @@ def add_direccion():
         """, (direccion, user['idUsuario']))
 
         connection.commit()
-    except Error as e:
+    except Exception as e:
         flash(f"Error al actualizar la dirección: {e}", "danger")
     finally:
         cursor.close()
         connection.close()
 
     return redirect(url_for('perfil.perfil'))
+
 
 
 # Ruta para eliminar un usuario
@@ -181,7 +188,7 @@ def eliminar_direccion(idUsuario):
         flash(message, "success" if success else "warning")
         return redirect(url_for('perfil.perfil'))
         
-    except Error as e:
+    except Exception as e:
         message = f"Error al eliminar la dirección: {e}"
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return jsonify({'success': False, 'message': message}), 500
@@ -190,5 +197,6 @@ def eliminar_direccion(idUsuario):
     finally:
         cursor.close()
         connection.close()
+
 
 
