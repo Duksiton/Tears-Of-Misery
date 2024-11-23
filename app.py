@@ -2,6 +2,7 @@
 import MySQLdb
 from flask import Flask, abort, render_template, flash, jsonify, request, send_from_directory,session,redirect, url_for
 from waitress import serve
+from dotenv import load_dotenv
 from flask_mail import Mail, Message
 from mvc.model.db_connection import create_connection, close_connection
 from mvc.controller.producto_controller import producto_controller
@@ -18,8 +19,17 @@ import os
 from mvc.controller.password_reset_controller import password_reset_controller
 import bcrypt
 
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = 'tearsofmiseryconexion'
+app.secret_key = os.getenv('SECRET_KEY', 'tearsofmiseryconexion')
+
+# Configuración de la base de datos
+app.config['MYSQL_HOST'] = os.getenv('MYSQLHOST', 'mysql.railway.internal')
+app.config['MYSQL_USER'] = os.getenv('MYSQLUSER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQLPASSWORD', 'ZSOWJGjemzeQLMBMkAEKaIJIwbZWECwA')
+app.config['MYSQL_DB'] = os.getenv('MYSQLDATABASE', 'Tears of Misery')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQLPORT', 3306))
 
 # Registro de los blueprints
 app.register_blueprint(producto_controller)
