@@ -4,11 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
+    <title>¡Registrate!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_producto.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musica.css') }}">
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button onclick="togglePlayPause()" id="playPauseButton">▶ Play</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" onchange="changeVolume()">
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" src="{{ url_for('static', filename='audio/desmembramiento selectivoR.mp3') }}" loop
+        muted></audio>
 </head>
 
 <body>
@@ -65,9 +77,13 @@
         <div class="group3">
             <ul>
                 <li class="submenu">
-                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
-                        id="img-carrito" alt="carrito de compra">
-                    <div id="carrito">
+                    <div class="cart-icon-container" style="position: relative;">
+                        <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                            id="img-carrito" alt="carrito de compra">
+                        <span id="cart-count" style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                    </div>
+                    <div id="carrito" style="display: none;">
+                        <button class="close-btn">&times;</button>
                         <table id="lista-carrito">
                             <thead>
                                 <tr>
@@ -79,7 +95,7 @@
                                 </tr>
                             </thead>
                             <tbody id="productos">
-
+                                <!-- Contenido dinámico aquí -->
                             </tbody>
                         </table>
                         <div id="ver-mas-container">
@@ -87,6 +103,7 @@
                         </div>
                         <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
                         <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
                         <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
                     </div>
                 </li>
@@ -98,6 +115,7 @@
         <div class="hr-color">
             <hr>
         </div>
+       
 
         <div class="box">
             <div class="login-form">
@@ -179,7 +197,7 @@
         </div>
         <div class="grupo-2">
             <hr class="hr-color-gris">
-            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
         </div>
     </footer>
 
@@ -197,6 +215,7 @@
         }
     </script>
     <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audioController.js') }}"></script>
 
 </body>
 

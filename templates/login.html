@@ -4,11 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
+    <title>¡Inicia sesión!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_producto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="{{ url_for('static', filename='images/icon-logo.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musica.css') }}">
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button onclick="togglePlayPause()" id="playPauseButton">▶ Play</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" onchange="changeVolume()">
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" src="{{ url_for('static', filename='audio/desmembramiento selectivoR.mp3') }}" loop
+        muted></audio>
 </head>
 
 <body>
@@ -19,34 +31,131 @@
             position: relative;
             margin-bottom: 1rem;
         }
+
         .inputBox label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: bold;
-            color: #d3d3d3; /* Gris claro */
+            color: #d3d3d3;
+            /* Gris claro */
         }
+
         .inputBox input {
-            width: calc(100% - 40px); /* Ajusta el ancho para el botón */
+            width: calc(100% - 40px);
+            /* Ajusta el ancho para el botón */
             padding: 0.5rem;
             box-sizing: border-box;
         }
+
         .inputBox .toggle-password {
             position: absolute;
-            bottom: 100px; /* Ajusta este valor para mover el botón más abajo */
+            bottom: 100px;
+            /* Ajusta este valor para mover el botón más abajo */
             right: 10px;
             background: transparent;
             border: none;
             cursor: pointer;
-            color: #d3d3d3; /* Gris claro */
+            color: #d3d3d3;
+            /* Gris claro */
             padding: 0;
-            font-size: 1.5rem; /* Tamaño del icono */
+            font-size: 1.5rem;
+            /* Tamaño del icono */
         }
+
         .inputBox .toggle-password i {
             display: inline-block;
         }
+
+        .modal-reset-password {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            /* Aumentado para asegurarse que esté por encima de otros elementos */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Fondo oscuro con más opacidad */
+            padding-top: 150px;
+            box-sizing: border-box;
+        }
+
+        .modal-reset-password-content {
+            background-color: #2e2e2e;
+            /* Color de fondo del modal */
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .modal-reset-password-content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .modal-reset-password-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            /* Texto en gris claro */
+        }
+
+        .modal-reset-password-content input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #444444;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .modal-reset-password-content input[type="email"]::placeholder {
+            color: #bbb;
+            /* Color de placeholder */
+        }
+
+        .btn-reset-password {
+            background: linear-gradient(45deg, #8d4a4a, #5d2a2a);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-reset-password:hover {
+            background: linear-gradient(45deg, #a73a2a, #6c1b1b);
+        }
+
+        .btn-close-reset-password {
+            background: none;
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            cursor: pointer;
+        }
+
+        .btn-close-reset-password:hover {
+            color: #ff6f61;
+        }
     </style>
-    
-    
+
+
 
     <header>
         <a href="{{ url_for('index') }}" class="logo">
@@ -54,22 +163,31 @@
         </a>
         <div class="group">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a href="{{ url_for('productos') }}">Productos</a></li>
+                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a
+                        href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a
+                        href="{{ url_for('productos') }}">Productos</a></li>
             </ul>
         </div>
         <div class="group2">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
-                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
+                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a
+                        href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
+                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a
+                        href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
             </ul>
         </div>
         <div class="group3">
             <ul>
                 <li class="submenu">
-                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
-                        id="img-carrito" alt="carrito de compra">
-                    <div id="carrito">
+                    <div class="cart-icon-container" style="position: relative;">
+                        <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                            id="img-carrito" alt="carrito de compra">
+                        <span id="cart-count"
+                            style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                    </div>
+                    <div id="carrito" style="display: none;">
+                        <button class="close-btn">&times;</button>
                         <table id="lista-carrito">
                             <thead>
                                 <tr>
@@ -81,7 +199,7 @@
                                 </tr>
                             </thead>
                             <tbody id="productos">
-
+                                <!-- Contenido dinámico aquí -->
                             </tbody>
                         </table>
                         <div id="ver-mas-container">
@@ -89,7 +207,8 @@
                         </div>
                         <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
                         <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
-                       
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más
+                            productos</a>
                         <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
                     </div>
                 </li>
@@ -100,6 +219,8 @@
         <hr>
     </div>
 
+
+
     <div class="main-container">
 
         <div class="box">
@@ -108,14 +229,14 @@
 
                 <div id="flash-messages" style="display: none;">
                     {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p class="flash-message">{{ message }}</p> <!-- Agregando la clase flash-message -->
-                            {% endfor %}
-                        {% endif %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="flash-message">{{ message }}</p> <!-- Agregando la clase flash-message -->
+                    {% endfor %}
+                    {% endif %}
                     {% endwith %}
                 </div>
-            
+
                 <!-- Modal para los mensajes de error -->
                 <div id="errorModal" class="modal">
                     <div class="modal-content">
@@ -124,7 +245,7 @@
                         <button class="btn-accept">Aceptar</button>
                     </div>
                 </div>
-                
+
 
                 <form method="post" action="{{ url_for('login_controller.login') }}">
                     <div class="inputBox">
@@ -133,7 +254,7 @@
                         </div>
                         <input type="email" id="email" name="email" required minlength="4" maxlength="60">
                     </div>
-                    
+
                     <div class="inputBox password-container">
                         <div class="registration-link">
                             <h5>Ingrese su contraseña</h5>
@@ -150,11 +271,27 @@
                         <h5>¿No tienes una cuenta?</h5>
                         <a href="{{ url_for('registro') }}">¡Regístrate!</a>
                     </div>
+                    <div class="registration-link">
+                        <h5>Reestablece tu contraseña aquí</h5>
+                        <a href="#" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                    </div>
                 </form>
             </div>
 
         </div>
+        <div id="modal-reset-password" class="modal-reset-password" style="display: none;">
+            <div class="modal-reset-password-content">
+                <button class="btn-close-reset-password">&times;</button>
+                <h2>Restablecer Contraseña</h2>
+                <p>Introduce tu correo electrónico y te enviaremos un correo con tu nueva contraseña.</p>
 
+                <form action="{{ url_for('password_reset_controller.reset_password') }}" method="POST">
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+                    <br>
+                    <button type="submit" class="btn-reset-password">Enviar Enlace</button>
+                </form>
+            </div>
+        </div>
         <footer class="pie-pagina">
             <hr class="hr-color">
             <div class="grupo-1">
@@ -182,7 +319,7 @@
             </div>
             <div class="grupo-2">
                 <hr class="hr-color-gris">
-                <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+                <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
             </div>
         </footer>
         <script>
@@ -200,36 +337,60 @@
         </script>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var modal = document.getElementById('errorModal');
-        var acceptBtn = document.getElementsByClassName('btn-accept')[0];
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var modal = document.getElementById('errorModal');
+                var acceptBtn = document.getElementsByClassName('btn-accept')[0];
 
-        var flashMessages = document.getElementById('flash-messages').innerHTML;
+                var flashMessages = document.getElementById('flash-messages').innerHTML;
 
-        if (flashMessages.trim() !== "") {
-            var modalMessage = document.getElementById('modal-message');
-            modalMessage.innerHTML = flashMessages;
-            modal.style.display = 'block';
-        }
+                if (flashMessages.trim() !== "") {
+                    var modalMessage = document.getElementById('modal-message');
+                    modalMessage.innerHTML = flashMessages;
+                    modal.style.display = 'block';
+                }
 
-        acceptBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
+                acceptBtn.onclick = function () {
+                    modal.style.display = 'none';
+                }
 
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    });
-</script>
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+            });
+        </script>
+        <script>
+            // Selecciona el enlace y el modal
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
+            const modalResetPassword = document.getElementById('modal-reset-password');
+            const btnCloseResetPassword = document.querySelector('.btn-close-reset-password');
 
+            // Función para mostrar el modal
+            forgotPasswordLink.addEventListener('click', function (event) {
+                event.preventDefault(); // Evita que el enlace recargue la página
+                modalResetPassword.style.display = 'block'; // Muestra el modal
+            });
+
+            // Función para cerrar el modal
+            btnCloseResetPassword.addEventListener('click', function () {
+                modalResetPassword.style.display = 'none'; // Oculta el modal
+            });
+
+            // Cierra el modal si se hace clic fuera de él
+            window.addEventListener('click', function (event) {
+                if (event.target === modalResetPassword) {
+                    modalResetPassword.style.display = 'none'; // Oculta el modal
+                }
+            });
+        </script>
 
 
         <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/audioController.js') }}"></script>
 
-        
+
 
 </body>
 

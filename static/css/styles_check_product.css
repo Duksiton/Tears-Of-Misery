@@ -22,28 +22,26 @@ html {
     font-family: "Montserrat", sans-serif;
     scroll-behavior: smooth;
 }
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2rem;
-    
-    
-}
 
 header {
-    position: fixed; /* Fija el header */
-    top: 0; /* Posición en la parte superior de la página */
-    left: 0;
-    width: 100%; /* Abarca todo el ancho */
-    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
-    background-color: #1d1e1e;; /* Fondo del header (puedes cambiar el color si es necesario) */
-    padding: 10px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra para resaltar el header */
+    position: fixed; /* Cambiado a fixed para que siga */
+    top: 0; /* Fija el header en la parte superior */
+    background: #030303;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    box-shadow: 0 15px 15px rgba(8, 0, 0, 0.05);
+    z-index: 2;
+    width: 100%;
+    min-height: 80px; 
 }
 
 body {
-    padding-top: 100px; /* Agrega espacio en la parte superior del contenido para evitar que el contenido quede oculto debajo del header */
+    margin-top: 128px; /* Espacio para que el contenido no quede oculto */
 }
+
+
 .logo {
     color: #fff;
     text-decoration: none;
@@ -114,11 +112,6 @@ body {
     transform: scaleX(1);
     transform-origin: left;
     background: #ff0000;
-}
-
-.navigation li.active a {
-    color: #ec994b; /* Color de texto resaltado para la sección activa */
-    font-weight: bold; /* Opcional: resaltar la fuente */
 }
 
 .group2 {
@@ -333,6 +326,27 @@ body {
     background: #e9ec08;
 }
 
+
+#explorar {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    background: #e4a700;
+    color: #000000;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #000000; /* Agrega un borde negro */
+    transition: background 0.3s;
+}
+
+
+#explorar:hover {
+    background: #ffbb00;
+}
+
 /* Enlaces adicionales */
 #ver-mas-container {
     text-align: center;
@@ -370,9 +384,9 @@ img {
 
 .container-title {
 	padding: 30px;
-	background-color: #eee;
+	background-color: #4547477a;
 	margin-bottom: 50px;
-	color: #222;
+	color: #ffffff;
 }
 
 main {
@@ -404,6 +418,7 @@ main {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+    color: white;
 }
 
 .container-price {
@@ -417,10 +432,12 @@ main {
 .container-price span {
 	font-size: 24px;
 	font-weight: 300;
+    color: white;
 }
 
 .container-details-product {
 	padding: 30px 0;
+    
 }
 
 .form-group {
@@ -432,7 +449,7 @@ main {
 
 .form-group label {
 	width: 100px;
-	color: #222;
+	color: #868686;
 	font-weight: 700;
 }
 
@@ -533,17 +550,17 @@ main {
 
 .btn-increment-decrement i {
     font-size: 16px; /* Tamaño de las flechas */
-    color: #333;
+    color: #686868;
     cursor: pointer;
     margin: 2px 0; /* Espacio entre las flechas */
 }
 
 .fa-chevron-down:hover {
-    color: #000000;
+    color: #ffffff;
 }
 
 .fa-chevron-up:hover {
-    color: #000000;
+    color: #ffffff;
 }
 
 
@@ -590,7 +607,7 @@ main {
 .title-additional-information h4,
 .title-reviews h4 {
 	font-weight: 300;
-	color: #666;
+	color: #ffffff;
 	font-size: 14px;
 }
 
@@ -598,7 +615,7 @@ main {
 .text-additional-information,
 .text-reviews {
 	font-size: 13px;
-	color: #252525;
+	color: #ffffff;
 	line-height: 22px;
 	margin-top: 25px;
 }
@@ -665,7 +682,7 @@ main {
 }
 
 .text-product {
-	color: #252525;
+	color: #ffffff;
 	font-weight: 300;
 	line-height: 1.4;
 }
@@ -681,7 +698,7 @@ main {
 }
 
 .text-product p{
-    color: #666;
+    color: #ffffff;
     font-size: 13px;
 }
 
@@ -803,4 +820,8 @@ main {
     color: #333;
     cursor: pointer;
     margin: 2px 0;
+}
+.navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
 }

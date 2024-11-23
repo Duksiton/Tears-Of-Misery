@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <h2 style="color: ${tipo === 'success' ? '#ffbb00' : tipo === 'info' ? '#ffbb00' : '#dc3545'}; font-size: 36px; margin-bottom: 20px;">
                 ${tipo === 'success' ? '¡Éxito!' : tipo === 'info' ? 'Información' : 'Atención'}
             </h2>
-            <p style="font-size: 24px; margin-bottom: 30px;">${mensaje}</p>
+            <p style="font-size: 24px; margin-bottom: 30px; color: black;">${mensaje}</p>
             <button id="cerrarModal" 
                     style="background-color: #ffbb00; color: black; border: none; 
                     padding: 15px 30px; margin-top: 20px; border-radius: 8px; cursor: pointer;
@@ -86,6 +86,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 modal.style.display = 'none';
             }
         });
+    }
+
+    function actualizarContadorCarrito() {
+        const totalItems = carrito.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = totalItems;
+            cartCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
     }
 
     function actualizarCarrito() {
@@ -123,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
         verMasLink.textContent = mostrarMas ? 'Ocultar productos' : 'Ver más productos agregados';
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
+        actualizarContadorCarrito();
     }
 
     function agregarAlCarrito(product) {
@@ -166,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 mostrarMensaje('Ocurrió un error al verificar el stock. Intenta nuevamente.', 'error');
             });
     }
-
 
     // Obtener el estado de inicio de sesión del servidor
     fetch('/api/estado_sesion')
@@ -227,58 +236,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const total = carrito.reduce((sum, item) => sum + item.price * item.quantity, 0);
         mostrarMensaje(`La suma de tus productos es de: ${formatearPrecio(total)}, serás redirigido para confirmar tus datos, ¡gracias por la compra!`);
 
-        // Preparar los datos del carrito para enviarlos a la API
-        const productosCarrito = carrito.map(item => ({
-            idProducto: item.id,
-            nombreProducto: item.name,
-            talla: item.size,
-            cantidad: item.quantity,
-            total: item.price * item.quantity
-        }));
-
-        // Actualizar stock para cada producto en el carrito
-        productosCarrito.forEach(product => {
-            actualizarStock(product.idProducto, product.talla, product.cantidad);
-        });
-
-        carrito.length = 0;
-        actualizarCarrito();
-
-        // Verificar datos antes de enviar
-        console.log("Datos del carrito antes de enviar:", carrito);
-
-        // Realizar la petición a la API para guardar la compra
+        // Redirigir a la página de verificación del usuario
         setTimeout(function () {
-            fetch('/api/guardar_compra', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    productos: productosCarrito,
-                    total: total,
-                    fechaCompra: new Date().toISOString().split('T')[0]  // Formato YYYY-MM-DD
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        mostrarMensaje(data.message);
-                    } else {
-                        mostrarMensaje(data.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al guardar la compra:', error);
-                });
-
-            // Redirigir a la página de verificación del usuario
             window.location.href = '/verificar_usuario';
         }, 2500);
     });
-
-
-
 
     verMasLink.addEventListener('click', function () {
         mostrarMas = !mostrarMas;
@@ -289,38 +251,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const addToCartButton = document.getElementById('add-to-cart');
     if (addToCartButton) {
         addToCartButton.addEventListener('click', () => {
-            // Verifica el valor del atributo data-size
             const requiereTalla = addToCartButton.getAttribute('data-size');
-            console.log('Valor de data-size:', requiereTalla); // Debería mostrar "required" o "optional"
-
-            // Verifica si se requiere una talla
             const requiresSize = requiereTalla === 'required';
-            console.log('Requiere talla:', requiresSize);
 
-            // Verifica las checkboxes y muestra los estados de selección
-            const checkboxes = Array.from(document.querySelectorAll('#tallas-section .talla-checkbox'));
-            checkboxes.forEach(checkbox => {
-                console.log(`Checkbox con valor ${checkbox.value} está ${checkbox.checked ? 'seleccionado' : 'no seleccionado'}`);
-            });
-
-            // Obtén todas las checkboxes de talla seleccionadas
             const selectedSizes = Array.from(document.querySelectorAll('#tallas-section .talla-checkbox:checked'))
                 .map(checkbox => checkbox.value);
 
-            console.log('Tallas seleccionadas:', selectedSizes);
-
-            // Obtén la cantidad del producto
             const quantity = parseInt(document.getElementById('quantityInput').value, 10);
-            console.log('Cantidad:', quantity);
 
-            // Verifica si se ha seleccionado una talla cuando es requerida
             if (requiresSize && selectedSizes.length === 0) {
-                console.log('Por favor selecciona una talla antes de agregar al carrito.');
                 mostrarMensaje('Por favor selecciona una talla antes de agregar al carrito.', 'info');
                 return;
             }
 
-            // Si no hay tallas seleccionadas pero se requiere, usa "Album" como talla predeterminada
             const size = selectedSizes.length > 0 ? selectedSizes[0] : "Album";
 
             const product = {
@@ -332,21 +275,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 quantity: quantity || 1
             };
 
-            console.log('Producto:', product);
-
             agregarAlCarrito(product);
         });
     }
 
     actualizarCarrito();
-
-
-
 });
 
-// Preparar los datos del carrito para enviarlos a la API
+// Función para actualizar el stock (corregida)
 function actualizarStock(idProducto, talla, cantidad) {
-    fetch('/api/actualizar_stock', {
+    console.log(`Intentando restar ${cantidad} unidades del producto ${idProducto}, talla ${talla}`);
+    
+    return fetch('/api/actualizar_stock', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -354,22 +294,121 @@ function actualizarStock(idProducto, talla, cantidad) {
         body: JSON.stringify({
             idProducto: idProducto,
             talla: talla,
-            cantidad: cantidad
+            cantidad: cantidad // Enviamos la cantidad directamente, sin negativo
         })
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Stock actualizado con éxito');
-            } else {
-                console.error('Error al actualizar el stock:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error al conectar con la API:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(`Stock actualizado con éxito. Restadas ${cantidad} unidades.`);
+            return true;
+        } else {
+            console.error('Error al actualizar el stock:', data.message);
+            return false;
+        }
+    })
+    .catch(error => {
+        console.error('Error al conectar con la API:', error);
+        return false;
+    });
 }
 
+// Función para procesar la compra
+function procesarCompra() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productosFiltrados = carrito.filter(item => item.name && item.quantity > 0);
+    const total = carrito.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+    if (productosFiltrados.length > 0) {
+        // Actualizar el stock de todos los productos
+        const actualizacionesStock = productosFiltrados.map(item => 
+            actualizarStock(item.id, item.size, item.quantity)
+        );
 
+        // Esperar a que todas las actualizaciones de stock se completen
+        Promise.all(actualizacionesStock)
+            .then(resultados => {
+                // Si todas las actualizaciones de stock fueron exitosas
+                if (resultados.every(resultado => resultado)) {
+                    // Proceder con el guardado de la compra
+                    return fetch('/api/guardar_compra', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            productos: productosFiltrados.map(item => ({
+                                idUsuario: idUsuario,
+                                idProducto: item.id,
+                                nombreProducto: item.name,
+                                imagenProducto: item.img,
+                                cantidad: item.quantity,
+                                total: item.price * item.quantity
+                            })),
+                            total: total,
+                            fechaCompra: new Date().toISOString().split('T')[0]
+                        })
+                    });
+                } else {
+                    throw new Error('No se pudo actualizar el stock de todos los productos');
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.removeItem('carrito');
+                    actualizarCarrito();
+                    mostrarMensaje('Compra realizada con éxito. Gracias por tu compra!', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/perfil#compras';
+                    }, 2000);
+                } else {
+                    mostrarMensaje(data.message || 'Error al procesar la compra.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error al procesar la compra:', error);
+                mostrarMensaje('Error al procesar la compra. Por favor, intenta nuevamente.', 'error');
+            });
+    }
+}
+// Agregar un event listener para el botón de confirmar datos en la página de verificación
+if (window.location.pathname === '/verificar_usuario') {
+    document.addEventListener('DOMContentLoaded', function() {
+        const confirmarDatosBtn = document.getElementById('confirmar-datos');
+        if (confirmarDatosBtn) {
+            confirmarDatosBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                const formulario = document.getElementById('verification-form');
+                const formData = new FormData(formulario);
 
+                const nombre = formData.get('nombre').trim();
+                const correo = formData.get('correo').trim();
+                const telefono = formData.get('telefono').trim();
+                const direccion = formData.get('direccion').trim();
+
+                if (!nombre || !correo || !telefono || !direccion) {
+                    mostrarMensaje('Por favor, completa todos los campos.', 'error');
+                    return;
+                }
+
+                fetch(formulario.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        procesarCompra();
+                    } else {
+                        mostrarMensaje(data.message || 'Error al verificar los datos.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al enviar el formulario:', error);
+                    mostrarMensaje('Error al enviar el formulario. Por favor, intenta nuevamente.', 'error');
+                });
+            });
+        }
+    });
+}

@@ -173,14 +173,14 @@
                         <table id="productosTable" class="table table-striped table-hover table-with-animation">
                             <thead>
                                 <tr>
-                                  
+
                                     <th>ID</th>
                                     <th>Producto</th>
                                     <th>Fecha Pedido</th>
                                     <th>Usuario</th>
                                     <th>Total Pedido</th>
                                     <th>Estado</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -253,6 +253,88 @@
                 <!----edit-modal start--------->
 
 
+                <!-- Modal -->
+                <div id="modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <span id="close-modal" class="close">&times;</span>
+                        <p id="modal-message"></p>
+                    </div>
+                </div>
+
+                <!-- Estilos del modal -->
+                <style>
+                    .modal {
+                        display: none;
+                        position: fixed;
+                        z-index: 1;
+                        padding-top: 100px;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.4);
+                    }
+
+                    .modal-content {
+                        background-color: white;
+                        margin: auto;
+                        padding: 20px;
+                        border: 1px solid #888;
+                        width: 80%;
+                        max-width: 500px;
+                    }
+
+                    .close {
+                        color: #aaa;
+                        float: right;
+                        font-size: 28px;
+                        font-weight: bold;
+                    }
+
+                    .close:hover,
+                    .close:focus {
+                        color: black;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+                </style>
+                <script>
+                    document.getElementById('form-actualizar').addEventListener('submit', function (e) {
+                        e.preventDefault(); // Evita la recarga de la página
+
+                        const formData = new FormData(this);
+
+                        fetch('/api/actualizar_pedido', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.mensaje) {
+                                    // Mostrar el modal con el mensaje
+                                    document.getElementById('modal-message').innerText = data.mensaje;
+                                    document.getElementById('modal').style.display = 'block';
+                                } else if (data.error) {
+                                    // Mostrar el modal con el mensaje de error
+                                    document.getElementById('modal-message').innerText = data.error;
+                                    document.getElementById('modal').style.display = 'block';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+
+                    // Cerrar el modal cuando se hace clic en la "X"
+                    document.getElementById('close-modal').onclick = function () {
+                        document.getElementById('modal').style.display = 'none';
+                    }
+
+                    // Cerrar el modal cuando se hace clic fuera del modal
+                    window.onclick = function (event) {
+                        if (event.target == document.getElementById('modal')) {
+                            document.getElementById('modal').style.display = 'none';
+                        }
+                    }
+                </script>
 
 
 
@@ -286,42 +368,42 @@
         <!----footer-design------------->
 
 
-<script>
-    
-</script>
+        <script>
+
+        </script>
 
 
     </div>
 
     </div>
 
-<script>
-const searchInput = document.getElementById('searchInput');
-const historialComprasTableBody = document.getElementById('tableBody');
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const historialComprasTableBody = document.getElementById('tableBody');
 
-searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.trim();
-    const page = 1;
-    const itemsPerPage = 5;
+        searchInput.addEventListener('input', function () {
+            const searchTerm = searchInput.value.trim();
+            const page = 1;
+            const itemsPerPage = 5;
 
-    if (searchTerm.length >= 1) {
-        fetch(`/api/historial-compras?query=${searchTerm}&page=${page}&items_per_page=${itemsPerPage}`)
-            .then(response => response.json())
-            .then(data => {
-                const historialCompras = data.historial_compras;
-                const total = data.total;
+            if (searchTerm.length >= 1) {
+                fetch(`/api/historial-compras?query=${searchTerm}&page=${page}&items_per_page=${itemsPerPage}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const historialCompras = data.historial_compras;
+                        const total = data.total;
 
-                if (historialCompras.length > 0) {
-                    const rows = historialCompras.map(historial => {
-                        const fechaCompra = new Date(historial.fechaCompra);
-                        const fechaFormateada = fechaCompra.toISOString().slice(0, 10);
-                        const totalFormateado = new Intl.NumberFormat('es-CO', { 
-                        style: 'currency', 
-                        currency: 'COP', 
-                        minimumFractionDigits: 3 
-                        }).format(historial.total);
+                        if (historialCompras.length > 0) {
+                            const rows = historialCompras.map(historial => {
+                                const fechaCompra = new Date(historial.fechaCompra);
+                                const fechaFormateada = fechaCompra.toISOString().slice(0, 10);
+                                const totalFormateado = new Intl.NumberFormat('es-CO', {
+                                    style: 'currency',
+                                    currency: 'COP',
+                                    minimumFractionDigits: 3
+                                }).format(historial.total);
 
-                        return `
+                                return `
                             <tr>
                                 <td>${historial.idCompra}</td>
                                 <td>${historial.nombreProducto}</td>
@@ -342,19 +424,19 @@ searchInput.addEventListener('input', function() {
                                     </td>
                             </tr>
                         `;
-                    });
+                            });
 
-                    historialComprasTableBody.innerHTML = rows.join('');
-                } else {
-                    historialComprasTableBody.innerHTML = '<tr><td>No se encontraron resultados</td></tr>';
-                }
-            })
-            .catch(error => console.error('Error al buscar historial de compras:', error));
-    } else {
-        historialComprasTableBody.innerHTML = '';
-    }
-});
-</script>
+                            historialComprasTableBody.innerHTML = rows.join('');
+                        } else {
+                            historialComprasTableBody.innerHTML = '<tr><td>No se encontraron resultados</td></tr>';
+                        }
+                    })
+                    .catch(error => console.error('Error al buscar historial de compras:', error));
+            } else {
+                historialComprasTableBody.innerHTML = '';
+            }
+        });
+    </script>
 
     <!-------complete html----------->
 

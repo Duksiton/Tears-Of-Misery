@@ -27,15 +27,15 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1.2rem;
-    background: #f0f0f0;
+    background: #0d0e0e;
     
 }
 
 
-/* Header */
 header {
-    position: relative;
-    background: #1d1e1e;
+    position: fixed; /* Cambiado a fixed para que siga */
+    top: 0; /* Fija el header en la parte superior */
+    background: #030303;
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -45,6 +45,8 @@ header {
     width: 100%;
     min-height: 80px; 
 }
+
+
 
 /* Logo */
 .logo {
@@ -122,11 +124,6 @@ header {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.navigation li.active a {
-    color: #ec994b; /* Color de texto resaltado para la sección activa */
-    font-weight: bold; /* Opcional: resaltar la fuente */
 }
 
 .navigation li {
@@ -358,7 +355,7 @@ footer {
 
 .slider-title {
     text-align: center;
-    color: rgb(0, 0, 0);
+    color: #fff;
     font-size: 2rem;
     margin-bottom: 20px;
 }
@@ -499,6 +496,12 @@ footer {
  .hr-color-gris{
     border-color: #2e2e2e;
  }
+
+ .navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
+}
+
 
 
 

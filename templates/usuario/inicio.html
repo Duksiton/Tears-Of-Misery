@@ -4,14 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carrusel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musica.css') }}">
 
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button onclick="togglePlayPause()" id="playPauseButton">▶ Play</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" onchange="changeVolume()">
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" src="{{ url_for('static', filename='audio/desmembramiento selectivoR.mp3') }}" loop
+        muted></audio>
     
 
 </head>
@@ -30,49 +40,60 @@
     </div>
     <div class="group2">
         <div class="user-profile" style="position: relative; display: inline-block;">
-            <i class="fas fa-user-circle" style="font-size: 40px; color: white; cursor: pointer;" onclick="toggleMenu()"></i>
+            <i class="fas fa-user-circle" style= "margin-left: -40px; font-size: 40px; color: white; cursor: pointer;" onclick="toggleMenu()"></i>
+            <!-- Mensaje de bienvenida al lado del ícono de perfil -->
+            
             <div class="dropdown-menu" id="userMenu" style="display: none; position: absolute; background-color: #333; color: white; border-radius: 5px; padding: 10px; z-index: 1; width: 200px;">
                 <ul style="list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; width: 100%;">
                     <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
-                        <a href="{{ url_for('perfil.perfil') }}" class="logout-btn" style="color: white; text-decoration: none;   ">Perfil</a>
+                        <a href="{{ url_for('perfil.perfil') }}" class="logout-btn" style="color: white; text-decoration: none;">Perfil</a>
                     </li>
                     <li style="padding: 8px 12px; width: 100%; box-sizing: border-box;">
-                        <a href="{{ url_for('logout.logout') }}" class="logout-btn" style="color: white; text-decoration: none;  ">Cerrar sesión</a>
+                        <a href="{{ url_for('logout.logout') }}" class="logout-btn" style="color: white; text-decoration: none;">Cerrar sesión</a>
                     </li>
                 </ul>
             </div>
         </div>
-</div>
-    <div class="group3">
-        <ul>
-            <li class="submenu">
-                <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}" id="img-carrito" alt="carrito de compra">
-                <div id="carrito">
-                    <table id="lista-carrito">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Acción</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="productos">
-                            <!-- Contenido dinámico aquí -->
-                        </tbody>
-                    </table>
-                    <div id="ver-mas-container">
-                        <a href="#" id="toggle-productos">Ver más productos agregados</a>
-                    </div>
-                    <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
-                    <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
-                    <a href="{{ url_for('catalogo') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
-                    <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
-                </div>
-            </li>
-        </ul>
     </div>
+    <span style="color: white; margin-left: 10px; font-size: 2.0em; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">¡Hola, {{ perfil.nombre }}!</span>
+
+        
+</div>
+<div class="group3">
+    <ul>
+        <li class="submenu">
+            <div class="cart-icon-container" style="position: relative;">
+                <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                    id="img-carrito" alt="carrito de compra">
+                <span id="cart-count" style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+            </div>
+            <div id="carrito" style="display: none;">
+                <button class="close-btn">&times;</button>
+                <table id="lista-carrito">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos">
+                        <!-- Contenido dinámico aquí -->
+                    </tbody>
+                </table>
+                <div id="ver-mas-container">
+                    <a href="#" id="toggle-productos">Ver más productos agregados</a>
+                </div>
+                <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
+                <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
+                <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
+            </div>
+        </li>
+    </ul>
+</div>
   </header>
 
   <div class="main-container">
@@ -222,7 +243,7 @@ let currentSlide = 0;
           </div>
           <div class="grupo-2">
               <hr class="hr-color-gris">
-              <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+              <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
           </div>
       </footer>
       <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
@@ -295,6 +316,8 @@ let currentSlide = 0;
     });
 </script>
 <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
+<script src="{{ url_for('static', filename='js/audioController.js') }}"></script>
+
 </body>
 
 </html>

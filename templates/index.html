@@ -4,13 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carrusel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_index_productos.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musica.css') }}">
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button onclick="togglePlayPause()" id="playPauseButton">▶ Play</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" onchange="changeVolume()">
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" src="{{ url_for('static', filename='audio/desmembramiento selectivoR.mp3') }}" loop
+        muted></audio>
+
+
+
+
 </head>
 
 <body>
@@ -21,22 +36,30 @@
         </a>
         <div class="group">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a href="{{ url_for('productos') }}">Productos</a></li>
+                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a
+                        href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a
+                        href="{{ url_for('productos') }}">Productos</a></li>
             </ul>
         </div>
         <div class="group2">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
-                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
+                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a
+                        href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
+                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a
+                        href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
             </ul>
         </div>
         <div class="group3">
             <ul>
                 <li class="submenu">
-                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
-                        id="img-carrito" alt="carrito de compra">
-                    <div id="carrito" style="display: none;"> <!-- Asegúrate de que esté oculto inicialmente -->
+                    <div class="cart-icon-container" style="position: relative;">
+                        <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                            id="img-carrito" alt="carrito de compra">
+                        <span id="cart-count"
+                            style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                    </div>
+                    <div id="carrito" style="display: none;">
                         <button class="close-btn">&times;</button>
                         <table id="lista-carrito">
                             <thead>
@@ -57,7 +80,8 @@
                         </div>
                         <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
                         <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
-                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más
+                            productos</a>
                         <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
                     </div>
                 </li>
@@ -70,48 +94,57 @@
         <div class="hr-color">
             <hr>
         </div>
+
         <br>
         <br>
         <br>
         <div class="slider-title"><strong>Galería de Productos</strong></div>
         <div class="slider-container">
             <div class="slider-content">
-              <div class="slider-single active">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="1" />
-              </div>
-              <div class="slider-single">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="2" />
-              </div>
-              <div class="slider-single">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="3" />
-              </div>
-              <div class="slider-single">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="4" />
-              </div>
-              <div class="slider-single">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="5" />
-              </div>
-              <div class="slider-single">
-                <img class="slider-single-image" src="{{ url_for('static', filename='images/productos/camisas/camisa_unisex.jpg') }}" alt="6" />
-              </div>
+                <div class="slider-single active">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}"
+                        alt="1" />
+                </div>
+                <div class="slider-single">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="2" />
+                </div>
+                <div class="slider-single">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}"
+                        alt="3" />
+                </div>
+                <div class="slider-single">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="4" />
+                </div>
+                <div class="slider-single">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="5" />
+                </div>
+                <div class="slider-single">
+                    <img class="slider-single-image"
+                        src="{{ url_for('static', filename='images/productos/camisas/camisa_unisex.jpg') }}" alt="6" />
+                </div>
             </div>
             <div class="slider-left">‹</div>
             <div class="slider-right">›</div>
             <div class="bullet-container">
-              <!-- Suponiendo que tienes 6 imágenes -->
-              <div class="bullet active"></div>
-              <div class="bullet"></div>
-              <div class="bullet"></div>
-              <div class="bullet"></div>
-              <div class="bullet"></div>
-              <div class="bullet"></div>
+                <!-- Suponiendo que tienes 6 imágenes -->
+                <div class="bullet active"></div>
+                <div class="bullet"></div>
+                <div class="bullet"></div>
+                <div class="bullet"></div>
+                <div class="bullet"></div>
+                <div class="bullet"></div>
             </div>
-          </div>
-          
-          
+        </div>
+
+
     </div>
     </div>
-    
+
 
     <section class="albums-section">
         <div class="albums-title">
@@ -169,15 +202,17 @@
         </div>
         <div class="grupo-2">
             <hr class="hr-color-gris">
-            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
         </div>
     </footer>
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
     <script src="{{ url_for('static', filename='js/carrusel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audioController.js') }}"></script>
+
     </div>
 
-    
+
 </body>
 
 </html>

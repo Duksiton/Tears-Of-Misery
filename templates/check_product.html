@@ -9,8 +9,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='/images/icon-logo.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_check_product.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musica.css') }}">
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+        <button onclick="togglePlayPause()" id="playPauseButton">▶ Play</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" onchange="changeVolume()">
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" src="{{ url_for('static', filename='audio/desmembramiento selectivoR.mp3') }}" loop
+        muted></audio>
 
 </head>
+
+<style>
+    body{
+        background-color: #0a0a0aef;
+};
+
+</style>
 
 <body>
     <header>
@@ -28,13 +46,18 @@
                 <li class="{% if request.path == url_for('login') %}active{% endif %}"><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
                 <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
             </ul>
+
         </div>
         <div class="group3">
             <ul>
                 <li class="submenu">
-                    <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
-                        id="img-carrito" alt="carrito de compra">
-                    <div id="carrito">
+                    <div class="cart-icon-container" style="position: relative;">
+                        <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
+                            id="img-carrito" alt="carrito de compra">
+                        <span id="cart-count" style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                    </div>
+                    <div id="carrito" style="display: none;">
+                        <button class="close-btn">&times;</button>
                         <table id="lista-carrito">
                             <thead>
                                 <tr>
@@ -315,7 +338,7 @@
         </div>
         <div class="grupo-2">
             <hr class="hr-color-gris">
-            <small>&copy; 2023 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
+            <small>&copy; 2024 <b>Tears Of Misery</b> - Todos los Derechos Reservados.</small>
         </div>
     </footer>
 
@@ -385,6 +408,8 @@
     <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
 
     <script src="{{ url_for('static', filename='js/script_pro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audioController.js') }}"></script>
+
 </body>
 
 </html>

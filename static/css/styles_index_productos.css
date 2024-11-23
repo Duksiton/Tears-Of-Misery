@@ -22,28 +22,29 @@ html {
     font-family: "Montserrat", sans-serif;
     scroll-behavior: smooth;
 }
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2rem;
-    
-    
-}
+
 
 header {
-    position: fixed; /* Fija el header */
-    top: 0; /* Posición en la parte superior de la página */
-    left: 0;
-    width: 100%; /* Abarca todo el ancho */
-    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
-    background-color: #1d1e1e;; /* Fondo del header (puedes cambiar el color si es necesario) */
-    padding: 10px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra para resaltar el header */
+    position: fixed; /* Cambiado a fixed para que siga */
+    top: 0; /* Fija el header en la parte superior */
+    background: #030303;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    box-shadow: 0 15px 15px rgba(8, 0, 0, 0.05);
+    z-index: 2;
+    width: 100%;
+    min-height: 80px; 
 }
 
 body {
-    padding-top: 100px; /* Agrega espacio en la parte superior del contenido para evitar que el contenido quede oculto debajo del header */
+    margin-top: 128px; /* Espacio para que el contenido no quede oculto */
 }
+
+
+
+
 
 
 .logo {
@@ -85,11 +86,6 @@ body {
 .group ul li,
 .group2 ul li {
     margin: 0;
-}
-
-.group2 navigation li.active a {
-    color: #ec994b; /* Color de texto resaltado para la sección activa */
-    font-weight: bold; /* Opcional: resaltar la fuente */
 }
 
 .group ul li a,
@@ -219,6 +215,7 @@ body {
     overflow-y: auto;
     z-index: 10;
     animation: slideIn 0.5s forwards;
+    color: black;
 }
 
 /* Botón de cerrar ("X") */
@@ -266,7 +263,7 @@ body {
 #lista-carrito td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #000000;
 }
 
 #lista-carrito th {
@@ -374,9 +371,9 @@ input:valid {
     justify-content: space-between;
     align-items: center; 
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #1d1e1e7a;
     padding: 80px 40px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px #0000001a; 
 }
 
 .header-txt {
@@ -386,7 +383,7 @@ input:valid {
 
 .header-txt span {
     font-size: 16px;
-    color: #424343;
+    color: #d6d4d4;
     font-weight: 700;
     margin-bottom: 10px; 
     display: block;
@@ -395,13 +392,13 @@ input:valid {
 .header-txt h1 {
     font-size: 55px;
     line-height: 1.2; 
-    color: black;
+    color: rgb(255, 255, 255);
     margin-bottom: 20px; 
 }
 
 .header-txt p {
     font-size: 16px;
-    color: black;
+    color: rgb(255, 255, 255);
     margin-bottom: 30px; 
     line-height: 1.6; 
 }
@@ -438,7 +435,7 @@ input:valid {
 
 .information {
     width: 70%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 0 20px #0000001a; 
     padding: 35px 75px;
     background-color: #f4f4f4; 
     margin: 50px auto; 
@@ -470,12 +467,12 @@ h3 {
 .products {
     padding: 0 0 100px 0;
     text-align: center;
-    background-color: #f9f9f9; 
+    
 }
 
 .products h2 {
     font-size: 40px;
-    color: #333; 
+    color: #ffffff; 
     text-transform: capitalize;
     margin-bottom: 55px;
     font-weight: 700;
@@ -495,7 +492,7 @@ h3 {
 }
 
 .product {
-    background: #fff; 
+    background: #19191a; 
     border-radius: 10px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     padding: 35px; 
@@ -523,7 +520,7 @@ h3 {
 
 
 .product h3 {
-    color: #333; 
+    color: #fff9f9; 
     font-size: 1.5em; 
     margin: 10px 0;
 }
@@ -532,7 +529,7 @@ h3 {
 .product p {
     font-size: 15px;
     margin: 0;
-    color: #666; 
+    color: #ffffff; 
     font-weight: 600;
 }
 
@@ -1153,4 +1150,8 @@ h3 {
         padding: 8px 20px;
         font-size: 0.9em;
     }
+}
+.navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
 }

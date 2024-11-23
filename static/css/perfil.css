@@ -41,10 +41,10 @@ body {
 
 
 
-/* Header */
 header {
-    position: relative;
-    background: #1d1e1e;
+    position: fixed; /* Cambiado a fixed para que siga */
+    top: 0; /* Fija el header en la parte superior */
+    background: #030303;
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -53,6 +53,10 @@ header {
     z-index: 2;
     width: 100%;
     min-height: 80px; 
+}
+
+body {
+    margin-top: 128px; /* Espacio para que el contenido no quede oculto */
 }
 
 /* Logo */
@@ -363,20 +367,22 @@ footer {
     width: 300px;
     padding: 10px;
     z-index: 1000;
+    color: black;
 }
 
 .cart-details table {
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .cart-details th, .cart-details td {
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #000000;
 }
 
 .cart-details th {
-    background: #f5f5f5;
+    background: #000000;
 }
 
 .cart-details .btn-1 {
@@ -448,11 +454,11 @@ footer {
 .purchase-history th, .purchase-history td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ffffff;
 }
 
 .purchase-history th {
-    background: #f5f5f5;
+    background: #fffefe;
 }
 
 
@@ -576,17 +582,17 @@ main.profile-container {
 
 body {
     font-family: "Montserrat", sans-serif;
-    background-color: #f9f9f9;
+    background-color: #19191a;
     margin: 0;
     padding: 0;
-    color: #333;
+    color: #ffffff;
 }
 
 .container {
     max-width: 1200px; /* Aumenta el ancho máximo del contenedor */
     margin: 50px auto;
     padding: 40px; /* Aumenta el espacio interior del contenedor */
-    background-color: #fff;
+    background-color: #0c0b0b;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
@@ -596,7 +602,7 @@ body {
 h1 {
     text-align: center;
     font-size: 3rem; /* Aumenta el tamaño del encabezado */
-    color: #333;
+    color: #ffffff;
     margin-bottom: 40px; /* Ajusta el margen inferior del encabezado */
     font-weight: 600;
 }
@@ -615,7 +621,7 @@ h1 {
     background-color: #f7f7f7;
     border: none;
     border-radius: 8px;
-    color: #555;
+    color: #000000;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     font-weight: 500;
@@ -643,13 +649,13 @@ h1 {
 
 .tab-content h2 {
     font-size: 2.5rem; /* Aumenta el tamaño del encabezado */
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px; /* Ajusta el margen inferior */
 }
 
 .tab-content p {
     font-size: 1.2rem; /* Aumenta el tamaño del texto de los párrafos */
-    color: #777;
+    color: #ffffff;
 }
 
 #cuenta {
@@ -694,7 +700,7 @@ h1 {
     font-size: 1.2rem; /* Aumenta el tamaño de la fuente de las etiquetas */
     font-weight: 500;
     margin-bottom: 5px;
-    color: #333;
+    color: #ffffff;
 }
 
 .form-group input, .address-form .form-group input {
@@ -740,7 +746,7 @@ h1 {
 .add-address-form h3 {
     margin-top: 0;
     font-size: 2rem; /* Aumenta el tamaño del encabezado */
-    color: #333;
+    color: #ffffff;
 }
 
 .address-form {
@@ -759,7 +765,7 @@ h1 {
     font-size: 1.2rem; /* Aumenta el tamaño de la fuente de las etiquetas */
     font-weight: 500;
     margin-bottom: 5px;
-    color: #333;
+    color: #ffffff;
 }
 
 .address-form .form-group input {
@@ -799,7 +805,7 @@ h1 {
 
 .address-list h3 {
     font-size: 2rem; /* Aumenta el tamaño del encabezado */
-    color: #333;
+    color: #ffffff;
     margin-bottom: 15px;
 }
 
@@ -819,6 +825,7 @@ h1 {
     margin-bottom: 15px; /* Aumenta el margen inferior */
     max-width: 600px; /* Ajustar el ancho máximo */
     width: 100%;
+    color:#000;
 }
 
 .address-info {
@@ -841,7 +848,7 @@ h1 {
 
 .address-actions .btn-edit {
     background-color: #ffbb00;
-    color: #fff;
+    color: #000000;
 }
 
 .address-actions .btn-edit:hover {
@@ -855,6 +862,38 @@ h1 {
 
 .address-actions .btn-delete:hover {
     background-color: #e60000;
+}
+
+.tab-content {
+    color: #ffffff; /* Color blanco para todo el contenido dentro de .tab-content */
+}
+
+.purchase-history table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff; /* Color blanco para todo el texto dentro de la tabla */
+}
+
+.purchase-history th, .purchase-history td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd; /* Puedes cambiar este color si lo deseas */
+}
+
+.purchase-history th {
+    background-color: #333333; /* Color de fondo para los encabezados */
+    color: #ffffff; /* Color blanco para el texto de los encabezados */
+}
+
+.purchase-history td {
+    background-color: #444444; /* Color de fondo para las filas */
+}
+
+.purchase-history tr:nth-child(even) td {
+    background-color: #555555; /* Color diferente para filas pares */
+}
+.toggle-password i {
+    color: #ffffff; /* Cambia el color del ícono a blanco */
 }
 
 

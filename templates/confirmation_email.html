@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <title>Confirmación de compra</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,17 +35,29 @@
             font-size: 12px;
             color: #777;
         }
+        .productos {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>TearsOfMisery - Confirmación de compra</h1>
+            <h1>Tears Of Misery - Confirmación de compra</h1>
         </div>
         <div class="content">
-            <p>¡Hola!</p>
-            <p>Gracias por tu compra en <b>TearsOfMisery</b>. Tu compra ha sido realizada exitosamente.</p>
+            <p>¡Hola {{ nombre }}!</p>
+            <p>Gracias por tu compra en <b>Tears Of Misery</b>. Tu compra ha sido realizada exitosamente.</p>
+
+            <p><b>Productos comprados:</b></p>
+            <ul class="productos">
+                {{ productos }}
+            </ul>
+
             <p>Total de la compra: <b>{{ total }}</b></p>
+            <br>
+            <p>El estado actual de tu compra es: Pendiente</p>
         </div>
         <div class="footer">
             <p>© 2024 TearsOfMisery. Todos los derechos reservados.</p>

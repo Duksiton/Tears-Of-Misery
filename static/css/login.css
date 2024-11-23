@@ -30,7 +30,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1.2rem;
-    background: #f0f0f0;
+    background: #0d0e0e;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -51,7 +51,7 @@ video {
 /* Header */
 header {
     position: relative;
-    background: #1d1e1e;
+    background: #030303;
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -142,11 +142,6 @@ header {
 
 .navigation li {
     margin: 0;
-}
-
-.navigation li.active a {
-    color: #ec994b; /* Color de texto resaltado para la sección activa */
-    font-weight: bold; /* Opcional: resaltar la fuente */
 }
 
 .navigation a {
@@ -584,4 +579,8 @@ header {
     background-color: #1e1e1e; 
     color: #ffffff; 
     border-color: #4c4c4c;
+}
+.navigation li.active a {
+    color: #ec994b; /* Color de texto resaltado para la sección activa */
+    font-weight: bold; /* Opcional: resaltar la fuente */
 }

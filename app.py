@@ -14,7 +14,7 @@ from mvc.controller.pedidos_controller import pedidos_controller
 from mvc.controller.compras_controller import compras_controller
 import shutil
 import os
-
+from mvc.controller.password_reset_controller import password_reset_controller
 import bcrypt
 
 app = Flask(__name__)
@@ -29,6 +29,7 @@ app.register_blueprint(perfil_controller)
 app.register_blueprint(logout_controller)
 app.register_blueprint(pedidos_controller)
 app.register_blueprint(compras_controller)
+app.register_blueprint(password_reset_controller)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com' 
 app.config['MAIL_PORT'] = 587  
@@ -56,7 +57,25 @@ def registro():
 
 @app.route('/inicio')
 def inicio():
-    return render_template('usuario/inicio.html')
+    if 'idUsuario' not in session:
+        return redirect(url_for('login_controller.login'))
+    
+    idUsuario = session['idUsuario']
+    conn = create_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        cursor.execute("SELECT nombre FROM usuario WHERE idUsuario = %s", (idUsuario,))
+        perfil = cursor.fetchone()
+        
+        if not perfil:
+            return redirect(url_for('login_controller.login'))
+        
+        return render_template('usuario/inicio.html', perfil=perfil)
+    finally:
+        cursor.close()
+        conn.close()
+
 
 @app.route('/catalogo')
 def catalogo():
@@ -178,7 +197,7 @@ def actualizar_estado_pedido():
         id_usuario_result = cursor.fetchone()
 
         if not id_usuario_result:
-            return jsonify({'error': 'No se encontró el usuario asociado al pedido'}), 404
+            return render_modal('No se encontró el usuario asociado al pedido')
 
         id_usuario = id_usuario_result['idUsuario']
 
@@ -187,7 +206,7 @@ def actualizar_estado_pedido():
         usuario = cursor.fetchone()
 
         if not usuario:
-            return jsonify({'error': 'No se encontró el correo del usuario asociado al pedido'}), 404
+            return render_modal('No se encontró el correo del usuario asociado al pedido')
 
         email = usuario['email']
         print(f"Email del usuario: {email}")  # Depuración
@@ -195,15 +214,61 @@ def actualizar_estado_pedido():
         # Enviar correo de notificación
         enviar_correo_actualizacion(email, estado)
 
-        return jsonify({'mensaje': 'Estado actualizado y correo enviado correctamente'})
+        return render_modal('Estado actualizado y correo enviado correctamente')
 
     except Exception as e:
         print('Error al actualizar estado:', e)
-        return jsonify({'error': str(e)}), 500
+        return render_modal(f'Error: {str(e)}')
 
     finally:
         cursor.close()
         conn.close()
+
+def render_modal(message):
+    return f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="modal fade" id="mensajeModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Notificación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href='/ver_pedidos';">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {message}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cerrarModal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {{
+                $('#mensajeModal').modal('show');
+                
+                // Redirigir al hacer clic en el botón "Cerrar"
+                $('#cerrarModal').click(function() {{
+                    window.location.href = '/ver_pedidos';
+                }});
+            }});
+        </script>
+    </body>
+    </html>
+    """
+
+
 
 
 def enviar_correo_actualizacion(email, estado):
@@ -215,7 +280,7 @@ def enviar_correo_actualizacion(email, estado):
 
     try:
         msg = Message('Actualización de Estado de Pedido', recipients=[email])
-        msg.body = f'El estado de tu pedido ha cambiado a: {estado}.'
+        msg.html = render_template('estado_email.html', estado=estado)
         mail.send(msg)
         print(f"Correo enviado a: {email}")  # Confirmación de envío
 
