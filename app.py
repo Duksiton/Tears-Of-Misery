@@ -483,10 +483,12 @@ def obtener_producto(id):
         close_connection(conn)
 
 
+
+
 @app.route('/api/usuarios', methods=['GET'])
 def get_usuarios():
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(MySQLdb.cursors.DictCursor)  # Uso de DictCursor para obtener resultados como diccionarios
 
     try:
         page = int(request.args.get('page', 1))
