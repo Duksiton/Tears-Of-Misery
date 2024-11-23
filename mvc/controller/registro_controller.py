@@ -18,8 +18,8 @@ def registro():
         contrasena = request.form['contrasena'].encode('utf-8')  # Convertir a bytes
         nombreRol = 'Usuario'  # Asignar un rol predeterminado, como 'Usuario'
 
-        if not nombre.isalpha():
-            flash('El nombre solo debe contener letras.', 'error')
+        if not re.match("^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$", nombre):
+            flash('El nombre solo debe contener letras y espacios.', 'error')
             return redirect(url_for('registro_controller.registro'))
         
         
