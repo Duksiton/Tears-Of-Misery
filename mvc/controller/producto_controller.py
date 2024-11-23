@@ -417,10 +417,11 @@ def mostrar_productos_invitado():
         # Crear el cursor y ejecutar la consulta
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM producto")
+        column_names = [column[0] for column in cursor.description]  # Obtener nombres de columnas
         productos = cursor.fetchall()
 
-        # Convertir el resultado a un diccionario
-        productos = [dict(zip([column[0] for column in cursor.description], row)) for row in productos]
+        # Convertir los resultados a diccionario
+        productos = [dict(zip(column_names, row)) for row in productos]
 
         # Formatear el precio de cada producto
         for producto in productos:
@@ -437,6 +438,7 @@ def mostrar_productos_invitado():
             close_connection(conn)
 
     return render_template('productos.html', productos=productos)
+
 
 # Ruta de prueba para la conexión a la base de datos
 @app.route('/test_db')

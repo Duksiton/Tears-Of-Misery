@@ -155,19 +155,22 @@
             <section class="products">
                 <h2>Nuestros Productos</h2>
                 <div class="product-content">
-                    {% for producto in productos %}
-                    <div class="product">
-                        <a href="{{ url_for('check_product', id_producto=producto['idProducto']) }}">
-                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto['imagen']) }}" alt="{{ producto['nombre'] }}">
-                            <h3>{{ producto['nombre'] }}</h3>
-                            <p>${{ producto['precio'] }}</p>
-                        </a>
-                    </div>
+                    {% if productos %}
+                        {% for producto in productos %}
+                        <div class="product">
+                            <a href="{{ url_for('check_product', id_producto=producto['idProducto']) }}">
+                                <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto['imagen']) }}" alt="{{ producto['nombre'] }}">
+                                <h3>{{ producto['nombre'] }}</h3>
+                                <p>${{ producto['precio'] }}</p>
+                            </a>
+                        </div>
+                        {% endfor %}
                     {% else %}
-                    <p>No hay productos disponibles.</p>
-                    {% endfor %}
+                        <p>No hay productos disponibles.</p>
+                    {% endif %}
                 </div>
             </section>
+            
             
             
             

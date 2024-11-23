@@ -37,6 +37,8 @@ def ver_pedidos():
 
 from MySQLdb.cursors import DictCursor  # Asegúrate de importar DictCursor
 
+from MySQLdb.cursors import DictCursor  # Importa DictCursor
+
 @pedidos_controller.route('/editar_estado_pedido', methods=['POST'])
 def editar_estado_pedido():
     idPedido = request.form.get('idPedido')
