@@ -1,4 +1,5 @@
 #Importaciones
+import logging
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash, abort, jsonify
 from mvc.model.db_connection import create_connection, close_connection
 import bcrypt
@@ -14,6 +15,8 @@ def listar_usuarios():
         flash("Error de conexión a la base de datos")
         abort(500, description="Error de conexión a la base de datos")
     
+    usuarios = []  # Inicializa usuarios para asegurar que siempre tenga un valor
+    cursor = None  # Inicializa cursor de forma segura
     try:
         cursor = conn.cursor(dictionary=True)
         cursor.execute("""
@@ -25,13 +28,16 @@ def listar_usuarios():
             flash("No se encontraron usuarios.")
            
     except Exception as e:
+        logging.error(f"Error al obtener los usuarios: {e}")
+        flash("Ocurrió un error al obtener los usuarios.")
         
-        usuarios = []
     finally:
-        cursor.close()
+        if cursor:
+            cursor.close()
         close_connection(conn)
     
     return render_template('admin/users.html', usuarios=usuarios)
+
 
 
 @usuarios_controller.route('/verificar_usuario', methods=['GET', 'POST'])
