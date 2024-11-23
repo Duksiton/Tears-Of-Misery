@@ -162,19 +162,22 @@
         <div class="product-content" id="product-content">
             <section class="products">
                 <h2>Nuestros Productos</h2>
-                <div class="product-content">
-                    {% for producto in productos %}
-                    <div class="product">
-                        <a href="{{ url_for('producto_controller.producto', id=producto.idProducto) }}">
-                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
-                            <h3>{{ producto.nombre }}</h3>
-                            <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
-
-                        </a>
+                {% if productos %}
+                    <div class="product-content">
+                        {% for producto in productos %}
+                        <div class="product">
+                            <a href="{{ url_for('producto_controller.producto', id=producto.idProducto) }}">
+                                <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
+                                <h3>{{ producto.nombre }}</h3>
+                                <p>${{ producto.precio }}</p> <!-- Mostrando el precio ya formateado -->
+                            </a>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
-            </section>
+                {% else %}
+                    <p>No hay productos disponibles en este momento.</p>
+                {% endif %}
+            </section>            
         </div>
     </section>
 
