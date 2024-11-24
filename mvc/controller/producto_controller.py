@@ -408,20 +408,14 @@ def close_connection(connection):
 @app.route('/productos', methods=['GET'])
 def mostrar_productos_invitado():
     try:
-        # Intentar establecer la conexión
         conn = create_connection()
         if conn is None:
             flash("Error de conexión a la base de datos")
             abort(500, description="Error de conexión a la base de datos")
 
-        # Crear el cursor y ejecutar la consulta
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM producto")
-        column_names = [column[0] for column in cursor.description]  # Obtener nombres de columnas
         productos = cursor.fetchall()
-
-        # Convertir los resultados a diccionario
-        productos = [dict(zip(column_names, row)) for row in productos]
 
         # Formatear el precio de cada producto
         for producto in productos:
@@ -431,13 +425,13 @@ def mostrar_productos_invitado():
         app.logger.error(f"Error en mostrar_productos_invitado: {e}")
         productos = []  # Devolver una lista vacía si hay un error
     finally:
-        # Asegurarse de cerrar los recursos
         if 'cursor' in locals() and cursor:
             cursor.close()
         if conn:
             close_connection(conn)
 
     return render_template('productos.html', productos=productos)
+
 
 
 # Ruta de prueba para la conexión a la base de datos

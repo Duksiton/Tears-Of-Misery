@@ -30,14 +30,18 @@
         </a>
         <div class="group">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a href="{{ url_for('productos') }}">Productos</a></li>
+                <li class="{% if request.path == url_for('index') %}active{% endif %}"><a
+                        href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="{% if request.path == url_for('productos') %}active{% endif %}"><a
+                        href="{{ url_for('productos') }}">Productos</a></li>
             </ul>
         </div>
         <div class="group2">
             <ul class="navigation">
-                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
-                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
+                <li class="{% if request.path == url_for('login') %}active{% endif %}"><a
+                        href="{{ url_for('login_controller.login') }}">Iniciar sesión</a></li>
+                <li class="{% if request.path == url_for('registro') %}active{% endif %}"><a
+                        href="{{ url_for('registro_controller.registro') }}">Registrarse</a></li>
             </ul>
         </div>
         <div class="group3">
@@ -46,7 +50,8 @@
                     <div class="cart-icon-container" style="position: relative;">
                         <img src="{{ url_for('static', filename='images/white-shopping-cart-icon-9.jpg') }}"
                             id="img-carrito" alt="carrito de compra">
-                        <span id="cart-count" style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                        <span id="cart-count"
+                            style="position: absolute; top: -1px; right: 10px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
                     </div>
                     <div id="carrito" style="display: none;">
                         <button class="close-btn">&times;</button>
@@ -69,7 +74,8 @@
                         </div>
                         <p id="total-carrito">Total: <span id="total-valor">0.00</span></p>
                         <a href="#" id="comprar-todo" class="btn-1">Finalizar compra</a>
-                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más productos</a>
+                        <a href="{{ url_for('productos') }}#product-content" id="explorar" class="btn-1">Explorar más
+                            productos</a>
                         <a href="#" id="vaciar-carrito" class="btn-1">Vaciar Carrito</a>
                     </div>
                 </li>
@@ -97,52 +103,61 @@
                     margin: 20px auto;
                     border-radius: 10px;
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    border: 3px solid rgba(255, 0, 0, 0.5); /* Bordes iniciales de fuego */
+                    border: 3px solid rgba(255, 0, 0, 0.5);
+                    /* Bordes iniciales de fuego */
                     animation: fireAnimation 2s infinite;
                 }
-        
-                
+
+
                 .carrusel {
                     display: flex;
-                    width: 2800px; /* Ajustar para imágenes adicionales */
-                    animation: deslizar 20s linear infinite; /* Animación fluida */
+                    width: 2800px;
+                    /* Ajustar para imágenes adicionales */
+                    animation: deslizar 20s linear infinite;
+                    /* Animación fluida */
                 }
-        
+
                 .carrusel img {
                     width: 400px;
                     height: 250px;
                     object-fit: cover;
                 }
-        
+
                 @keyframes deslizar {
                     0% {
                         transform: translateX(0);
                     }
+
                     100% {
-                        transform: translateX(-1600px); /* Mover todo el carrusel */
+                        transform: translateX(-1600px);
+                        /* Mover todo el carrusel */
                     }
                 }
             </style>
-        
+
             <div class="carrusel-contenedor">
                 <div class="carrusel">
                     <!-- Clonar las imágenes para el bucle continuo -->
-                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="Foto 1">
+                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}"
+                        alt="Foto 1">
                     <img src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="Foto 2">
-                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="Foto 3">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}"
+                        alt="Foto 3">
                     <img src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="Foto 4">
                     <img src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="Foto 5">
-        
+
                     <!-- Clonar las mismas imágenes para bucle -->
-                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}" alt="Foto 1">
+                    <img src="{{ url_for('static', filename='images/productos/camisas/camisas_dobles_tears.jpg') }}"
+                        alt="Foto 1">
                     <img src="{{ url_for('static', filename='images/productos/sacos/saco_tears.jpg') }}" alt="Foto 2">
-                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}" alt="Foto 3">
+                    <img src="{{ url_for('static', filename='images/productos/sacos/saco_capota_tears.jpg') }}"
+                        alt="Foto 3">
                     <img src="{{ url_for('static', filename='images/productos/discos/cd.jpg') }}" alt="Foto 4">
                     <img src="{{ url_for('static', filename='images/productos/discos/cd2.jpg') }}" alt="Foto 5">
                 </div>
             </div>
         </div>
-        
+
     </section>
     <br>
     <br>
@@ -154,26 +169,28 @@
         <div class="product-content" id="product-content">
             <section class="products">
                 <h2>Nuestros Productos</h2>
+                {% if productos %}
                 <div class="product-content">
-                    {% if productos %}
-                        {% for producto in productos %}
-                        <div class="product">
-                            <a href="{{ url_for('check_product', id_producto=producto['idProducto']) }}">
-                                <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto['imagen']) }}" alt="{{ producto['nombre'] }}">
-                                <h3>{{ producto['nombre'] }}</h3>
-                                <p>${{ producto['precio'] }}</p>
-                            </a>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>No hay productos disponibles.</p>
-                    {% endif %}
+                    {% for producto in productos %}
+                    <div class="product">
+                        <a href="{{ url_for('producto_controller.producto', id=producto.idProducto) }}">
+                            <img src="{{ url_for('static', filename='images/productos-insertados/' ~ producto.imagen) }}"
+                                alt="{{ producto.nombre }}">
+                            <h3>{{ producto.nombre }}</h3>
+                            <p>${{ producto.precio }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
+                {% else %}
+                <p>No hay productos disponibles.</p>
+                {% endif %}
             </section>
-            
-            
-            
-            
+
+
+
+
+
         </div>
     </section>
 
