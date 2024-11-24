@@ -48,7 +48,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False 
 app.config['MAIL_USERNAME'] = 'tearsofmisery.13@gmail.com'  
 app.config['MAIL_PASSWORD'] = 'oaif rsnb gchj mkxh'  
-app.config['MAIL_DEFAULT_SENDER'] = ('TearsOfMisery', 'tearsofmisery.13@gmail.com')
+app.config['MAIL_DEFAULT_SENDER'] = ('Tears Of Misery', 'tearsofmisery.13@gmail.com')
 
 mail = Mail(app)
 
@@ -191,7 +191,7 @@ def obtener_pedidos():
 @app.route('/api/actualizar_pedido', methods=['POST'])
 def actualizar_estado_pedido():
     conn = create_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()  # Elimina el argumento `dictionary=True`
 
     try:
         # Obtener idPedido y estado desde el formulario
@@ -214,7 +214,7 @@ def actualizar_estado_pedido():
         if not id_usuario_result:
             return render_modal('No se encontró el usuario asociado al pedido')
 
-        id_usuario = id_usuario_result['idUsuario']
+        id_usuario = id_usuario_result[0]  # Acceso mediante índice
 
         # Obtener el correo del usuario
         cursor.execute('SELECT email FROM usuario WHERE idUsuario = %s', (id_usuario,))
@@ -223,7 +223,7 @@ def actualizar_estado_pedido():
         if not usuario:
             return render_modal('No se encontró el correo del usuario asociado al pedido')
 
-        email = usuario['email']
+        email = usuario[0]  # Acceso mediante índice
         print(f"Email del usuario: {email}")  # Depuración
 
         # Enviar correo de notificación
@@ -239,6 +239,7 @@ def actualizar_estado_pedido():
         cursor.close()
         conn.close()
 
+# Función para renderizar el modal de respuesta
 def render_modal(message):
     return f"""
     <!DOCTYPE html>
@@ -283,15 +284,13 @@ def render_modal(message):
     </html>
     """
 
-
-
-
+# Función para enviar correos de actualización
 def enviar_correo_actualizacion(email, estado):
     """
     Función para enviar un correo cuando el estado de un pedido cambia.
     """
-    from app import mail
     from flask_mail import Message
+    from app import mail  # Asegúrate de que Flask-Mail esté configurado
 
     try:
         msg = Message('Actualización de Estado de Pedido', recipients=[email])
